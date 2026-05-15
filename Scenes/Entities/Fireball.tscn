@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://4jf41esh0ijh"]
+
+[ext_resource type="Script" uid="uid://blh17ug2ux5ec" path="res://Scripts/Entities/Fireball.cs" id="1_oerqp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pv7h3"]
+radius = 8.0
+
+[node name="Fireball" type="Area2D" unique_id=1441397192]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_oerqp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=67393490]
+shape = SubResource("CircleShape2D_pv7h3")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=665028645]
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+color = Color(1, 0.4, 0, 1)

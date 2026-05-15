@@ -1,0 +1,107 @@
+[gd_scene format=3 uid="uid://bjo40rn4j6iqb"]
+
+[ext_resource type="Script" uid="uid://ccs31fh64n5hf" path="res://Scripts/UI/HUD.cs" id="1_omqfp"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_omqfp"]
+size = Vector2(200, 20)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_qc5w2"]
+size = Vector2(200, 20)
+
+[node name="HUD" type="CanvasLayer" unique_id=1652673588]
+script = ExtResource("1_omqfp")
+
+[node name="Container" type="Control" parent="." unique_id=136685888]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HealthBar" type="TextureProgressBar" parent="Container" unique_id=1349640859]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 220.0
+offset_bottom = 40.0
+value = 100.0
+texture_progress = SubResource("PlaceholderTexture2D_omqfp")
+tint_progress = Color(0.8, 0.13333334, 0.13333334, 1)
+
+[node name="HealthLabel" type="Label" parent="Container" unique_id=71741899]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 44.0
+offset_right = 82.0
+offset_bottom = 67.0
+text = "100/100"
+
+[node name="XPBar" type="TextureProgressBar" parent="Container" unique_id=1760367301]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 68.0
+offset_right = 220.0
+offset_bottom = 88.0
+texture_progress = SubResource("PlaceholderTexture2D_qc5w2")
+tint_progress = Color(0.5070526, 0.17437571, 0.7305799, 1)
+
+[node name="XPLabel" type="Label" parent="Container/XPBar" unique_id=707747444]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "0 / 50"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LevelLabel" type="Label" parent="Container" unique_id=1648149766]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 86.0
+offset_right = 78.0
+offset_bottom = 109.0
+text = "Level: 1"
+
+[node name="TimeLabel" type="Label" parent="Container" unique_id=2118484023]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 110.0
+offset_right = 62.0
+offset_bottom = 133.0
+text = "Time: 00:00"
+
+[node name="DifficultyLabel" type="Label" parent="Container" unique_id=251161730]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 130.0
+offset_right = 108.0
+offset_bottom = 153.0
+text = "Difficulty: 0"
+
+[node name="Cooldowns" type="VBoxContainer" parent="Container" unique_id=809463362]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 160.0
+offset_right = 337.0
+offset_bottom = 249.0
+
+[node name="NovaLabel" type="Label" parent="Container/Cooldowns" unique_id=1096940500]
+layout_mode = 2
+text = "Fire Nova (Q): Ready"
+
+[node name="MeteorLabel" type="Label" parent="Container/Cooldowns" unique_id=793626242]
+layout_mode = 2
+text = "Meteor Shower (E): Ready"
+
+[node name="DashLabel" type="Label" parent="Container/Cooldowns" unique_id=251219095]
+layout_mode = 2
+text = "Dash (Space): Ready"

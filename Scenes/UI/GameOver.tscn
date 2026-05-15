@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://co8afyiwlwo14"]
+
+[ext_resource type="Script" uid="uid://b088e687f10mc" path="res://Scripts/UI/GameOver.cs" id="1_n002h"]
+
+[node name="GameOver" type="Control" unique_id=90216153]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_n002h")
+
+[node name="Background" type="ColorRect" parent="." unique_id=400145560]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.8)
+
+[node name="Title" type="Label" parent="." unique_id=2126939754]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.5
+offset_top = -61.5
+offset_right = 43.5
+offset_bottom = -38.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 48
+text = "Game Over"
+
+[node name="RestartButton" type="Button" parent="." unique_id=829182059]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -45.5
+offset_top = 24.5
+offset_right = 45.5
+offset_bottom = 55.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Retry"
+
+[node name="MenuButton" type="Button" parent="." unique_id=1742897501]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -91.5
+offset_top = 74.5
+offset_right = 91.5
+offset_bottom = 105.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Go back to menu"

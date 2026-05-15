@@ -1,0 +1,25 @@
+# Godot 4+ specific ignores
+.godot/
+.nomedia
+
+# Godot-specific ignores
+# Note: In Godot 4, '.import/' is largely replaced by '.godot/imported/'
+.import/
+export.cfg
+export_credentials.cfg
+*.tmp
+
+# Imported translations (automatically generated from CSV files)
+*.translation
+
+# Mono/C#/.NET specific ignores
+.mono/
+data_*/
+mono_crash.*.json
+[Bb]in/
+[Oo]bj/
+*.sln
+*.csproj
+
+# Custom ignores
+_Notes/

@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dcdftxtkemsjn"]
+
+[ext_resource type="Script" uid="uid://c8caji6pkinyl" path="res://Scripts/Entities/MeteorIndicator.cs" id="1_3i76r"]
+
+[node name="MeteorIndicator" type="Node2D" unique_id=608948100]
+script = ExtResource("1_3i76r")

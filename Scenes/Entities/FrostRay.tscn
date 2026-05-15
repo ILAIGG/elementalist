@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://c2ogmcik846mm"]
+
+[ext_resource type="Script" uid="uid://cxoay6rmw7pq7" path="res://Scripts/Entities/FrostRay.cs" id="1_vb2mi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p7op8"]
+size = Vector2(200, 8)
+
+[node name="FrostRay" type="Area2D" unique_id=329825715]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_vb2mi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1068373087]
+position = Vector2(100, 0)
+shape = SubResource("RectangleShape2D_p7op8")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=295138583]
+offset_top = -4.0
+offset_right = 200.0
+offset_bottom = 4.0
+color = Color(0, 0.8, 1, 1)

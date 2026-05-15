@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://qxo46jqxfpax"]
+
+[ext_resource type="Script" uid="uid://coh4esb8vrmpa" path="res://Scripts/Entities/ExplosionEffect.cs" id="1_sv6lt"]
+
+[node name="ExplosionEffect" type="Node2D" unique_id=1240226217]
+script = ExtResource("1_sv6lt")

@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://dxysu8dp4ff8b"]
+
+[ext_resource type="Script" uid="uid://ccnuo6538nc4l" path="res://Scripts/Entities/Shockwave.cs" id="1_rvkcg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_262vj"]
+radius = 120.0
+
+[node name="Shockwave" type="Area2D" unique_id=1459429938]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_rvkcg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1438462911]
+shape = SubResource("CircleShape2D_262vj")

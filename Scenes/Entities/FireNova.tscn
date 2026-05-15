@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://ce5qs82ndkdps"]
+
+[ext_resource type="Script" uid="uid://bl3ylk7kjv0nb" path="res://Scripts/Entities/FireNova.cs" id="1_clpnt"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cdoe4"]
+radius = 150.0
+
+[node name="FireNova" type="Area2D" unique_id=948794777]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_clpnt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=199148156]
+shape = SubResource("CircleShape2D_cdoe4")

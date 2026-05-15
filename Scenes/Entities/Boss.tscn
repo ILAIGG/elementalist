@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://b41k10rumb8le"]
+
+[ext_resource type="Script" uid="uid://dqr14emp73x66" path="res://Scripts/Entities/Boss.cs" id="1_bjbev"]
+[ext_resource type="Texture2D" uid="uid://itwnwlxff1n1" path="res://Assets/Sprites/Enemy.png" id="2_xiecr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l1gqu"]
+size = Vector2(64, 64)
+
+[node name="Boss" type="CharacterBody2D" unique_id=459496420 groups=["enemies"]]
+collision_layer = 2
+collision_mask = 3
+motion_mode = 1
+script = ExtResource("1_bjbev")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=181025382]
+shape = SubResource("RectangleShape2D_l1gqu")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2029145584]
+modulate = Color(0.66595006, 0.20900002, 0.95, 1)
+texture_filter = 1
+scale = Vector2(4.5, 4.5)
+texture = ExtResource("2_xiecr")

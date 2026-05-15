@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://bhs8rrtrjpiyt"]
+
+[ext_resource type="Script" uid="uid://c2wx831rd4wek" path="res://Scripts/Entities/Player.cs" id="1_3kvya"]
+[ext_resource type="Script" uid="uid://daeelv6xrna5b" path="res://Scripts/Entities/SpellCaster.cs" id="2_agccv"]
+[ext_resource type="Texture2D" uid="uid://bj35f6k7iw14u" path="res://Assets/Sprites/Player.png" id="2_wmg1a"]
+[ext_resource type="Script" uid="uid://bq2v3ej6avsiq" path="res://Scripts/Entities/AbilityManager.cs" id="3_g4oe6"]
+[ext_resource type="PackedScene" uid="uid://4jf41esh0ijh" path="res://Scenes/Entities/Fireball.tscn" id="3_km4ui"]
+[ext_resource type="PackedScene" uid="uid://c2ogmcik846mm" path="res://Scenes/Entities/FrostRay.tscn" id="4_rsj4h"]
+[ext_resource type="PackedScene" uid="uid://qxo46jqxfpax" path="res://Scenes/Entities/ExplosionEffect.tscn" id="5_4kc40"]
+[ext_resource type="PackedScene" uid="uid://cghcap5da2m21" path="res://Scenes/Entities/RepulsionBurst.tscn" id="6_rsj4h"]
+[ext_resource type="PackedScene" uid="uid://dxysu8dp4ff8b" path="res://Scenes/Entities/Shockwave.tscn" id="7_4kc40"]
+[ext_resource type="PackedScene" uid="uid://ce5qs82ndkdps" path="res://Scenes/Entities/FireNova.tscn" id="7_wmg1a"]
+[ext_resource type="PackedScene" uid="uid://cyo37b1d37i6d" path="res://Scenes/Entities/Meteor.tscn" id="8_3m754"]
+[ext_resource type="PackedScene" uid="uid://dcdftxtkemsjn" path="res://Scenes/Entities/MeteorIndicator.tscn" id="9_46t5s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2tapu"]
+size = Vector2(32, 32)
+
+[node name="Player" type="CharacterBody2D" unique_id=417996818 groups=["player"]]
+collision_mask = 6
+motion_mode = 1
+script = ExtResource("1_3kvya")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=156905721]
+shape = SubResource("RectangleShape2D_2tapu")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=313276052]
+texture_filter = 1
+position = Vector2(-5.9604645e-08, -5.9604645e-08)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("2_wmg1a")
+
+[node name="SpellCaster" type="Node" parent="." unique_id=857088393]
+script = ExtResource("2_agccv")
+FireballScene = ExtResource("3_km4ui")
+FrostRayScene = ExtResource("4_rsj4h")
+ExplosionEffectScene = ExtResource("5_4kc40")
+RepulsionBurstScene = ExtResource("6_rsj4h")
+ShockwaveScene = ExtResource("7_4kc40")
+
+[node name="AbilityManager" type="Node" parent="." unique_id=1317871580]
+script = ExtResource("3_g4oe6")
+FireNovaScene = ExtResource("7_wmg1a")
+MeteorShowerScene = ExtResource("8_3m754")
+MeteorIndicatorScene = ExtResource("9_46t5s")

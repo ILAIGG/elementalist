@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://ceynpls5g6tfo"]
+
+[ext_resource type="Script" uid="uid://ckac23f3a6idl" path="res://Scripts/UI/UpgradeCard.cs" id="1_bh2l2"]
+
+[node name="UpgradeCard" type="PanelContainer" unique_id=1145939474]
+custom_minimum_size = Vector2(200, 300)
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_bh2l2")
+
+[node name="CardContent" type="VBoxContainer" parent="." unique_id=1407757178]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="UpgradeName" type="Label" parent="CardContent" unique_id=618304575]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Card Name"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="UpgradeType" type="Label" parent="CardContent" unique_id=461356491]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6666667, 0.6666667, 0.6666667, 1)
+text = "Upgrade Type"
+horizontal_alignment = 1
+
+[node name="UpgradeDescription" type="Label" parent="CardContent" unique_id=1391859365]
+layout_mode = 2
+text = "Text Description"
+horizontal_alignment = 1
+autowrap_mode = 2

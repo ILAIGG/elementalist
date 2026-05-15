@@ -1,0 +1,171 @@
+using System;
+using Godot;
+
+public partial class Player : CharacterBody2D
+{
+    //[Export] permite modificar el valor de una variable desde el inspector directamente sin tener que tocar el código
+
+    //Sprites
+    private Sprite2D _sprite;
+
+    //Dash
+    [Export] public float DashSpeed = 600f;
+    [Export] public float DashDuration = 0.15f; //Segundos que dura el dash
+    [Export] public float DashCooldown = 2f; //Segundos entre dashes
+
+    private bool _isDashing = false;
+    private float _dashTimer = 0f; //Tiempo restante del dash activo
+    private float _dashCooldownTimer = 0f; //tiempo restante del cooldown
+    private Vector2 _dashDirection; //Dirección del dash
+    public Vector2 LastMovementDirection { get; private set; } = Vector2.Down;
+
+    //Componentes
+    public PlayerStats Stats { get; private set; }
+    public SpellCaster SpellCaster { get; private set; }
+    public AbilityManager AbilityManager { get; private set; }
+    public HealthSystem Health { get; private set; }
+    public ExperienceSystem Experience { get; private set; }
+    public UpgradeSystem Upgrades { get; private set; }
+
+    public override void _Ready()
+    {
+        //Se inicializan los stats
+        Stats = new PlayerStats();
+
+        //Se obtienen los componentes nodo desde la escena
+        SpellCaster = GetNode<SpellCaster>("SpellCaster");
+        AbilityManager = GetNode<AbilityManager>("AbilityManager");
+
+        //Se inicializan los componentes con referencias al jugador y sus stats
+        SpellCaster.Initialize(this, Stats);
+        AbilityManager.Initialize(this, Stats);
+
+        _sprite = GetNode<Sprite2D>("Sprite2D");
+
+        //Sistemas "Puros"
+        Health = new HealthSystem(Stats.MaxHealth);
+        //Nos suscribimos al evento de muerte
+        Health.OnDeath += OnPlayerDeath;
+
+        Experience = new ExperienceSystem();
+        Experience.OnLevelUp += OnLevelUp;
+
+        Upgrades = new UpgradeSystem(this, Stats);
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        HandleDash((float)delta);
+        HandleMovement();
+        
+        SpellCaster.Process((float)delta);
+        AbilityManager.Process((float)delta);
+
+        //Regeneración de vida
+        if (Stats.HealthRegen > 0f && !Health.IsDead)
+            Health.Heal(Stats.HealthRegen * (float)delta);
+    }
+
+    private void HandleMovement()
+    {
+        //Si el jugador está dasheando, el movimiento normal no se aplica
+        if (_isDashing) return;
+
+        //Lee el input del teclado y lo convierte en una dirección. GetAxis devuelve -1, 0 o 1 según que teclas están siendo presionadas.
+        Vector2 direction = new(
+            Input.GetAxis("move_left", "move_right"), 
+            Input.GetAxis("move_up", "move_down")
+        );
+
+        //Si hay alguna dirección, se normaliza el vector, evitando que el jugador se mueva más rápido en diagonal.
+        if (direction != Vector2.Zero)
+        {
+            direction = direction.Normalized();
+            LastMovementDirection = direction; //guarda la última dirección
+
+            //Solo se actualiza FlipH si hay movimiento horizontal
+            if (direction.X != 0)
+                _sprite.FlipH = direction.X < 0;
+        }
+            
+        //Aplica la velocidad al CharacterBody2D
+        Velocity = direction * Stats.Speed;
+
+        //MoveAndSlide mueve al personaje y maneja las colisiones automáticamente (se "desliza" contra las paredes)
+        MoveAndSlide();
+    }
+
+    private void HandleDash(float delta)
+    {
+        //Se reduce el cooldown con el tiempo
+        if (_dashCooldownTimer > 0f)
+            _dashCooldownTimer -= delta;
+        
+        //Si el jugador está en medio de un dash
+        if (_isDashing)
+        {
+            _dashTimer -= delta;
+
+            //El mago se mueve en la dirección del dash
+            Velocity = _dashDirection * DashSpeed;
+            MoveAndSlide();
+
+            //Si el dash terminó, el jugador vuelve al estado normal
+            if (_dashTimer <= 0f)
+            {
+                _isDashing = false;
+
+                //Al terminar el dash, restaura la colisión
+                if (Stats.DashIsInvincible)
+                    SetCollisionLayerValue(1, true);
+            }
+            
+            return;
+        }
+
+        //Detecta si el jugador quiere dashear
+        if (Input.IsActionJustPressed("dash") && _dashCooldownTimer <= 0f)
+        {
+            StartDash();
+        }
+    }
+
+    private void StartDash()
+    {
+        //La dirección del dash es la dirección del movimiento actual
+        Vector2 direction = new (
+            Input.GetAxis("move_left", "move_right"),
+            Input.GetAxis("move_up", "move_down")
+        );
+
+        //Si el jugador no se está moviendo, se hace un dash hacia el último punto hacia donde miraba por defecto
+        if (direction == Vector2.Zero)
+            direction = LastMovementDirection;
+        
+        _dashDirection = direction.Normalized();
+        _isDashing = true;
+        _dashTimer = DashDuration;
+        _dashCooldownTimer = DashCooldown;
+
+        //Si tiene el upgrade, se desactiva la capa de colisión del jugador para que los enemigos no puedan hacerle daño durante el dash.
+        if (Stats.DashIsInvincible)
+            SetCollisionLayerValue(1, false);
+    }
+
+    //Método para cooldown
+    public float GetDashCooldownRemaining() => Mathf.Max(0f, _dashCooldownTimer);
+
+    private void OnLevelUp(int newLevel)
+    {
+        //Se busca la pantalla de upgrades y se muestra
+        UpgradeScreen upgradeScreen = GetTree().Root.FindChild("UpgradeScreen", true, false) as UpgradeScreen;
+        upgradeScreen?.ShowCard(Upgrades.GetUpgradeChoices());
+    }
+
+    private void OnPlayerDeath()
+    {
+        //Se busca la pantalla de Game Over y se la muestra
+        GameOver gameOver = GetTree().Root.FindChild("GameOver", true, false) as GameOver;
+        gameOver?.ShowGameOver();
+    }
+}
