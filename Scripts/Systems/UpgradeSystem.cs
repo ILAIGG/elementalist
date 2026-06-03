@@ -152,12 +152,12 @@ public class UpgradeSystem
         {
             Id = "stat_damage",
             Name = "Arcane Might",
-            GetDescription = (times) => "+10 Damage to ALL spells and abilities.",
+            GetDescription = (times) => "+6 Damage to ALL spells and abilities.",
             Type = UpgradeType.Stat,
             IsInfinite = true,
             Apply = (player, times) =>
             {
-                _stats.BonusDamage += 10f;
+                _stats.BonusDamage += 6f;
             }
         });
 
@@ -181,7 +181,7 @@ public class UpgradeSystem
         {
             Id = "dash_invincible",
             Name = "Shadow Dash",
-            GetDescription = (times) => "The mage is invincible during the dash.",
+            GetDescription = (times) => "The mage is invincible and passes through enemies during the dash.",
             Type = UpgradeType.Dash,
             IsInfinite = false,
             Apply = (player, times) =>
@@ -383,13 +383,13 @@ public class UpgradeSystem
         {
             Id = "repulsion_burst_damage",
             Name = "Arcane Repulsion",
-            GetDescription = (times) => $"+{10f * times} Repulsion Burst damage.",
+            GetDescription = (times) => $"+{3f * times} Repulsion Burst damage.This bonus scales up further every time you choose this upgrade card.",
             Type = UpgradeType.Spell,
             IsInfinite = true,
             Condition = (player) => _stats.HasRepulsionBurst,
             Apply = (player, times) =>
             {
-                _stats.BonusRepulsionBurstDamage += 10f * times;
+                _stats.BonusRepulsionBurstDamage += 3f * times;
             }
         });
 

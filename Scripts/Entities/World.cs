@@ -39,7 +39,7 @@ public partial class World : Node2D
         Player player = GetTree().GetFirstNodeInGroup("player") as Player;
         if (player != null)
             boss.GlobalPosition = player.GlobalPosition + new Vector2(700, 0);
-        
+
         //Se pausa el spawner cuando aparece el Boss
         EnemySpawner spawner = GetTree().Root.FindChild("EnemySpawner", true, false) as EnemySpawner;
         if (spawner != null)

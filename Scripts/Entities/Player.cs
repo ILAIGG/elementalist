@@ -17,6 +17,7 @@ public partial class Player : CharacterBody2D
     private float _dashTimer = 0f; //Tiempo restante del dash activo
     private float _dashCooldownTimer = 0f; //tiempo restante del cooldown
     private Vector2 _dashDirection; //Dirección del dash
+    private bool _needsCollisionRestoration = false; //Espera a que el jugador deje de solaparse con enemigos para restaurar la colisión
     public Vector2 LastMovementDirection { get; private set; } = Vector2.Down;
 
     //Componentes
@@ -57,9 +58,12 @@ public partial class Player : CharacterBody2D
     {
         HandleDash((float)delta);
         HandleMovement();
-        
+
         SpellCaster.Process((float)delta);
         AbilityManager.Process((float)delta);
+
+        if (_needsCollisionRestoration)
+            CheckCollisionRestoration();
 
         //Regeneración de vida
         if (Stats.HealthRegen > 0f && !Health.IsDead)
@@ -73,7 +77,7 @@ public partial class Player : CharacterBody2D
 
         //Lee el input del teclado y lo convierte en una dirección. GetAxis devuelve -1, 0 o 1 según que teclas están siendo presionadas.
         Vector2 direction = new(
-            Input.GetAxis("move_left", "move_right"), 
+            Input.GetAxis("move_left", "move_right"),
             Input.GetAxis("move_up", "move_down")
         );
 
@@ -87,7 +91,7 @@ public partial class Player : CharacterBody2D
             if (direction.X != 0)
                 _sprite.FlipH = direction.X < 0;
         }
-            
+
         //Aplica la velocidad al CharacterBody2D
         Velocity = direction * Stats.Speed;
 
@@ -100,7 +104,7 @@ public partial class Player : CharacterBody2D
         //Se reduce el cooldown con el tiempo
         if (_dashCooldownTimer > 0f)
             _dashCooldownTimer -= delta;
-        
+
         //Si el jugador está en medio de un dash
         if (_isDashing)
         {
@@ -115,11 +119,13 @@ public partial class Player : CharacterBody2D
             {
                 _isDashing = false;
 
-                //Al terminar el dash, restaura la colisión
+                //Al terminar el dash, marca que necesita restaurar la colisión
                 if (Stats.DashIsInvincible)
-                    SetCollisionLayerValue(1, true);
+                {
+                    _needsCollisionRestoration = true;
+                }
             }
-            
+
             return;
         }
 
@@ -133,7 +139,7 @@ public partial class Player : CharacterBody2D
     private void StartDash()
     {
         //La dirección del dash es la dirección del movimiento actual
-        Vector2 direction = new (
+        Vector2 direction = new(
             Input.GetAxis("move_left", "move_right"),
             Input.GetAxis("move_up", "move_down")
         );
@@ -141,7 +147,7 @@ public partial class Player : CharacterBody2D
         //Si el jugador no se está moviendo, se hace un dash hacia el último punto hacia donde miraba por defecto
         if (direction == Vector2.Zero)
             direction = LastMovementDirection;
-        
+
         _dashDirection = direction.Normalized();
         _isDashing = true;
         _dashTimer = DashDuration;
@@ -149,11 +155,40 @@ public partial class Player : CharacterBody2D
 
         //Si tiene el upgrade, se desactiva la capa de colisión del jugador para que los enemigos no puedan hacerle daño durante el dash.
         if (Stats.DashIsInvincible)
+        {
             SetCollisionLayerValue(1, false);
+            SetCollisionMaskValue(2, false); //Permite atravesar enemigos
+        }
     }
 
     //Método para cooldown
     public float GetDashCooldownRemaining() => Mathf.Max(0f, _dashCooldownTimer);
+
+    private void CheckCollisionRestoration()
+    {
+        //Verifica si el jugador sigue superpuesto con algún enemigo (radio aprox 85px)
+        bool isOverlapping = false;
+        var enemies = GetTree().GetNodesInGroup("enemies");
+        foreach (var node in enemies)
+        {
+            if (node is Node2D enemy)
+            {
+                if (GlobalPosition.DistanceTo(enemy.GlobalPosition) < 85f)
+                {
+                    isOverlapping = true;
+                    break;
+                }
+            }
+        }
+
+        //Si ya no está tocando a ningún enemigo, restaura la colisión
+        if (!isOverlapping)
+        {
+            SetCollisionLayerValue(1, true);
+            SetCollisionMaskValue(2, true);
+            _needsCollisionRestoration = false;
+        }
+    }
 
     private void OnLevelUp(int newLevel)
     {
