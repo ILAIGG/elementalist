@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://b22ly5jjwd034"]
+
+[ext_resource type="Script" uid="uid://biaq55o8h7djc" path="res://Scripts/UI/MapNode.cs" id="1_46u72"]
+
+[node name="MapNode" type="Node2D" unique_id=680037592]
+script = ExtResource("1_46u72")
+
+[node name="NodeButton" type="Button" parent="." unique_id=154064280]
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="NodeLabel" type="Label" parent="." unique_id=384642715]
+offset_right = 40.0
+offset_bottom = 23.0

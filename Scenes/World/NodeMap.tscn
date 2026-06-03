@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://b3dttt1c6fm8q"]
+
+[ext_resource type="Script" uid="uid://cs3atger3ywa" path="res://Scripts/UI/NodeMap.cs" id="1_v33mv"]
+
+[node name="NodeMap" type="Node2D" unique_id=91471255]
+script = ExtResource("1_v33mv")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1575490436]
+
+[node name="Paths" type="Node2D" parent="." unique_id=1285065306]
+
+[node name="Nodes" type="Node2D" parent="." unique_id=85516760]
+
+[node name="PopUp" type="Control" parent="." unique_id=651343874]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Panel" type="PanelContainer" parent="PopUp" unique_id=396904450]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Margin" type="MarginContainer" parent="PopUp/Panel" unique_id=1483623296]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Content" type="VBoxContainer" parent="PopUp/Panel/Margin" unique_id=1447206265]
+layout_mode = 2
+
+[node name="Header" type="HBoxContainer" parent="PopUp/Panel/Margin/Content" unique_id=1255085988]
+layout_mode = 2
+
+[node name="NodeNameLabel" type="Label" parent="PopUp/Panel/Margin/Content/Header" unique_id=1828533050]
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="PopUp/Panel/Margin/Content/Header" unique_id=582591932]
+layout_mode = 2
+text = "X"
+
+[node name="DifficultyLabel" type="Label" parent="PopUp/Panel/Margin/Content" unique_id=351256081]
+layout_mode = 2
+
+[node name="EnterButton" type="Button" parent="PopUp/Panel/Margin/Content" unique_id=1649344658]
+layout_mode = 2
+text = "Enter"
