@@ -10,6 +10,7 @@ public partial class SaveSlotScreen : Control
     private Button _backButton;
 
     private PackedScene _newGameDialog = GD.Load<PackedScene>("res://Scenes/UI/NewGameDialog.tscn");
+    private PackedScene _confirmDialog = GD.Load<PackedScene>("res://Scenes/UI/ConfirmDialog.tscn");
 
     public override void _Ready()
     {
@@ -88,8 +89,15 @@ public partial class SaveSlotScreen : Control
 
     private void OnDeletePressed(int slot)
     {
-        GD.Print($"Delete");
-        //Aquí se abrirá el diálogo de confirmación cuando se cree
+        ConfirmDialog dialog = _confirmDialog.Instantiate<ConfirmDialog>();
+        AddChild(dialog);
+        dialog.SetMessage($"delete \"{SaveSystem.LoadSlot(slot).Name}\"");
+
+        dialog.OnConfirmed += () =>
+        {
+            SaveSystem.DeleteSlot(slot);
+            RefreshSlots();
+        };
     }
 
     private void OnBackPressed()
