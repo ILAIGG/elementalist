@@ -51,9 +51,10 @@ offset_right = 20.5
 offset_bottom = 35.5
 grow_horizontal = 2
 grow_vertical = 2
-text = "Play"
+text = "Play Game"
 
-[node name="HowToPlayButton" type="Button" parent="." unique_id=1057560365]
+[node name="EndlessModeButton" type="Button" parent="." unique_id=1057560365]
+visible = false
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 1
 anchors_preset = 8
@@ -67,7 +68,7 @@ offset_right = 51.5
 offset_bottom = 95.5
 grow_horizontal = 2
 grow_vertical = 2
-text = "How To Play"
+text = "[???]"
 
 [node name="QuitButton" type="Button" parent="." unique_id=1681677319]
 layout_mode = 1

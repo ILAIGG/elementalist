@@ -2,24 +2,26 @@ using Godot;
 
 public partial class MainMenu : Control
 {
+    private Button _playButton;
+    private Button _endlessModeButton;
+    private Button _quitButton;
+
     public override void _Ready()
     {
-        GetNode<Button>("PlayButton").Pressed += OnPlayButtonPressed;
-        GetNode<Button>("HowToPlayButton").Pressed += OnHowToPlayButtonPressed;
-        GetNode<Button>("QuitButton").Pressed += OnQuitButtonPressed;
+        _playButton = GetNode<Button>("PlayButton");
+        _endlessModeButton = GetNode<Button>("EndlessModeButton");
+        _quitButton = GetNode<Button>("QuitButton");
+
+        _playButton.Pressed += OnPlayPressed;
+        _quitButton.Pressed += OnQuitPressed;
     }
 
-    private void OnPlayButtonPressed()
+    private void OnPlayPressed()
     {
-        GetTree().ChangeSceneToFile("res://Scenes/World/World.tscn");
+        GetTree().ChangeSceneToFile("res://Scenes/UI/SaveSlotScreen.tscn");
     }
 
-    private void OnHowToPlayButtonPressed()
-    {
-        GetTree().ChangeSceneToFile("res://Scenes/UI/HowToPlay.tscn");
-    }
-
-    private void OnQuitButtonPressed()
+    private void OnQuitPressed()
     {
         GetTree().Quit();
     }

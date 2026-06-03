@@ -1,0 +1,187 @@
+[gd_scene format=3 uid="uid://bdc11c7w1tyrb"]
+
+[ext_resource type="Script" uid="uid://6cghcqlj65lu" path="res://Scripts/UI/SaveSlotScreen.cs" id="1_kmhqd"]
+
+[node name="SaveSlotScreen" type="Control" unique_id=821270665]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kmhqd")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1058236000]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.050980393, 0.050980393, 0.101960786, 1)
+
+[node name="Title" type="Label" parent="." unique_id=1655337471]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -44.0
+offset_top = 50.0
+offset_right = 44.0
+offset_bottom = 73.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.7529412, 0.5176471, 0.9882353, 1)
+theme_override_font_sizes/font_size = 32
+text = "Start Game"
+
+[node name="SlotsContainer" type="VBoxContainer" parent="." unique_id=1878047263]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -179.5
+offset_right = 20.0
+offset_bottom = 179.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Slot0" type="PanelContainer" parent="SlotsContainer" unique_id=353256441]
+layout_mode = 2
+
+[node name="SlotMargin0" type="MarginContainer" parent="SlotsContainer/Slot0" unique_id=2007044924]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="SlotContent0" type="HBoxContainer" parent="SlotsContainer/Slot0/SlotMargin0" unique_id=632935154]
+layout_mode = 2
+
+[node name="SlotInfo0" type="VBoxContainer" parent="SlotsContainer/Slot0/SlotMargin0/SlotContent0" unique_id=34108278]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+
+[node name="SlotNumber0" type="Label" parent="SlotsContainer/Slot0/SlotMargin0/SlotContent0/SlotInfo0" unique_id=168527244]
+layout_mode = 2
+text = "0"
+
+[node name="SlotName0" type="Label" parent="SlotsContainer/Slot0/SlotMargin0/SlotContent0/SlotInfo0" unique_id=2112818742]
+layout_mode = 2
+text = "[New Game 0]"
+
+[node name="SlotDetails0" type="Label" parent="SlotsContainer/Slot0/SlotMargin0/SlotContent0/SlotInfo0" unique_id=1717820657]
+layout_mode = 2
+text = "Playtime: 00h 00m 00s"
+
+[node name="SlotButtons0" type="VBoxContainer" parent="SlotsContainer/Slot0/SlotMargin0/SlotContent0" unique_id=239465541]
+custom_minimum_size = Vector2(93, 101)
+layout_mode = 2
+
+[node name="ContinueButton0" type="Button" parent="SlotsContainer/Slot0/SlotMargin0/SlotContent0/SlotButtons0" unique_id=994411233]
+layout_mode = 2
+text = "Continue"
+
+[node name="NewGameButton0" type="Button" parent="SlotsContainer/Slot0/SlotMargin0/SlotContent0/SlotButtons0" unique_id=1263025640]
+layout_mode = 2
+text = "New Game"
+
+[node name="DeleteButton0" type="Button" parent="SlotsContainer/Slot0/SlotMargin0/SlotContent0/SlotButtons0" unique_id=1157315389]
+layout_mode = 2
+text = "Delete"
+
+[node name="Slot1" type="PanelContainer" parent="SlotsContainer" unique_id=750407252]
+layout_mode = 2
+
+[node name="SlotMargin1" type="MarginContainer" parent="SlotsContainer/Slot1" unique_id=425664331]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="SlotContent1" type="HBoxContainer" parent="SlotsContainer/Slot1/SlotMargin1" unique_id=206003903]
+layout_mode = 2
+
+[node name="SlotInfo1" type="VBoxContainer" parent="SlotsContainer/Slot1/SlotMargin1/SlotContent1" unique_id=952460401]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+
+[node name="SlotNumber1" type="Label" parent="SlotsContainer/Slot1/SlotMargin1/SlotContent1/SlotInfo1" unique_id=1512788939]
+layout_mode = 2
+text = "1"
+
+[node name="SlotName1" type="Label" parent="SlotsContainer/Slot1/SlotMargin1/SlotContent1/SlotInfo1" unique_id=1409033096]
+layout_mode = 2
+text = "[New Game 1]"
+
+[node name="SlotDetails1" type="Label" parent="SlotsContainer/Slot1/SlotMargin1/SlotContent1/SlotInfo1" unique_id=1436621364]
+layout_mode = 2
+text = "Playtime: 00h 00m 00s"
+
+[node name="SlotButtons1" type="VBoxContainer" parent="SlotsContainer/Slot1/SlotMargin1/SlotContent1" unique_id=1538172217]
+layout_mode = 2
+
+[node name="ContinueButton1" type="Button" parent="SlotsContainer/Slot1/SlotMargin1/SlotContent1/SlotButtons1" unique_id=406845685]
+layout_mode = 2
+text = "Continue"
+
+[node name="NewGameButton1" type="Button" parent="SlotsContainer/Slot1/SlotMargin1/SlotContent1/SlotButtons1" unique_id=127910870]
+layout_mode = 2
+text = "New Game"
+
+[node name="DeleteButton1" type="Button" parent="SlotsContainer/Slot1/SlotMargin1/SlotContent1/SlotButtons1" unique_id=375932920]
+layout_mode = 2
+text = "Delete"
+
+[node name="Slot2" type="PanelContainer" parent="SlotsContainer" unique_id=2001112379]
+layout_mode = 2
+
+[node name="SlotMargin2" type="MarginContainer" parent="SlotsContainer/Slot2" unique_id=2021596592]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="SlotContent2" type="HBoxContainer" parent="SlotsContainer/Slot2/SlotMargin2" unique_id=1746084496]
+layout_mode = 2
+
+[node name="SlotInfo2" type="VBoxContainer" parent="SlotsContainer/Slot2/SlotMargin2/SlotContent2" unique_id=734577272]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+
+[node name="SlotNumber2" type="Label" parent="SlotsContainer/Slot2/SlotMargin2/SlotContent2/SlotInfo2" unique_id=1111674828]
+layout_mode = 2
+text = "2"
+
+[node name="SlotName2" type="Label" parent="SlotsContainer/Slot2/SlotMargin2/SlotContent2/SlotInfo2" unique_id=1542502948]
+layout_mode = 2
+text = "[New Game 2]"
+
+[node name="SlotDetails2" type="Label" parent="SlotsContainer/Slot2/SlotMargin2/SlotContent2/SlotInfo2" unique_id=1327749726]
+layout_mode = 2
+text = "Playtime: 00h 00m 00s"
+
+[node name="SlotButtons2" type="VBoxContainer" parent="SlotsContainer/Slot2/SlotMargin2/SlotContent2" unique_id=1770512972]
+layout_mode = 2
+
+[node name="ContinueButton2" type="Button" parent="SlotsContainer/Slot2/SlotMargin2/SlotContent2/SlotButtons2" unique_id=1321505106]
+layout_mode = 2
+text = "Continue"
+
+[node name="NewGameButton2" type="Button" parent="SlotsContainer/Slot2/SlotMargin2/SlotContent2/SlotButtons2" unique_id=1179802685]
+layout_mode = 2
+text = "New Game"
+
+[node name="DeleteButton2" type="Button" parent="SlotsContainer/Slot2/SlotMargin2/SlotContent2/SlotButtons2" unique_id=1404549094]
+layout_mode = 2
+text = "Delete"
+
+[node name="BackButton" type="Button" parent="SlotsContainer" unique_id=467565587]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Back"
