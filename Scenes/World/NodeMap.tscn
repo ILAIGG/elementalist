@@ -1,6 +1,37 @@
 [gd_scene format=3 uid="uid://b3dttt1c6fm8q"]
 
 [ext_resource type="Script" uid="uid://cs3atger3ywa" path="res://Scripts/UI/NodeMap.cs" id="1_v33mv"]
+[ext_resource type="PackedScene" uid="uid://b22ly5jjwd034" path="res://Scenes/UI/MapNode.tscn" id="2_mgjav"]
+
+[sub_resource type="Curve2D" id="Curve2D_mgjav"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 230, 0, 0, 0, 0, 0, 118)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_ew0w5"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -8, 111, 0, 0, 0, 0, -48, 63, 0, 0, 0, 0, -119, 42)
+}
+point_count = 3
+
+[sub_resource type="Curve2D" id="Curve2D_drf1a"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 4, 120, 0, 0, 0, 0, 75, 141, 0, 0, 0, 0, 150, 112)
+}
+point_count = 3
+
+[sub_resource type="Curve2D" id="Curve2D_hft32"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -125, 21, 0, 0, 0, 0, -133, -8, 0, 0, 0, 0, -152, -23, 0, 0, 0, 0, -198, -55)
+}
+point_count = 4
+
+[sub_resource type="Curve2D" id="Curve2D_jwkku"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 172, 107, 0, 0, 0, 0, 212, 93, 0, 0, 0, 0, 240, 97, 0, 0, 0, 0, 262, 91, 0, 0, 0, 0, 272, 74, 0, 0, 0, 0, 279, 30)
+}
+point_count = 6
 
 [node name="NodeMap" type="Node2D" unique_id=91471255]
 script = ExtResource("1_v33mv")
@@ -9,7 +40,59 @@ script = ExtResource("1_v33mv")
 
 [node name="Paths" type="Node2D" parent="." unique_id=1285065306]
 
+[node name="Path_0_1" type="Path2D" parent="Paths" unique_id=2022032031]
+curve = SubResource("Curve2D_mgjav")
+
+[node name="Path_1_2" type="Path2D" parent="Paths" unique_id=689382103]
+curve = SubResource("Curve2D_ew0w5")
+
+[node name="Path_1_3" type="Path2D" parent="Paths" unique_id=1154016792]
+curve = SubResource("Curve2D_drf1a")
+
+[node name="Path_2_4" type="Path2D" parent="Paths" unique_id=960594167]
+curve = SubResource("Curve2D_hft32")
+
+[node name="Path_3_5" type="Path2D" parent="Paths" unique_id=1372719140]
+curve = SubResource("Curve2D_jwkku")
+
 [node name="Nodes" type="Node2D" parent="." unique_id=85516760]
+
+[node name="MapNode0" parent="Nodes" unique_id=680037592 instance=ExtResource("2_mgjav")]
+position = Vector2(0, 230)
+NodeName = "Tutorial 0.0"
+ConnectedNodeIds = PackedInt32Array(1)
+
+[node name="MapNode1" parent="Nodes" unique_id=612191859 instance=ExtResource("2_mgjav")]
+position = Vector2(-2, 117)
+NodeName = "Square 1.0"
+NodeId = 1
+ConnectedNodeIds = PackedInt32Array(2, 3)
+
+[node name="MapNode2" parent="Nodes" unique_id=984605447 instance=ExtResource("2_mgjav")]
+position = Vector2(-123, 35)
+NodeName = "City 2.0"
+DifficultyMultiplier = 1.2
+NodeId = 2
+ConnectedNodeIds = PackedInt32Array(4)
+
+[node name="MapNode3" parent="Nodes" unique_id=563671525 instance=ExtResource("2_mgjav")]
+position = Vector2(158, 108)
+NodeName = "City 2.2"
+DifficultyMultiplier = 1.4
+NodeId = 3
+ConnectedNodeIds = PackedInt32Array(5)
+
+[node name="MapNode4" parent="Nodes" unique_id=1150889481 instance=ExtResource("2_mgjav")]
+position = Vector2(-209, -74)
+NodeName = "City 2.1"
+DifficultyMultiplier = 1.6
+NodeId = 4
+
+[node name="MapNode5" parent="Nodes" unique_id=1545426148 instance=ExtResource("2_mgjav")]
+position = Vector2(279, 30)
+NodeName = "Forest 3.0"
+DifficultyMultiplier = 1.8
+NodeId = 5
 
 [node name="PopUp" type="Control" parent="." unique_id=651343874]
 visible = false

@@ -3,6 +3,7 @@ using Godot;
 public partial class NodeMap : Node2D
 {
     private Node2D _nodesContainer;
+    private Node2D _pathsContainer;
     private Control _popUp;
     private Label _nodeNameLabel;
     private Label _difficultyLabel;
@@ -23,6 +24,9 @@ public partial class NodeMap : Node2D
         _nodesContainer = GetNode<Node2D>("Nodes");
         _camera = GetNode<Camera2D>("Camera2D");
         _popUp = GetNode<Control>("PopUp");
+
+        _pathsContainer = GetNode<Node2D>("Paths");
+        DrawPaths();
 
         string popUpPath = "PopUp/Panel/Margin/Content";
         _nodeNameLabel = GetNode<Label>($"{popUpPath}/Header/NodeNameLabel");
@@ -94,5 +98,35 @@ public partial class NodeMap : Node2D
     {
         _popUp.Visible = false;
         _selectedNode = null;
+    }
+
+    private void DrawPaths()
+    {
+        Color pathColor = new Color(0.76f, 0.60f, 0.42f); // Marrón claro estilo tierra
+        int pathWidth = 6;
+
+        foreach (Node child in _pathsContainer.GetChildren())
+        {
+            if (child is Path2D path2D)
+            {
+                Line2D line = new Line2D();
+                line.DefaultColor = pathColor;
+                line.Width = pathWidth;
+
+                //SampleBaked recorre la curva completa uniformemente
+                Curve2D curve = path2D.Curve;
+                float totalLength = curve.GetBakedLength();
+                int sampleCount = 50;
+
+                for (int i = 0; i <= sampleCount; i++)
+                {
+                    float distance = (float)i / sampleCount * totalLength;
+                    Vector2 point = curve.SampleBaked(distance);
+                    line.AddPoint(point + path2D.Position);
+                }
+
+                _pathsContainer.AddChild(line);
+            }
+        }
     }
 }

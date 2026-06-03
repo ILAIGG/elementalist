@@ -2,13 +2,74 @@
 
 [ext_resource type="Script" uid="uid://biaq55o8h7djc" path="res://Scripts/UI/MapNode.cs" id="1_46u72"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_46u72"]
+bg_color = Color(0.6696688, 0.55329186, 0.16124421, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.19181955, 0.14465731, 0.01772706, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uy357"]
+bg_color = Color(0.3251687, 0.2640954, 0.058298133, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.19181955, 0.14465731, 0.01772706, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gjx71"]
+bg_color = Color(0.5025914, 0.40966222, 0.10870566, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.19181955, 0.14465731, 0.01772706, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
 [node name="MapNode" type="Node2D" unique_id=680037592]
 script = ExtResource("1_46u72")
 
 [node name="NodeButton" type="Button" parent="." unique_id=154064280]
-offset_right = 8.0
-offset_bottom = 8.0
+custom_minimum_size = Vector2(50, 50)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_46u72")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_uy357")
+theme_override_styles/hover = SubResource("StyleBoxFlat_gjx71")
 
 [node name="NodeLabel" type="Label" parent="." unique_id=384642715]
-offset_right = 40.0
-offset_bottom = 23.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = 28.5
+offset_right = 20.0
+offset_bottom = 51.5
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
