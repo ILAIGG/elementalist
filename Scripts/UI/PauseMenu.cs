@@ -6,6 +6,8 @@ public partial class PauseMenu : Control
     private Button _returnToMapButton;
     private Button _mainMenuButton;
 
+    private PackedScene _confirmDialog = GD.Load<PackedScene>("res://Scenes/UI/ConfirmDialog.tscn");
+
     public override void _Ready()
     {
         _resumeButton = GetNode<Button>("Panel/Margin/Content/ResumeButton");
@@ -31,13 +33,27 @@ public partial class PauseMenu : Control
 
     private void OnReturnToMapPressed()
     {
-        GetTree().Paused = false;
-        GetTree().ChangeSceneToFile("res://Scenes/World/NodeMap.tscn");
+        ConfirmDialog dialog = _confirmDialog.Instantiate<ConfirmDialog>();
+        AddChild(dialog);
+        dialog.SetMessage("return to the map? Your progress will be lost");
+
+        dialog.OnConfirmed += () =>
+        {
+            GetTree().Paused = false;
+            GetTree().ChangeSceneToFile("res://Scenes/World/NodeMap.tscn");
+        };
     }
 
     private void OnMainMenuPressed()
     {
-        GetTree().Paused = false;
-        GetTree().ChangeSceneToFile("res://Scenes/UI/MainMenu.tscn");
+        ConfirmDialog dialog = _confirmDialog.Instantiate<ConfirmDialog>();
+        AddChild(dialog);
+        dialog.SetMessage("return to the main menu? Your progress will be lost");
+
+        dialog.OnConfirmed += () =>
+        {
+            GetTree().Paused = false;
+            GetTree().ChangeSceneToFile("res://Scenes/UI/MainMenu.tscn");
+        };
     }
 }
