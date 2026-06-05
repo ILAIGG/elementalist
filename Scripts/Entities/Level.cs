@@ -11,6 +11,9 @@ public partial class Level : Node2D
     private float _gameTimer = 0f;
     private bool _bossSpawned = false;
 
+    private PackedScene _pauseMenuScene = GD.Load<PackedScene>("res://Scenes/UI/PauseMenu.tscn");
+    private bool _isPaused = false;
+
     public override void _Ready()
     {
         DamageNumberSystem.Initialize(DamageNumberScene);
@@ -50,5 +53,22 @@ public partial class Level : Node2D
     {
         Victory victory = GetTree().Root.FindChild("Victory", true, false) as Victory;
         victory?.ShowVictory();
+    }
+
+    public override void _Input(InputEvent @event)
+    {
+        if (@event.IsActionPressed("ui_cancel") && !_isPaused)
+        {
+            _isPaused = true;
+            GetTree().Paused = true;
+
+            PauseMenu pauseMenu = _pauseMenuScene.Instantiate<PauseMenu>();
+
+            //Lo agrega al CanvasLayer de UI para que se dibuje encima de todo
+            GetNode<CanvasLayer>("UI").AddChild(pauseMenu);
+
+            //Cuando el PauseMenu se destruya, resetea _isPaused
+            pauseMenu.TreeExited += () => _isPaused = false;
+        }
     }
 }
