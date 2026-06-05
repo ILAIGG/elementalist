@@ -70,8 +70,8 @@ public partial class SaveSlotScreen : Control
 
     private void OnContinuePressed(int slot)
     {
-        GD.Print($"Continue");
-        //Aquí se cargará la partida cuando se haga el mapa de nodos
+        GameManager.Instance.LoadGame(slot);
+        GetTree().ChangeSceneToFile("res://Scenes/World/NodeMap.tscn");
     }
 
     private void OnNewGamePressed(int slot)
@@ -81,9 +81,8 @@ public partial class SaveSlotScreen : Control
 
         dialog.OnConfirmed += (string saveName) =>
         {
-            SaveData newData = new SaveData { Name = saveName };
-            SaveSystem.SaveSlot(slot, newData);
-            RefreshSlots();
+            GameManager.Instance.NewGame(slot, saveName);
+            GetTree().ChangeSceneToFile("res://Scenes/World/NodeMap.tscn");
         };
     }
 

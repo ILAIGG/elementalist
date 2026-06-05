@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://cnlhsq5hjasy"]
+
+[ext_resource type="Script" uid="uid://bdv18ph1aii2u" path="res://Scripts/UI/PauseMenu.cs" id="1_eod5q"]
+
+[node name="PauseMenu" type="Control" unique_id=1331194945]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_eod5q")
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=1025568491]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.8)
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=532402363]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -29.5
+offset_right = 20.0
+offset_bottom = 29.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="Panel" unique_id=90029589]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Content" type="VBoxContainer" parent="Panel/Margin" unique_id=1040721870]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Panel/Margin/Content" unique_id=812202272]
+layout_mode = 2
+text = "Paused"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Panel/Margin/Content" unique_id=1225423304]
+layout_mode = 2
+
+[node name="ResumeButton" type="Button" parent="Panel/Margin/Content" unique_id=1439892396]
+layout_mode = 2
+text = "Resume"
+
+[node name="ReturnToMapButton" type="Button" parent="Panel/Margin/Content" unique_id=226878907]
+layout_mode = 2
+text = "Return to Map"
+
+[node name="MainMenuButton" type="Button" parent="Panel/Margin/Content" unique_id=1165395998]
+layout_mode = 2
+text = "Main Menu"

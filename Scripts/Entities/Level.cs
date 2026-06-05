@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class World : Node2D
+public partial class Level : Node2D
 {
     [Export] public PackedScene DamageNumberScene { get; set; }
 

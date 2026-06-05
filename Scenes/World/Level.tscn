@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://tqvyqw8dl6y0"]
+
+[ext_resource type="Script" uid="uid://dix04qd22kpw7" path="res://Scripts/Entities/Level.cs" id="1_7clbi"]
+[ext_resource type="PackedScene" uid="uid://bth3wwe172qnu" path="res://Scenes/Entities/DamageNumber.tscn" id="2_p3yta"]
+[ext_resource type="PackedScene" uid="uid://b41k10rumb8le" path="res://Scenes/Entities/Boss.tscn" id="3_c0wbg"]
+[ext_resource type="Script" uid="uid://d1h6xn1rvwjcq" path="res://Scripts/Entities/Background.cs" id="4_u2ioh"]
+[ext_resource type="PackedScene" uid="uid://4ktcx0v2mc1x" path="res://Scenes/World/WorldBounds.tscn" id="5_hencd"]
+[ext_resource type="Script" uid="uid://dnqi7x31tikbu" path="res://Scripts/Systems/EnemySpawner.cs" id="6_lg6u0"]
+[ext_resource type="PackedScene" uid="uid://bmsfw8siu6wpu" path="res://Scenes/Entities/Enemy.tscn" id="7_ijlj7"]
+[ext_resource type="PackedScene" uid="uid://bhs8rrtrjpiyt" path="res://Scenes/Entities/Player.tscn" id="8_dq7cm"]
+[ext_resource type="PackedScene" uid="uid://bjo40rn4j6iqb" path="res://Scenes/UI/HUD.tscn" id="9_o0mui"]
+[ext_resource type="PackedScene" uid="uid://co8afyiwlwo14" path="res://Scenes/UI/GameOver.tscn" id="10_dco46"]
+[ext_resource type="PackedScene" uid="uid://b73wajj7pvyso" path="res://Scenes/UI/UpgradeScreen.tscn" id="11_2l5nb"]
+[ext_resource type="PackedScene" uid="uid://dluvqrhtsjygh" path="res://Scenes/UI/Victory.tscn" id="12_i00xf"]
+
+[node name="Level" type="Node2D" unique_id=1536102581]
+script = ExtResource("1_7clbi")
+DamageNumberScene = ExtResource("2_p3yta")
+BossScene = ExtResource("3_c0wbg")
+
+[node name="Background" type="Node2D" parent="." unique_id=744452641]
+script = ExtResource("4_u2ioh")
+
+[node name="WorldBounds" parent="." unique_id=2046790191 instance=ExtResource("5_hencd")]
+collision_layer = 8
+
+[node name="Projectiles" type="Node2D" parent="." unique_id=1954467565]
+
+[node name="Enemies" type="Node2D" parent="." unique_id=98136928]
+
+[node name="EnemySpawner" type="Node" parent="." unique_id=71016853]
+script = ExtResource("6_lg6u0")
+EnemyScene = ExtResource("7_ijlj7")
+SpawnRadius = 800.0
+
+[node name="Player" parent="." unique_id=417996818 instance=ExtResource("8_dq7cm")]
+collision_mask = 14
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1627368884]
+
+[node name="HUD" parent="." unique_id=1652673588 instance=ExtResource("9_o0mui")]
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1257800634]
+
+[node name="GameOver" parent="UI" unique_id=90216153 instance=ExtResource("10_dco46")]
+process_mode = 3
+
+[node name="UpgradeScreen" parent="UI" unique_id=246309593 instance=ExtResource("11_2l5nb")]
+process_mode = 3
+
+[node name="Victory" parent="UI" unique_id=1471975588 instance=ExtResource("12_i00xf")]
+process_mode = 3

@@ -38,6 +38,18 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ikf2l"]
+bg_color = Color(0.21050578, 0.16904294, 0.023589771, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.10583312, 0.076972224, 0.00978784, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
 [node name="MapNode" type="Node2D" unique_id=680037592]
 script = ExtResource("1_46u72")
 
@@ -59,6 +71,7 @@ size_flags_vertical = 4
 theme_override_styles/normal = SubResource("StyleBoxFlat_46u72")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_uy357")
 theme_override_styles/hover = SubResource("StyleBoxFlat_gjx71")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ikf2l")
 
 [node name="NodeLabel" type="Label" parent="." unique_id=384642715]
 anchors_preset = 8

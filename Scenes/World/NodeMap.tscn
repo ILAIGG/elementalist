@@ -2,6 +2,12 @@
 
 [ext_resource type="Script" uid="uid://cs3atger3ywa" path="res://Scripts/UI/NodeMap.cs" id="1_v33mv"]
 [ext_resource type="PackedScene" uid="uid://b22ly5jjwd034" path="res://Scenes/UI/MapNode.tscn" id="2_mgjav"]
+[ext_resource type="PackedScene" uid="uid://bel41tib81pne" path="res://Scenes/World/Level_0_0.tscn" id="3_e3h8j"]
+[ext_resource type="PackedScene" uid="uid://b35cyshjwd62y" path="res://Scenes/World/Level_1_0.tscn" id="4_xbq6r"]
+[ext_resource type="PackedScene" uid="uid://bf34jykfrywii" path="res://Scenes/World/Level_2_0.tscn" id="5_d7720"]
+[ext_resource type="PackedScene" uid="uid://d6akfy6b0rfu" path="res://Scenes/World/Level_2_2.tscn" id="6_xr7py"]
+[ext_resource type="PackedScene" uid="uid://cavjju3o0dqmo" path="res://Scenes/World/Level_2_1.tscn" id="7_qhs27"]
+[ext_resource type="PackedScene" uid="uid://d0vlq6kb87dv0" path="res://Scenes/World/Level_3_0.tscn" id="8_24bpp"]
 
 [sub_resource type="Curve2D" id="Curve2D_mgjav"]
 _data = {
@@ -60,11 +66,13 @@ curve = SubResource("Curve2D_jwkku")
 [node name="MapNode0" parent="Nodes" unique_id=680037592 instance=ExtResource("2_mgjav")]
 position = Vector2(0, 230)
 NodeName = "Tutorial 0.0"
+LevelScene = ExtResource("3_e3h8j")
 ConnectedNodeIds = PackedInt32Array(1)
 
 [node name="MapNode1" parent="Nodes" unique_id=612191859 instance=ExtResource("2_mgjav")]
 position = Vector2(-2, 117)
 NodeName = "Square 1.0"
+LevelScene = ExtResource("4_xbq6r")
 NodeId = 1
 ConnectedNodeIds = PackedInt32Array(2, 3)
 
@@ -72,6 +80,7 @@ ConnectedNodeIds = PackedInt32Array(2, 3)
 position = Vector2(-123, 35)
 NodeName = "City 2.0"
 DifficultyMultiplier = 1.2
+LevelScene = ExtResource("5_d7720")
 NodeId = 2
 ConnectedNodeIds = PackedInt32Array(4)
 
@@ -79,6 +88,7 @@ ConnectedNodeIds = PackedInt32Array(4)
 position = Vector2(158, 108)
 NodeName = "City 2.2"
 DifficultyMultiplier = 1.4
+LevelScene = ExtResource("6_xr7py")
 NodeId = 3
 ConnectedNodeIds = PackedInt32Array(5)
 
@@ -86,12 +96,14 @@ ConnectedNodeIds = PackedInt32Array(5)
 position = Vector2(-209, -74)
 NodeName = "City 2.1"
 DifficultyMultiplier = 1.6
+LevelScene = ExtResource("7_qhs27")
 NodeId = 4
 
 [node name="MapNode5" parent="Nodes" unique_id=1545426148 instance=ExtResource("2_mgjav")]
 position = Vector2(279, 30)
 NodeName = "Forest 3.0"
 DifficultyMultiplier = 1.8
+LevelScene = ExtResource("8_24bpp")
 NodeId = 5
 
 [node name="PopUp" type="Control" parent="." unique_id=651343874]

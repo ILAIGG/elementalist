@@ -41,8 +41,11 @@ public partial class NodeMap : Node2D
         foreach (Node child in _nodesContainer.GetChildren())
         {
             if (child is MapNode mapNode)
+            {
                 mapNode.OnNodeClicked += OnNodeClicked;
+            }
         }
+        RefreshNodeStates();
 
         _popUp.Visible = false;
     }
@@ -90,8 +93,11 @@ public partial class NodeMap : Node2D
     private void OnEnterPressed()
     {
         if (_selectedNode == null || _selectedNode.LevelScene == null) return;
-        //Aquí se cargará la escena del nivel cuando se conecte con el sistema de guardado
-        GD.Print($"Entrando al nodo: {_selectedNode.NodeName}");
+
+        // Guardamos qué nodo está activo para cuando el jugador lo complete
+        GameManager.Instance.ActiveNodeId = _selectedNode.NodeId;
+
+        GetTree().ChangeSceneToPacked(_selectedNode.LevelScene);
     }
 
     private void OnClosePressed()
@@ -126,6 +132,44 @@ public partial class NodeMap : Node2D
                 }
 
                 _pathsContainer.AddChild(line);
+            }
+        }
+    }
+
+    private void RefreshNodeStates()
+    {
+        foreach (Node child in _nodesContainer.GetChildren())
+        {
+            if (child is MapNode mapNode)
+            {
+                //El nodo 0 (tutorial) siempre está desbloqueado
+                if (mapNode.NodeId == 0)
+                {
+                    mapNode.SetUnlocked(true);
+                    continue;
+                }
+
+                //Un nodo se desbloquea si al menos uno de sus nodos prerequisito está completado — buscamos qué nodos apuntan a este nodo
+                bool unlocked = false;
+                foreach (Node other in _nodesContainer.GetChildren())
+                {
+                    if (other is MapNode otherNode)
+                    {
+                        foreach (int connectedId in otherNode.ConnectedNodeIds)
+                        {
+                            if (connectedId == mapNode.NodeId &&
+                                GameManager.Instance.IsNodeCompleted(otherNode.NodeId))
+                            {
+                                unlocked = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (unlocked) break;
+                }
+
+                mapNode.SetUnlocked(unlocked);
             }
         }
     }
