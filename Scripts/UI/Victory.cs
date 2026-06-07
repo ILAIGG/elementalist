@@ -2,10 +2,13 @@ using Godot;
 
 public partial class Victory : Control
 {
+    private Button _returnToMapButton;
+
     public override void _Ready()
     {
         Visible = false;
-        GetNode<Button>("MenuButton").Pressed += OnMenuButtonPressed;
+        _returnToMapButton = GetNode<Button>("ReturnToMapButton");
+        _returnToMapButton.Pressed += OnReturnToMapPressed;
     }
 
     public void ShowVictory()
@@ -14,9 +17,9 @@ public partial class Victory : Control
         GetTree().Paused = true;
     }
 
-    private void OnMenuButtonPressed()
+    private void OnReturnToMapPressed()
     {
         GetTree().Paused = false;
-        GetTree().ChangeSceneToFile("res://Scenes/UI/MainMenu.tscn");
+        GetTree().ChangeSceneToFile("res://Scenes/World/NodeMap.tscn");
     }
 }

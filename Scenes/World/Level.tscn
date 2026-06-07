@@ -8,8 +8,9 @@
 [ext_resource type="Script" uid="uid://dnqi7x31tikbu" path="res://Scripts/Systems/EnemySpawner.cs" id="6_lg6u0"]
 [ext_resource type="PackedScene" uid="uid://bmsfw8siu6wpu" path="res://Scenes/Entities/Enemy.tscn" id="7_ijlj7"]
 [ext_resource type="PackedScene" uid="uid://bhs8rrtrjpiyt" path="res://Scenes/Entities/Player.tscn" id="8_dq7cm"]
+[ext_resource type="Script" uid="uid://ep3hviiql5it" path="res://Scripts/Systems/KillBossCondition.cs" id="8_p3yta"]
 [ext_resource type="PackedScene" uid="uid://bjo40rn4j6iqb" path="res://Scenes/UI/HUD.tscn" id="9_o0mui"]
-[ext_resource type="PackedScene" uid="uid://co8afyiwlwo14" path="res://Scenes/UI/GameOver.tscn" id="10_dco46"]
+[ext_resource type="PackedScene" uid="uid://co8afyiwlwo14" path="res://Scenes/UI/Defeat.tscn" id="10_dco46"]
 [ext_resource type="PackedScene" uid="uid://b73wajj7pvyso" path="res://Scenes/UI/UpgradeScreen.tscn" id="11_2l5nb"]
 [ext_resource type="PackedScene" uid="uid://dluvqrhtsjygh" path="res://Scenes/UI/Victory.tscn" id="12_i00xf"]
 
@@ -33,6 +34,9 @@ script = ExtResource("6_lg6u0")
 EnemyScene = ExtResource("7_ijlj7")
 SpawnRadius = 800.0
 
+[node name="KillBossCondition" type="Node" parent="." unique_id=939733064]
+script = ExtResource("8_p3yta")
+
 [node name="Player" parent="." unique_id=417996818 instance=ExtResource("8_dq7cm")]
 collision_mask = 14
 
@@ -42,7 +46,7 @@ collision_mask = 14
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1257800634]
 
-[node name="GameOver" parent="UI" unique_id=90216153 instance=ExtResource("10_dco46")]
+[node name="Defeat" parent="UI" unique_id=90216153 instance=ExtResource("10_dco46")]
 process_mode = 3
 
 [node name="UpgradeScreen" parent="UI" unique_id=246309593 instance=ExtResource("11_2l5nb")]

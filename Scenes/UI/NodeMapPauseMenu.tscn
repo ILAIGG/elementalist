@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://b58kq7mmc2q8j"]
+
+[ext_resource type="Script" uid="uid://rabobtyurxvk" path="res://Scripts/UI/NodeMapPauseMenu.cs" id="1_qsdts"]
+
+[node name="NodeMapPauseMenu" type="Control" unique_id=1948099660]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qsdts")
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=1539725308]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.8)
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=1132161099]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.5
+offset_top = -23.5
+offset_right = 28.5
+offset_bottom = 23.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="Panel" unique_id=204386569]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Content" type="VBoxContainer" parent="Panel/Margin" unique_id=1709211775]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Panel/Margin/Content" unique_id=871242936]
+layout_mode = 2
+text = "Paused"
+horizontal_alignment = 1
+
+[node name="ResumeButton" type="Button" parent="Panel/Margin/Content" unique_id=70512813]
+layout_mode = 2
+text = "Resume"
+
+[node name="SaveAndQuitButton" type="Button" parent="Panel/Margin/Content" unique_id=899753129]
+layout_mode = 2
+text = "Save & Quit"

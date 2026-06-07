@@ -8,8 +8,12 @@
         "dotnet",
         "Elementalist",
         "instanciar",
+        "knockback",
         "Mathf",
+        "Regen",
+        "resetea",
         "sobreescriba",
-        "stackeable"
+        "stackeable",
+        "tscn"
     ]
 }

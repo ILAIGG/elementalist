@@ -4,10 +4,10 @@ using Godot;
 public partial class Boss : CharacterBody2D, IEnemy
 {
     [Export] public float Speed = 160f;
-    [Export] public float MaxHealth = 200000f;
+    [Export] public float MaxHealth = 2000f;
     [Export] public float ContactDamage = 80f;
     private float _damageCooldown = 0f;
-    
+
     private const float DamageInterval = 0.5f;
 
     private Sprite2D _sprite;
@@ -16,7 +16,6 @@ public partial class Boss : CharacterBody2D, IEnemy
 
     private Player _player;
     private int _currentPhase = 1;
-    private ColorRect _colorRect;
 
     private float _slowFactor = 1f;
     private float _slowTimer = 0f;
@@ -36,7 +35,6 @@ public partial class Boss : CharacterBody2D, IEnemy
         _sprite = GetNode<Sprite2D>("Sprite2D");
 
         _player = GetTree().GetFirstNodeInGroup("player") as Player;
-        _colorRect = GetNode<ColorRect>("ColorRect");
     }
 
     public override void _PhysicsProcess(double delta)
@@ -106,7 +104,7 @@ public partial class Boss : CharacterBody2D, IEnemy
 
         //El jefe resiste el slow, nunca puede quedar completamente inmóvil
         float resistedFactor = Mathf.Max(actualFactor, MinSlowFactor);
-        
+
         if (actualFactor < _slowFactor)
         {
             _slowFactor = resistedFactor;
@@ -136,14 +134,13 @@ public partial class Boss : CharacterBody2D, IEnemy
     {
         //Se vuelve más rápido y cambia de color
         Speed *= 1.5f;
-        _colorRect.Color = new(1f, 0f, 0f); //rojo
     }
 
     private void OnBossDeath()
     {
-        GetTree().Root.FindChild("World", true, false)
+        GetTree().Root.FindChild("Level", true, false)
             ?.Call("OnBossDefeated");
 
-            QueueFree();
+        QueueFree();
     }
 }

@@ -200,7 +200,7 @@ public partial class Player : CharacterBody2D
     private void OnPlayerDeath()
     {
         //Se busca la pantalla de Game Over y se la muestra
-        GameOver gameOver = GetTree().Root.FindChild("GameOver", true, false) as GameOver;
-        gameOver?.ShowGameOver();
+        Defeat defeat = GetTree().Root.FindChild("Defeat", true, false) as Defeat;
+        defeat?.ShowDefeat();
     }
 }

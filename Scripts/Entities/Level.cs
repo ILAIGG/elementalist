@@ -1,4 +1,5 @@
 using Godot;
+using System.Collections.Generic;
 
 public partial class Level : Node2D
 {
@@ -10,17 +11,55 @@ public partial class Level : Node2D
 
     private float _gameTimer = 0f;
     private bool _bossSpawned = false;
+    private bool _victoryAchieved = false;
 
     private PackedScene _pauseMenuScene = GD.Load<PackedScene>("res://Scenes/UI/PauseMenu.tscn");
     private bool _isPaused = false;
 
+    // Lista de condiciones de victoria detectadas como nodos hijos
+    private List<VictoryCondition> _victoryConditions = new();
+    private KillBossCondition _killBossCondition;
+
     public override void _Ready()
     {
         DamageNumberSystem.Initialize(DamageNumberScene);
+
+        // Busca todas las condiciones de victoria definidas como nodos hijos
+        foreach (Node child in GetChildren())
+        {
+            if (child is VictoryCondition condition)
+                _victoryConditions.Add(condition);
+        }
+
+        // Busca específicamente KillBossCondition para notificarle cuando spawnee el jefe
+        _killBossCondition = GetNodeOrNull<KillBossCondition>("KillBossCondition");
     }
 
     public override void _Process(double delta)
     {
+        if (_victoryAchieved) return;
+
+        // Solo verifica condiciones si hay alguna definida
+        if (_victoryConditions.Count > 0)
+        {
+            bool allCompleted = true;
+            foreach (VictoryCondition condition in _victoryConditions)
+            {
+                if (!condition.IsCompleted)
+                {
+                    allCompleted = false;
+                    break;
+                }
+            }
+
+            if (allCompleted)
+            {
+                _victoryAchieved = true;
+                OnVictory();
+                return;
+            }
+        }
+
         if (_bossSpawned) return;
 
         _gameTimer += (float)delta;
@@ -47,10 +86,16 @@ public partial class Level : Node2D
         EnemySpawner spawner = GetTree().Root.FindChild("EnemySpawner", true, false) as EnemySpawner;
         if (spawner != null)
             spawner.IsPaused = true;
+
+        // Notifica a la condición que el jefe apareció
+        _killBossCondition?.NotifyBossSpawned();
     }
 
-    private void OnBossDefeated()
+    private void OnVictory()
     {
+        // Marca el nodo como completado en el GameManager
+        GameManager.Instance.CompleteNode(GameManager.Instance.ActiveNodeId);
+
         Victory victory = GetTree().Root.FindChild("Victory", true, false) as Victory;
         victory?.ShowVictory();
     }
