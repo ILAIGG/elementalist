@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://0l0jl77gj06h"]
+
+[ext_resource type="Script" uid="uid://dh031chgpssqu" path="res://Scripts/UI/TutorialDialog.cs" id="1_j655c"]
+
+[node name="TutorialDialog" type="CanvasLayer" unique_id=1719307643]
+script = ExtResource("1_j655c")
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=1559384675]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.8)
+
+[node name="DialogBox" type="PanelContainer" parent="." unique_id=364795055]
+custom_minimum_size = Vector2(400, 200)
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Margin" type="MarginContainer" parent="DialogBox" unique_id=1867427433]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Content" type="VBoxContainer" parent="DialogBox/Margin" unique_id=1377490041]
+layout_mode = 2
+
+[node name="DialogText" type="Label" parent="DialogBox/Margin/Content" unique_id=1867124359]
+layout_mode = 2
+size_flags_vertical = 6
+autowrap_mode = 2
+
+[node name="ContinueButton" type="Button" parent="DialogBox/Margin/Content" unique_id=845943024]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Continue"

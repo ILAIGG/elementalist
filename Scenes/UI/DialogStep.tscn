@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://b4f7mbidwoin8"]
+
+[ext_resource type="Script" uid="uid://doy0vyqmp7ete" path="res://Scripts/UI/DialogStep.cs" id="1_vkh5d"]
+
+[node name="DialogStep" type="Node" unique_id=1360271452]
+script = ExtResource("1_vkh5d")
