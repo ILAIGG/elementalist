@@ -105,3 +105,14 @@ text = "Meteor Shower (E): Ready"
 [node name="DashLabel" type="Label" parent="Container/Cooldowns" unique_id=251219095]
 layout_mode = 2
 text = "Dash (Space): Ready"
+
+[node name="ObjectiveLabel" type="Label" parent="Container" unique_id=877192949]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -60.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 43.0
+grow_horizontal = 0

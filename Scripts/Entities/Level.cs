@@ -13,12 +13,15 @@ public partial class Level : Node2D
     private bool _bossSpawned = false;
     private bool _victoryAchieved = false;
 
+    //Pausa
     private PackedScene _pauseMenuScene = GD.Load<PackedScene>("res://Scenes/UI/PauseMenu.tscn");
     private bool _isPaused = false;
 
     // Lista de condiciones de victoria detectadas como nodos hijos
     private List<VictoryCondition> _victoryConditions = new();
     private KillBossCondition _killBossCondition;
+    private SurviveTimeCondition _surviveTimeCondition;
+    private HUD _hud;
 
     public override void _Ready()
     {
@@ -31,20 +34,42 @@ public partial class Level : Node2D
                 _victoryConditions.Add(condition);
         }
 
-        // Busca específicamente KillBossCondition para notificarle cuando spawnee el jefe
+        //Busca específicamente KillBossCondition para notificarle cuando spawnee el jefe
         _killBossCondition = GetNodeOrNull<KillBossCondition>("KillBossCondition");
+
+        _hud = GetTree().Root.FindChild("HUD", true, false) as HUD;
+        _surviveTimeCondition = GetNodeOrNull<SurviveTimeCondition>("SurviveTimeCondition");
+
+        //Inicializa el objetivo en el HUD
+        if (_surviveTimeCondition != null && _surviveTimeCondition.Enabled)
+        {
+            float remaining = _surviveTimeCondition.GetTimeRemaining();
+            _hud?.UpdateObjectiveTime(remaining);
+        }
+        else if (_killBossCondition != null && _killBossCondition.Enabled)
+        {
+            _hud?.SetObjective("Defeat the Boss");
+        }
     }
 
     public override void _Process(double delta)
     {
+
+        //Actualiza el objetivo de supervivencia en el HUD
+        if (_surviveTimeCondition != null && _surviveTimeCondition.Enabled && !_victoryAchieved)
+            _hud?.UpdateObjectiveTime(_surviveTimeCondition.GetTimeRemaining());
+
         if (_victoryAchieved) return;
 
-        // Solo verifica condiciones si hay alguna definida
+        //Solo verifica condiciones si hay alguna definida
         if (_victoryConditions.Count > 0)
         {
             bool allCompleted = true;
             foreach (VictoryCondition condition in _victoryConditions)
             {
+                // Ignora las condiciones deshabilitadas
+                if (!condition.Enabled) continue;
+
                 if (!condition.IsCompleted)
                 {
                     allCompleted = false;

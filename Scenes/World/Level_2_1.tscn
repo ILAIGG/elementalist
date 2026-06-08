@@ -3,3 +3,10 @@
 [ext_resource type="PackedScene" uid="uid://tqvyqw8dl6y0" path="res://Scenes/World/Level.tscn" id="1_ca0ug"]
 
 [node name="Level" unique_id=1536102581 instance=ExtResource("1_ca0ug")]
+
+[node name="KillBossCondition" parent="." index="5" unique_id=939733064]
+Enabled = false
+
+[node name="SurviveTimeCondition" parent="." index="6" unique_id=1049670784]
+TimeToSurvive = 420.0
+Enabled = true
