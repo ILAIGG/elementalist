@@ -21,6 +21,20 @@ public partial class GameManager : Node
         Instance = this;
     }
 
+    public override void _Process(double delta)
+    {
+        if (ActiveSave != null)
+        {
+            ActiveSave.PlaytimeSeconds += (float)delta;
+        }
+    }
+
+    public void ClearActiveSave()
+    {
+        ActiveSlot = -1;
+        ActiveSave = null;
+    }
+
     //Carga una partida existente
     public void LoadGame(int slot)
     {

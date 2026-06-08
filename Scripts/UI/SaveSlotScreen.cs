@@ -64,8 +64,9 @@ public partial class SaveSlotScreen : Control
     private string FormatPlaytime(float seconds)
     {
         int hours = (int)(seconds / 3600);
-        int minutes = (int)(seconds % 3600 / 60);
-        return $"Play time: {hours}h {minutes}m {seconds}s";
+        int minutes = (int)((seconds % 3600) / 60);
+        int remainingSeconds = (int)(seconds % 60);
+        return $"Play time: {hours}h {minutes}m {remainingSeconds}s";
     }
 
     private void OnContinuePressed(int slot)

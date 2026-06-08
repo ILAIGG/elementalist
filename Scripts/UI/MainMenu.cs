@@ -8,6 +8,7 @@ public partial class MainMenu : Control
 
     public override void _Ready()
     {
+        GameManager.Instance?.ClearActiveSave();
         _playButton = GetNode<Button>("PlayButton");
         _endlessModeButton = GetNode<Button>("EndlessModeButton");
         _quitButton = GetNode<Button>("QuitButton");

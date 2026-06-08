@@ -5,6 +5,8 @@ public partial class NodeMapPauseMenu : Control
     private Button _resumeButton;
     private Button _saveAndQuitButton;
 
+    private PackedScene _confirmDialog = GD.Load<PackedScene>("res://Scenes/UI/ConfirmDialog.tscn");
+
     public override void _Ready()
     {
         _resumeButton = GetNode<Button>("Panel/Margin/Content/ResumeButton");
@@ -28,8 +30,15 @@ public partial class NodeMapPauseMenu : Control
 
     private void OnSaveAndQuitPressed()
     {
-        GameManager.Instance.SaveGame();
-        GetTree().Paused = false;
-        GetTree().ChangeSceneToFile("res://Scenes/UI/MainMenu.tscn");
+        ConfirmDialog dialog = _confirmDialog.Instantiate<ConfirmDialog>();
+        AddChild(dialog);
+        dialog.SetMessage("save and quit to the main menu?");
+
+        dialog.OnConfirmed += () =>
+        {
+            GameManager.Instance.SaveGame();
+            GetTree().Paused = false;
+            GetTree().ChangeSceneToFile("res://Scenes/UI/MainMenu.tscn");
+        };
     }
 }
