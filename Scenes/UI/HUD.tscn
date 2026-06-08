@@ -107,6 +107,7 @@ layout_mode = 2
 text = "Dash (Space): Ready"
 
 [node name="ObjectiveLabel" type="Label" parent="Container" unique_id=877192949]
+custom_minimum_size = Vector2(200, 30)
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0

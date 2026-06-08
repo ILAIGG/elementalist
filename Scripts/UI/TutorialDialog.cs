@@ -70,31 +70,28 @@ public partial class TutorialDialog : CanvasLayer
 
     private void DrawHighlight(Vector2 position, Vector2 size)
     {
-        //Un shader para recortar el área del highlight
         ShaderMaterial material = new ShaderMaterial();
         Shader shader = new Shader();
         shader.Code = @"
-            shader_type canvas_item;
-            uniform vec2 highlight_pos;
-            uniform vec2 highlight_size;
+			shader_type canvas_item;
+			uniform vec2 highlight_pos;
+			uniform vec2 highlight_size;
 
-            void fragment() {
-                vec2 screen_pos = UV * vec2(textureSize(TEXTURE, 0));
-                bool in_highlight = 
-                    screen_pos.x >= highlight_pos.x &&
-                    screen_pos.x <= highlight_pos.x + highlight_size.x &&
-                    screen_pos.y >= highlight_pos.y &&
-                    screen_pos.y <= highlight_pos.y + highlight_size.y;
+			void fragment() {
+				vec2 screen_pos = FRAGCOORD.xy;
+				bool in_highlight = 
+					screen_pos.x >= highlight_pos.x &&
+					screen_pos.x <= highlight_pos.x + highlight_size.x &&
+					screen_pos.y >= highlight_pos.y &&
+					screen_pos.y <= highlight_pos.y + highlight_size.y;
 
-                if (in_highlight)
-                    COLOR.a = 0.0;
-                else
-                    COLOR.a = 0.8;
-            }
-        ";
+				if (in_highlight)
+					COLOR.a = 0.0;
+				else
+					COLOR.a = 0.8;
+			}
+		";
         material.Shader = shader;
-
-        Vector2 textureSize = _overlay.Size;
         material.SetShaderParameter("highlight_pos", position);
         material.SetShaderParameter("highlight_size", size);
 

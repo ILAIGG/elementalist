@@ -1,8 +1,11 @@
 [gd_scene format=3 uid="uid://0l0jl77gj06h"]
 
 [ext_resource type="Script" uid="uid://dh031chgpssqu" path="res://Scripts/UI/TutorialDialog.cs" id="1_j655c"]
+[ext_resource type="PackedScene" uid="uid://b4f7mbidwoin8" path="res://Scenes/UI/DialogStep.tscn" id="2_w22n0"]
 
 [node name="TutorialDialog" type="CanvasLayer" unique_id=1719307643]
+process_mode = 3
+layer = 10
 script = ExtResource("1_j655c")
 
 [node name="Overlay" type="ColorRect" parent="." unique_id=1559384675]
@@ -14,7 +17,7 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0.8)
 
 [node name="DialogBox" type="PanelContainer" parent="." unique_id=364795055]
-custom_minimum_size = Vector2(400, 200)
+custom_minimum_size = Vector2(300, 100)
 offset_right = 40.0
 offset_bottom = 40.0
 
@@ -37,3 +40,24 @@ autowrap_mode = 2
 layout_mode = 2
 size_flags_vertical = 8
 text = "Continue"
+
+[node name="Step0" parent="." unique_id=1360271452 instance=ExtResource("2_w22n0")]
+Text = "Welcome, Elementalist! Move with W, A, S, D or the arrow keys."
+
+[node name="Step1" parent="." unique_id=1870783597 instance=ExtResource("2_w22n0")]
+Text = "Your objective is shown in the top right corner. Survive as long as you can!"
+HighlightPosition = Vector2(922, 20)
+HighlightSize = Vector2(200, 25)
+DialogPosition = Vector2(612, 20)
+
+[node name="Step2" parent="." unique_id=727293340 instance=ExtResource("2_w22n0")]
+Text = "This is your health bar. Don't let it reach zero!"
+HighlightPosition = Vector2(15, 15)
+HighlightSize = Vector2(210, 50)
+DialogPosition = Vector2(240, 20)
+
+[node name="Step3" parent="." unique_id=1596020267 instance=ExtResource("2_w22n0")]
+Text = "Use Q for Fire Nova and E for Meteor Shower. Space to dash!"
+
+[node name="Step4" parent="." unique_id=1752463035 instance=ExtResource("2_w22n0")]
+Text = "You attack automatically, so focus on moving and surviving!"

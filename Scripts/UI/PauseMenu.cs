@@ -35,7 +35,7 @@ public partial class PauseMenu : Control
     {
         ConfirmDialog dialog = _confirmDialog.Instantiate<ConfirmDialog>();
         AddChild(dialog);
-        dialog.SetMessage("return to the map? Your progress will be lost");
+        dialog.SetMessage("return to the map? Your progress will be lost!");
 
         dialog.OnConfirmed += () =>
         {
@@ -48,7 +48,7 @@ public partial class PauseMenu : Control
     {
         ConfirmDialog dialog = _confirmDialog.Instantiate<ConfirmDialog>();
         AddChild(dialog);
-        dialog.SetMessage("return to the main menu? Your progress will be lost");
+        dialog.SetMessage("return to the main menu? Your progress will be lost!");
 
         dialog.OnConfirmed += () =>
         {

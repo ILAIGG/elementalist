@@ -31,7 +31,7 @@ public partial class ConfirmDialog : Control
         if (string.IsNullOrEmpty(specificText))
             title.Text = "Are you sure?";
         else
-            title.Text = $"Are you sure you want to {specificText}?";
+            title.Text = $"Are you sure you want to {specificText}";
     }
 
     private void OnConfirmPressed()

@@ -17,11 +17,16 @@ public partial class Level : Node2D
     private PackedScene _pauseMenuScene = GD.Load<PackedScene>("res://Scenes/UI/PauseMenu.tscn");
     private bool _isPaused = false;
 
-    // Lista de condiciones de victoria detectadas como nodos hijos
+    //Lista de condiciones de victoria detectadas como nodos hijos
     private List<VictoryCondition> _victoryConditions = new();
     private KillBossCondition _killBossCondition;
     private SurviveTimeCondition _surviveTimeCondition;
+
+    //Hud
     private HUD _hud;
+
+    //Tutorial
+    [Export] public PackedScene TutorialDialogScene { get; set; }
 
     public override void _Ready()
     {
@@ -49,6 +54,14 @@ public partial class Level : Node2D
         else if (_killBossCondition != null && _killBossCondition.Enabled)
         {
             _hud?.SetObjective("Defeat the Boss");
+        }
+
+        //Tutorial
+        //Si hay un diálogo de tutorial configurado, lo instancia al inicio
+        if (TutorialDialogScene != null)
+        {
+            TutorialDialog dialog = TutorialDialogScene.Instantiate<TutorialDialog>();
+            GetNode<CanvasLayer>("UI").AddChild(dialog);
         }
     }
 
