@@ -115,5 +115,36 @@ public partial class Level : Node2D
             //Cuando el PauseMenu se destruya, resetea _isPaused
             pauseMenu.TreeExited += () => _isPaused = false;
         }
+
+#if DEBUG
+        if (GameManager.Instance.GodModeEnabled && @event is InputEventKey keyEvent && keyEvent.Pressed && !keyEvent.Echo)
+        {
+            if (keyEvent.Keycode == Key.Kp0)
+            {
+                Player player = GetTree().GetFirstNodeInGroup("player") as Player;
+                if (player != null)
+                {
+                    player.Experience.AddXP(player.Experience.XPToNextLevel);
+                }
+            }
+            else if (keyEvent.Keycode == Key.Kp1)
+            {
+                Player player = GetTree().GetFirstNodeInGroup("player") as Player;
+                if (player != null)
+                {
+                    player.Health.IsImmortal = !player.Health.IsImmortal;
+                    GD.Print("Immortality " + (player.Health.IsImmortal ? "On" : "Off"));
+                }
+            }
+            else if (keyEvent.Keycode == Key.Kp2)
+            {
+                if (!_victoryAchieved)
+                {
+                    _victoryAchieved = true;
+                    OnVictory();
+                }
+            }
+        }
+#endif
     }
 }

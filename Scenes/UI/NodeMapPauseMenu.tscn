@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://rabobtyurxvk" path="res://Scripts/UI/NodeMapPauseMenu.cs" id="1_qsdts"]
 
 [node name="NodeMapPauseMenu" type="Control" unique_id=1948099660]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

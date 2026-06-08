@@ -13,6 +13,10 @@ public class HealthSystem
     //Devuelve true si la vida llegó a 0
     public bool IsDead => CurrentHealth <= 0;
 
+#if DEBUG
+    public bool IsImmortal { get; set; } = false;
+#endif
+
     //Una "señal" que se dispara cuando el personaje muere. Cualquier otro sistema puede "suscribirse" a dicha señal
     //para ejecutar o hacer algo cuando esta se dispare.
     public event Action OnDeath;
@@ -29,6 +33,10 @@ public class HealthSystem
     public void TakeDamage(float amount, Vector2 position, SceneTree tree, ulong entityId = 0)
     {
         if (IsDead) return;
+
+#if DEBUG
+        if (IsImmortal) return;
+#endif
 
         CurrentHealth = Mathf.Max(0, CurrentHealth - amount);
 

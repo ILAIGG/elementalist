@@ -50,7 +50,7 @@ public partial class EnemySpawner : Node
         {
             _difficultyTimer = 0f;
             _difficultyLevel++;
-            
+
             //Avisa al HUD
             HUD hud = GetTree().Root.FindChild("HUD", true, false) as HUD;
             hud?.UpdateDifficulty(_difficultyLevel);
@@ -95,9 +95,12 @@ public partial class EnemySpawner : Node
 
     private void ApplyDifficultyScaling(Enemy enemy)
     {
-        //Reducimos la vida que ganan a un 20% por nivel y la velocidad a un 3% por nivel
-        float healthMultiplier = 1f + (_difficultyLevel * 0.2f);
-        float speedMultiplier = 1f + (_difficultyLevel * 0.03f);
+        //El multiplicador base viene del nodo activo en el GameManager
+        float nodeDifficulty = GameManager.Instance.ActiveNodeDifficulty;
+
+        //Se aplica el multiplicador del nodo sobre el escalado progresivo
+        float healthMultiplier = nodeDifficulty + (_difficultyLevel * 0.2f);
+        float speedMultiplier = nodeDifficulty + (_difficultyLevel * 0.03f);
 
         enemy.ScaleStats(healthMultiplier, speedMultiplier);
     }

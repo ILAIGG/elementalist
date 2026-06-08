@@ -19,6 +19,12 @@ public partial class NodeMap : Node2D
     //Nodo actualmente seleccionado
     private MapNode _selectedNode;
 
+    //Menú de pausa
+    private PackedScene _pauseMenuScene = GD.Load<PackedScene>("res://Scenes/UI/NodeMapPauseMenu.tscn");
+    private bool _isPaused = false;
+    private float _autosaveTimer = 0f;
+    private const float AutosaveInterval = 30f;
+
     public override void _Ready()
     {
         _nodesContainer = GetNode<Node2D>("Nodes");
@@ -50,6 +56,18 @@ public partial class NodeMap : Node2D
         _popUp.Visible = false;
     }
 
+    public override void _Process(double delta)
+    {
+        //Autosave cada 30 segundos
+        _autosaveTimer += (float)delta;
+        if (_autosaveTimer >= AutosaveInterval)
+        {
+            _autosaveTimer = 0f;
+            GameManager.Instance.SaveGame();
+            GD.Print("Autosave realizado");
+        }
+    }
+
     public override void _Input(InputEvent @event)
     {
         //Drag de la cámara con click izquierdo
@@ -75,6 +93,18 @@ public partial class NodeMap : Node2D
             Vector2 delta = mouseMotion.Position - _dragStartPosition;
             _camera.Position = _cameraStartPosition - delta;
         }
+
+        if (@event.IsActionPressed("ui_cancel") && !_isPaused)
+        {
+            _isPaused = true;
+            GetTree().Paused = true;
+
+            NodeMapPauseMenu pauseMenu = _pauseMenuScene.Instantiate<NodeMapPauseMenu>();
+            GetNode<CanvasLayer>("UI").AddChild(pauseMenu);
+
+            //Cuando el menú se destruya, resetea _isPaused
+            pauseMenu.TreeExited += () => _isPaused = false;
+        }
     }
 
     private void OnNodeClicked(MapNode node)
@@ -94,8 +124,9 @@ public partial class NodeMap : Node2D
     {
         if (_selectedNode == null || _selectedNode.LevelScene == null) return;
 
-        // Guardamos qué nodo está activo para cuando el jugador lo complete
+        //Guarda el nodo activo y su dificultad en el GameManager
         GameManager.Instance.ActiveNodeId = _selectedNode.NodeId;
+        GameManager.Instance.ActiveNodeDifficulty = _selectedNode.DifficultyMultiplier;
 
         GetTree().ChangeSceneToPacked(_selectedNode.LevelScene);
     }

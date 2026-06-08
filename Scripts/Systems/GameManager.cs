@@ -9,6 +9,13 @@ public partial class GameManager : Node
     public int ActiveNodeId { get; set; } = -1;
     public SaveData ActiveSave { get; private set; }
 
+    //Dificultad
+    public float ActiveNodeDifficulty { get; set; } = 1.0f;
+
+#if DEBUG
+    public bool GodModeEnabled { get; set; } = false;
+#endif
+
     public override void _Ready()
     {
         Instance = this;
