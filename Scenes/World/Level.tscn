@@ -54,7 +54,6 @@ script = ExtResource("9_c0wbg")
 Enabled = false
 
 [node name="Player" parent="." unique_id=417996818 instance=ExtResource("8_dq7cm")]
-collision_mask = 14
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1627368884]
 

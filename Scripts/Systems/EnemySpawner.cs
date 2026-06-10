@@ -110,6 +110,9 @@ public partial class EnemySpawner : Node
         Vector2 spawnPos = Vector2.Zero;
         bool positionFound = false;
 
+        // Obtenemos el estado de las físicas del mundo para revisar colisiones
+        var spaceState = _player.GetWorld2D().DirectSpaceState;
+
         // Intentamos hasta 30 veces encontrar una posición válida dentro del mapa
         for (int i = 0; i < 30; i++)
         {
@@ -121,12 +124,23 @@ public partial class EnemySpawner : Node
             //Se limita la posición de forma lógica (el mapa va de -2400 a 2400)
             if (spawnPos.X >= -2400f && spawnPos.X <= 2400f && spawnPos.Y >= -2400f && spawnPos.Y <= 2400f)
             {
-                positionFound = true;
-                break;
+                // Configuramos una consulta de punto para ver si hay una colisión ahí
+                var query = new PhysicsPointQueryParameters2D
+                {
+                    Position = spawnPos
+                };
+
+                // Si no hay intersecciones, significa que el área está libre
+                var result = spaceState.IntersectPoint(query);
+                if (result.Count == 0)
+                {
+                    positionFound = true;
+                    break;
+                }
             }
         }
 
-        // Si estamos justo en una esquina y todas las posiciones intentadas cayeron afuera, forzamos un spawn hacia el centro
+        // Si después de 30 intentos no encontramos lugar libre, forzamos un spawn hacia el centro
         if (!positionFound)
         {
             Vector2 dirToCenter = (Vector2.Zero - _player.GlobalPosition).Normalized();

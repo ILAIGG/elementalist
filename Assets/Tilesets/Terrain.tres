@@ -22,7 +22,6 @@ texture_region_size = Vector2i(32, 32)
 texture = ExtResource("3_efahn")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(9.34035, 14.315102, -9.226671, 14.155204, -9.035772, -12.183065, 9.341289, -12.206715)
 1:0/0 = 0
 1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(16, -16, -16, -16, -16, 16, 16, 16)
 0:1/0 = 0
@@ -30,7 +29,6 @@ texture_region_size = Vector2i(32, 32)
 0:2/0 = 0
 1:2/0 = 0
 0:3/0 = 0
-0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-12.4265995, 7.6471367, 9.558922, 7.9657707, 9.558922, -7.3285065, -12.4265995, -7.6471386)
 1:3/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lg6u0"]
