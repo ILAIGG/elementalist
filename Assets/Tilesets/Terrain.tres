@@ -1,0 +1,39 @@
+[gd_resource type="TileSet" format=3 uid="uid://ddi1a4dgycg4a"]
+
+[ext_resource type="Texture2D" uid="uid://bcatswffexyy2" path="res://Assets/Sprites/spr_terrain-sheet.png" id="1_40ycp"]
+[ext_resource type="Texture2D" uid="uid://cyxtb46huj3v4" path="res://Assets/Sprites/spr_void.png" id="2_xd6fq"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hencd"]
+resource_name = "Terrain"
+texture = ExtResource("1_40ycp")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+0:2/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lg6u0"]
+resource_name = "Void"
+texture = ExtResource("2_xd6fq")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+
+[resource]
+resource_name = "Terrain"
+sources/0 = SubResource("TileSetAtlasSource_hencd")
+sources/1 = SubResource("TileSetAtlasSource_lg6u0")

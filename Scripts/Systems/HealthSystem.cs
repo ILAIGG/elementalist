@@ -21,8 +21,13 @@ public class HealthSystem
     //para ejecutar o hacer algo cuando esta se dispare.
     public event Action OnDeath;
 
+    //Una señal que se dispara cuando recibe daño (útil para iframes)
+    public event Action OnDamageTaken;
+
     //Una señal que se dispara cuando la vida cambia, la UI lo utilizará para la barra de vida.
     public event Action<float, float> OnHealthChanged;
+
+    public bool IsInvulnerable { get; set; } = false;
 
     public HealthSystem(float maxHealth)
     {
@@ -38,10 +43,13 @@ public class HealthSystem
         if (IsImmortal) return;
 #endif
 
+        if (IsInvulnerable) return;
+
         CurrentHealth = Mathf.Max(0, CurrentHealth - amount);
 
         //Avisa que la vida cambió
         OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
+        OnDamageTaken?.Invoke();
 
         DamageNumberSystem.Spawn(tree, position, amount, false, entityId);
 

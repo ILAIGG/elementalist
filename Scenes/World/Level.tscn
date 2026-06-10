@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://d1h6xn1rvwjcq" path="res://Scripts/Entities/Background.cs" id="4_u2ioh"]
 [ext_resource type="PackedScene" uid="uid://4ktcx0v2mc1x" path="res://Scenes/World/WorldBounds.tscn" id="5_hencd"]
 [ext_resource type="Script" uid="uid://dnqi7x31tikbu" path="res://Scripts/Systems/EnemySpawner.cs" id="6_lg6u0"]
+[ext_resource type="TileSet" uid="uid://ddi1a4dgycg4a" path="res://Assets/Tilesets/Terrain.tres" id="6_u2ioh"]
 [ext_resource type="PackedScene" uid="uid://bmsfw8siu6wpu" path="res://Scenes/Entities/Enemy.tscn" id="7_ijlj7"]
 [ext_resource type="PackedScene" uid="uid://bhs8rrtrjpiyt" path="res://Scenes/Entities/Player.tscn" id="8_dq7cm"]
 [ext_resource type="Script" uid="uid://ep3hviiql5it" path="res://Scripts/Systems/KillBossCondition.cs" id="8_p3yta"]
@@ -21,10 +22,14 @@ DamageNumberScene = ExtResource("2_p3yta")
 BossScene = ExtResource("3_c0wbg")
 
 [node name="Background" type="Node2D" parent="." unique_id=744452641]
+visible = false
 script = ExtResource("4_u2ioh")
 
 [node name="WorldBounds" parent="." unique_id=2046790191 instance=ExtResource("5_hencd")]
 collision_layer = 8
+
+[node name="TerrainLayer" type="TileMapLayer" parent="." unique_id=245172007]
+tile_set = ExtResource("6_u2ioh")
 
 [node name="Projectiles" type="Node2D" parent="." unique_id=1954467565]
 
@@ -53,9 +58,12 @@ collision_mask = 14
 
 [node name="Defeat" parent="UI" unique_id=90216153 instance=ExtResource("10_dco46")]
 process_mode = 3
+visible = false
 
 [node name="UpgradeScreen" parent="UI" unique_id=246309593 instance=ExtResource("11_2l5nb")]
 process_mode = 3
+visible = false
 
 [node name="Victory" parent="UI" unique_id=1471975588 instance=ExtResource("12_i00xf")]
 process_mode = 3
+visible = false
