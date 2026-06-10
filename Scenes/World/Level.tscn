@@ -25,11 +25,20 @@ BossScene = ExtResource("3_c0wbg")
 visible = false
 script = ExtResource("4_u2ioh")
 
-[node name="WorldBounds" parent="." unique_id=2046790191 instance=ExtResource("5_hencd")]
-collision_layer = 8
-
 [node name="TerrainLayer" type="TileMapLayer" parent="." unique_id=245172007]
 tile_set = ExtResource("6_u2ioh")
+
+[node name="RoadsAndTrailsLayer" type="TileMapLayer" parent="." unique_id=625593011]
+tile_set = ExtResource("6_u2ioh")
+
+[node name="PropsLayer" type="TileMapLayer" parent="." unique_id=1195270088]
+tile_set = ExtResource("6_u2ioh")
+
+[node name="CollidablePropsLayer" type="TileMapLayer" parent="." unique_id=1310696496]
+tile_set = ExtResource("6_u2ioh")
+
+[node name="WorldBounds" parent="." unique_id=2046790191 instance=ExtResource("5_hencd")]
+collision_layer = 8
 
 [node name="Projectiles" type="Node2D" parent="." unique_id=1954467565]
 

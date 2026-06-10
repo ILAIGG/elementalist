@@ -49,9 +49,9 @@ public partial class Player : CharacterBody2D
 
         //Sistemas "Puros"
         Health = new HealthSystem(Stats.MaxHealth);
-        //Nos suscribimos al evento de muerte
+        //Se suscribe al evento de muerte
         Health.OnDeath += OnPlayerDeath;
-        //Nos suscribimos al recibir daño para los iframes
+        //Se suscribe al recibir daño para los iframes
         Health.OnDamageTaken += OnPlayerDamageTaken;
 
         Experience = new ExperienceSystem();
