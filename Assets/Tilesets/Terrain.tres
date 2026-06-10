@@ -1,6 +1,7 @@
 [gd_resource type="TileSet" format=3 uid="uid://ddi1a4dgycg4a"]
 
 [ext_resource type="Texture2D" uid="uid://bcatswffexyy2" path="res://Assets/Sprites/spr_terrain-sheet.png" id="1_40ycp"]
+[ext_resource type="Texture2D" uid="uid://d6637bd7e2tj" path="res://Assets/Sprites/spr_nature-sheet.png" id="2_2r6oe"]
 [ext_resource type="Texture2D" uid="uid://cyxtb46huj3v4" path="res://Assets/Sprites/spr_void.png" id="2_xd6fq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hencd"]
@@ -13,6 +14,21 @@ texture = ExtResource("1_40ycp")
 0:1/0 = 0
 0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, -8, 8, 8, -8, 8, -8, -8)
 0:2/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_efahn"]
+resource_name = "Nature"
+texture = ExtResource("2_2r6oe")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(3.5971737, -5.935337, 3.7770329, 6.4749146, -4.136751, 6.4749146, -3.956892, -5.755479)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+0:1/0 = 0
+1:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+0:3/0 = 0
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(5.2159023, 3.956892, -5.935338, 3.7770348, -5.935338, -3.956891, 5.2159023, -3.7770329)
+1:3/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lg6u0"]
 resource_name = "Void"
@@ -39,4 +55,5 @@ resource_name = "Terrain"
 physics_layer_0/collision_layer = 8
 physics_layer_0/collision_mask = 3
 sources/0 = SubResource("TileSetAtlasSource_hencd")
-sources/1 = SubResource("TileSetAtlasSource_lg6u0")
+sources/2 = SubResource("TileSetAtlasSource_efahn")
+sources/50 = SubResource("TileSetAtlasSource_lg6u0")

@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://itwnwlxff1n1" path="res://Assets/Sprites/Enemy.png" id="2_xiecr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l1gqu"]
-size = Vector2(64, 64)
+size = Vector2(45, 49)
 
 [node name="Boss" type="CharacterBody2D" unique_id=459496420 groups=["enemies"]]
 collision_layer = 2
@@ -13,6 +13,7 @@ motion_mode = 1
 script = ExtResource("1_bjbev")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=181025382]
+position = Vector2(2.5, 4.5)
 shape = SubResource("RectangleShape2D_l1gqu")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2029145584]

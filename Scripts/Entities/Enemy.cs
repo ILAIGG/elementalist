@@ -67,7 +67,7 @@ public partial class Enemy : CharacterBody2D, IEnemy
         //Se reduce el cooldown de daño
         if (_damageCooldown > 0f)
             _damageCooldown -= (float)delta;
-        
+
         //Se calcula la dirección desde el enemigo hasta el jugador. Simplemente se le resta la posición del enemigo a la posición del jugador
         Vector2 direction = (_player.GlobalPosition - GlobalPosition).Normalized();
 
@@ -76,7 +76,7 @@ public partial class Enemy : CharacterBody2D, IEnemy
             _sprite.FlipH = direction.X < 0;
 
         Velocity = direction * Speed * _slowFactor;
-        MoveAndSlide(); 
+        MoveAndSlide();
 
         bool touchingPlayer = false;
         //Después de moverse, verifica que haya tocado al jugador
@@ -108,7 +108,7 @@ public partial class Enemy : CharacterBody2D, IEnemy
         //Escala la vida y velocidad por los multiplicadores
         MaxHealth *= healthMultiplier;
         Health.SetMaxHealth(MaxHealth);
-        Speed *= speedMultiplier; 
+        Speed *= speedMultiplier;
     }
 
     public void ApplySlow(float factor, float duration)
@@ -130,7 +130,7 @@ public partial class Enemy : CharacterBody2D, IEnemy
     {
         //Se le da experiencia al jugador antes de eliminar al enemigo
         _player?.Experience.AddXP(XPValue); //Esto es lo mismo que hacer: "if (_player != null) _player.Experience.AddXP(XPValue);" El "?" hace que diga "Existe el jugador? Si existe, entonces haz esto".
-        
+
         QueueFree();
     }
 }

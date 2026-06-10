@@ -3,7 +3,7 @@ using System;
 public class PlayerStats
 {
     //Stats base
-    public float Speed = 200f;
+    public float Speed = 180f;
     public float MaxHealth = 100f;
     public float HealthRegen = 0f;
     public float BonusDamage = 0f;

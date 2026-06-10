@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://dcdftxtkemsjn" path="res://Scenes/Entities/MeteorIndicator.tscn" id="9_46t5s"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2tapu"]
-size = Vector2(32, 32)
+size = Vector2(18, 18)
 
 [node name="Player" type="CharacterBody2D" unique_id=417996818 groups=["player"]]
 collision_mask = 6
@@ -22,12 +22,13 @@ motion_mode = 1
 script = ExtResource("1_3kvya")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=156905721]
+position = Vector2(1, 3)
 shape = SubResource("RectangleShape2D_2tapu")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=313276052]
 texture_filter = 1
 position = Vector2(-5.9604645e-08, -5.9604645e-08)
-scale = Vector2(2.5, 2.5)
+scale = Vector2(2, 2)
 texture = ExtResource("2_wmg1a")
 
 [node name="SpellCaster" type="Node" parent="." unique_id=857088393]
