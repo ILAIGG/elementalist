@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d6637bd7e2tj"
-path="res://.godot/imported/spr_nature-sheet.png-fa052bea3902416d00f80429f50577dd.ctex"
+uid="uid://bipg65suds4eb"
+path="res://.godot/imported/spr_terrain.png-6e50d9b250b8a4ae6fad2c6f8529950b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/spr_nature-sheet.png"
-dest_files=["res://.godot/imported/spr_nature-sheet.png-fa052bea3902416d00f80429f50577dd.ctex"]
+source_file="res://Assets/Sprites/spr_terrain.png"
+dest_files=["res://.godot/imported/spr_terrain.png-6e50d9b250b8a4ae6fad2c6f8529950b.ctex"]
 
 [params]
 
