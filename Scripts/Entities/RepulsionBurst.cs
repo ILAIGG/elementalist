@@ -2,7 +2,7 @@ using Godot;
 
 public partial class RepulsionBurst : Area2D
 {
-    [Export] public float Damage = 5f;
+    [Export] public float Damage = 2f;
     [Export] public float Duration = 0.3f;
     [Export] public float Force = 200f;
     [Export] public float Radius = 120f;
@@ -15,7 +15,7 @@ public partial class RepulsionBurst : Area2D
 
     public override void _PhysicsProcess(double delta)
     {
-        _timer += (float) delta;
+        _timer += (float)delta;
 
         if (!_effectApplied)
         {

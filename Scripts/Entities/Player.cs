@@ -17,6 +17,10 @@ public partial class Player : CharacterBody2D
     [Export] public float IFrameDuration = 0.5f;
     private float _iFrameTimer = 0f;
 
+    //Regeneración
+    [Export] public float RegenCooldown = 3f;
+    private float _regenTimer = 0f;
+
     private bool _isDashing = false;
     private float _dashTimer = 0f; //Tiempo restante del dash activo
     private float _dashCooldownTimer = 0f; //tiempo restante del cooldown
@@ -89,7 +93,14 @@ public partial class Player : CharacterBody2D
 
         //Regeneración de vida
         if (Stats.HealthRegen > 0f && !Health.IsDead)
-            Health.Heal(Stats.HealthRegen * (float)delta);
+        {
+            _regenTimer += (float)delta;
+            if (_regenTimer >= RegenCooldown)
+            {
+                _regenTimer -= RegenCooldown;
+                Health.Heal(Stats.HealthRegen);
+            }
+        }
     }
 
     private void HandleMovement()

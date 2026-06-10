@@ -87,15 +87,15 @@ public class UpgradeSystem
             //Si es infinito pero tiene un límite máximo de veces (mayor a 0), verificamos no excederlo
             if (upgrade.IsInfinite && upgrade.MaxAcquisitions > 0 && upgrade.TimesApplied >= upgrade.MaxAcquisitions)
                 continue;
-            
+
             //Si tiene condición y no se cumple, no aparece
             if (upgrade.Condition != null && !upgrade.Condition(_player))
                 continue;
-            
+
             //Si está en la lista de excluidos, no aparece
             if (_excludedIds.Contains(upgrade.Id))
                 continue;
-            
+
             available.Add(upgrade);
         }
 
@@ -110,7 +110,7 @@ public class UpgradeSystem
 
         if (!_acquiredUpgrades.Contains(upgrade))
             _acquiredUpgrades.Add(upgrade);
-        
+
         //Bloquea todos los upgrades que este excluye
         foreach (var excludedId in upgrade.Excludes)
             _excludedIds.Add(excludedId);
@@ -121,7 +121,7 @@ public class UpgradeSystem
     {
         //-------- STATS BASE --------
         //Upgrades genéricos de stats (siempre disponibles)
-        _allUpgrades.Add(new Upgrade 
+        _allUpgrades.Add(new Upgrade
         {
             Id = "stat_health",
             Name = "Arcane Vitality",
@@ -139,7 +139,7 @@ public class UpgradeSystem
         {
             Id = "stat_speed",
             Name = "Ethereal Stride",
-            GetDescription = (times) => "+15 Movement Speed.", 
+            GetDescription = (times) => "+15 Movement Speed.",
             Type = UpgradeType.Stat,
             IsInfinite = true,
             Apply = (player, times) =>
@@ -166,7 +166,7 @@ public class UpgradeSystem
         {
             Id = "stat_regen",
             Name = "Arcane Regeneration",
-            GetDescription = (times) => $"+{times} HP regenerated per second.",
+            GetDescription = (times) => $"+{times} HP regenerated every 3 seconds.",
             Type = UpgradeType.Stat,
             IsInfinite = true,
             Apply = (player, times) =>
@@ -370,7 +370,7 @@ public class UpgradeSystem
         {
             Id = "unlock_repulsion_burst",
             Name = "Repulsion Burst",
-            GetDescription = (times) => "Periodically releases a burst that pushes nearby enemies away",
+            GetDescription = (times) => $"Periodically releases a burst that pushes nearby enemies away. Triggers every {_stats.RepulsionBurstFireRate:F1} seconds.",
             Type = UpgradeType.Spell,
             IsInfinite = false,
             Apply = (player, times) =>
@@ -383,13 +383,13 @@ public class UpgradeSystem
         {
             Id = "repulsion_burst_damage",
             Name = "Arcane Repulsion",
-            GetDescription = (times) => $"+{3f * times} Repulsion Burst damage.This bonus scales up further every time you choose this upgrade card.",
+            GetDescription = (times) => $"+2 Repulsion Burst damage (Current: {_stats.BonusRepulsionBurstDamage:F2}s).",
             Type = UpgradeType.Spell,
             IsInfinite = true,
             Condition = (player) => _stats.HasRepulsionBurst,
             Apply = (player, times) =>
             {
-                _stats.BonusRepulsionBurstDamage += 3f * times;
+                _stats.BonusRepulsionBurstDamage += 3f;
             }
         });
 
