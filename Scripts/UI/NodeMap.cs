@@ -176,7 +176,7 @@ public partial class NodeMap : Node2D
                 //El nodo 0 (tutorial) siempre está desbloqueado
                 if (mapNode.NodeId == 0)
                 {
-                    mapNode.SetUnlocked(true);
+                    mapNode.SetState(true, GameManager.Instance.IsNodeCompleted(0));
                     continue;
                 }
 
@@ -200,7 +200,7 @@ public partial class NodeMap : Node2D
                     if (unlocked) break;
                 }
 
-                mapNode.SetUnlocked(unlocked);
+                mapNode.SetState(unlocked, GameManager.Instance.IsNodeCompleted(mapNode.NodeId));
             }
         }
     }

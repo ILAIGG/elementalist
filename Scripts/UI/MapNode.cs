@@ -24,10 +24,16 @@ public partial class MapNode : Node2D
         _nodeLabel.Text = NodeName;
     }
 
-    //Habilita o deshabilita el botón según si el nodo está desbloqueado
-    public void SetUnlocked(bool unlocked)
+    //Configura el estado visual del nodo según si está desbloqueado o completado
+    public void SetState(bool unlocked, bool completed)
     {
         _nodeButton.Disabled = !unlocked;
-        Modulate = unlocked ? Colors.White : new Color(0.4f, 0.4f, 0.4f);
+
+        if (completed)
+            _nodeButton.Modulate = Colors.LightGreen;
+        else if (unlocked)
+            _nodeButton.Modulate = Colors.White;
+        else
+            _nodeButton.Modulate = new Color(0.4f, 0.4f, 0.4f);
     }
 }

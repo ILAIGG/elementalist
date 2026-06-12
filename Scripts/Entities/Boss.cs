@@ -4,7 +4,7 @@ using Godot;
 public partial class Boss : CharacterBody2D, IEnemy
 {
     [Export] public float Speed = 160f;
-    [Export] public float MaxHealth = 2000f;
+    [Export] public float MaxHealth = 8000f;
     [Export] public float ContactDamage = 80f;
     private float _damageCooldown = 0f;
 
