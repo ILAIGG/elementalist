@@ -152,7 +152,7 @@ public class UpgradeSystem
         {
             Id = "stat_damage",
             Name = "Arcane Might",
-            GetDescription = (times) => "+8 Damage to ALL spells and abilities.",
+            GetDescription = (times) => "+6 Damage to ALL spells and abilities.",
             Type = UpgradeType.Stat,
             IsInfinite = true,
             Apply = (player, times) =>
@@ -278,13 +278,13 @@ public class UpgradeSystem
         {
             Id = "fireball_damage",
             Name = "Igneous Fury",
-            GetDescription = (times) => $"+{5f * times} Fireball Damage. This bonus scales up further every time you choose this upgrade card.", //Descripción dinámica. Muestra exactamente cuánto daño va a sumar esta vez
+            GetDescription = (times) => $"+{2f * times} Fireball Damage. This bonus scales up further every time you choose this upgrade card.", //Descripción dinámica. Muestra exactamente cuánto daño va a sumar esta vez
             Type = UpgradeType.Spell,
             IsInfinite = true,
             Apply = (player, times) =>
             {
                 //Primer vez +5, segunda +10, tercera +15...
-                _stats.BonusFireballDamage += 5f * times;
+                _stats.BonusFireballDamage += 2f * times;
             }
         });
 
