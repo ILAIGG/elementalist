@@ -67,7 +67,7 @@ layout_mode = 2
 
 [node name="SlotNumber0" type="Label" parent="SlotsContainer/Slot0/SlotMargin0/SlotContent0/SlotInfo0" unique_id=168527244]
 layout_mode = 2
-text = "0"
+text = "Save Slot 0"
 
 [node name="SlotName0" type="Label" parent="SlotsContainer/Slot0/SlotMargin0/SlotContent0/SlotInfo0" unique_id=2112818742]
 layout_mode = 2
@@ -112,7 +112,7 @@ layout_mode = 2
 
 [node name="SlotNumber1" type="Label" parent="SlotsContainer/Slot1/SlotMargin1/SlotContent1/SlotInfo1" unique_id=1512788939]
 layout_mode = 2
-text = "1"
+text = "Save Slot 1"
 
 [node name="SlotName1" type="Label" parent="SlotsContainer/Slot1/SlotMargin1/SlotContent1/SlotInfo1" unique_id=1409033096]
 layout_mode = 2
@@ -156,7 +156,7 @@ layout_mode = 2
 
 [node name="SlotNumber2" type="Label" parent="SlotsContainer/Slot2/SlotMargin2/SlotContent2/SlotInfo2" unique_id=1111674828]
 layout_mode = 2
-text = "2"
+text = "Save Slot 2"
 
 [node name="SlotName2" type="Label" parent="SlotsContainer/Slot2/SlotMargin2/SlotContent2/SlotInfo2" unique_id=1542502948]
 layout_mode = 2

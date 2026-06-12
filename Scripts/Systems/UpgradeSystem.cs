@@ -152,7 +152,7 @@ public class UpgradeSystem
         {
             Id = "stat_damage",
             Name = "Arcane Might",
-            GetDescription = (times) => "+6 Damage to ALL spells and abilities.",
+            GetDescription = (times) => "+8 Damage to ALL spells and abilities.",
             Type = UpgradeType.Stat,
             IsInfinite = true,
             Apply = (player, times) =>
