@@ -43,6 +43,8 @@ public partial class Enemy : CharacterBody2D, IEnemy
 
     public override void _PhysicsProcess(double delta)
     {
+        _statusEffects.Update(delta);
+
         if (_player == null) return;
 
         //Se aplica el knockback y se reduce gradualmente
@@ -53,8 +55,6 @@ public partial class Enemy : CharacterBody2D, IEnemy
             MoveAndSlide();
             return; //Mientras no haya knockback, se ignora el movimiento normal
         }
-
-        _statusEffects.Update(delta);
 
         //Se reduce el cooldown de daño
         if (_damageCooldown > 0f)
@@ -103,9 +103,9 @@ public partial class Enemy : CharacterBody2D, IEnemy
         Speed *= speedMultiplier;
     }
 
-    public void ApplySlow(float factor, float duration)
+    public void ApplyStatusEffect(StatusEffect effect)
     {
-        _statusEffects.ApplySlow(factor, duration);
+        _statusEffects.Apply(effect);
     }
 
     public void ApplyKnockback(Vector2 force)

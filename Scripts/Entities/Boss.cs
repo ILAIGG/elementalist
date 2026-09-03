@@ -38,6 +38,8 @@ public partial class Boss : CharacterBody2D, IEnemy
 
     public override void _PhysicsProcess(double delta)
     {
+        _statusEffects.Update(delta);
+
         if (_player == null) return;
 
         if (_knockbackVelocity != Vector2.Zero)
@@ -47,8 +49,6 @@ public partial class Boss : CharacterBody2D, IEnemy
             MoveAndSlide();
             return;
         }
-
-        _statusEffects.Update(delta);
 
         if (_damageCooldown > 0f)
             _damageCooldown -= (float)delta;
@@ -85,21 +85,21 @@ public partial class Boss : CharacterBody2D, IEnemy
         }
     }
 
-    public void ApplySlow(float factor, float duration)
+    public void ApplyStatusEffect(StatusEffect effect)
     {
-        float actualFactor = factor;
+        float actualFactor = effect.MovementFactor;
 
         //En fase 2, solo recibe el 20% del efecto del slow
         if (_currentPhase == 2)
         {
-            float slowEffect = 1f - factor;
+            float slowEffect = 1f - effect.MovementFactor;
             actualFactor = 1f - (slowEffect * 0.2f);
         }
 
         //El jefe resiste el slow, nunca puede quedar completamente inmóvil
         float resistedFactor = Mathf.Max(actualFactor, MinSlowFactor);
 
-        _statusEffects.ApplySlow(resistedFactor, duration);
+        _statusEffects.Apply(new FrozenEffect(resistedFactor, effect.RemainingDuration));
     }
 
     public void ApplyKnockback(Vector2 force)

@@ -46,8 +46,8 @@ public partial class FrostRay : Area2D
                 //Daño
                 enemy.Health.TakeDamage(Damage, body.GlobalPosition, GetTree(),body.GetInstanceId());
 
-                //Ralentización
-                enemy.ApplySlow(SlowFactor, SlowDuration);
+                //Aplica el estado de congelación con la intensidad configurada por las mejoras.
+                enemy.ApplyStatusEffect(new FrozenEffect(SlowFactor, SlowDuration));
 
                 //Si tiene chain y no ha rebotado aún, entonces busca al siguiente enemigo
                 if (IsChaining && !_hasChained)

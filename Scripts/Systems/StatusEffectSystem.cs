@@ -1,28 +1,75 @@
-using Godot;
+using System.Collections.Generic;
+
+public abstract class StatusEffect
+{
+    protected StatusEffect(string id, float movementFactor, float duration)
+    {
+        Id = id;
+        MovementFactor = movementFactor;
+        RemainingDuration = duration;
+    }
+
+    public string Id { get; }
+    public float MovementFactor { get; }
+    public float RemainingDuration { get; private set; }
+
+    public bool IsExpired => RemainingDuration <= 0f;
+
+    public void Update(double delta)
+    {
+        RemainingDuration -= (float)delta;
+    }
+}
+
+public sealed class FrozenEffect : StatusEffect
+{
+    public FrozenEffect(float movementFactor, float duration)
+        : base("frozen", movementFactor, duration)
+    {
+    }
+}
 
 public sealed class StatusEffectSystem
 {
-    private float _slowFactor = 1f;
-    private float _slowRemainingDuration = 0f;
+    private readonly Dictionary<string, StatusEffect> _effects = new();
 
-    public float MovementFactor => _slowFactor;
-
-    public void ApplySlow(float factor, float duration)
+    public float MovementFactor
     {
-        if (factor >= _slowFactor || duration <= 0f)
+        get
+        {
+            float movementFactor = 1f;
+            foreach (StatusEffect effect in _effects.Values)
+                movementFactor = System.MathF.Min(movementFactor, effect.MovementFactor);
+
+            return movementFactor;
+        }
+    }
+
+    public void Apply(StatusEffect effect)
+    {
+        if (effect.IsExpired)
             return;
 
-        _slowFactor = factor;
-        _slowRemainingDuration = duration;
+        if (_effects.TryGetValue(effect.Id, out StatusEffect currentEffect)
+            && effect.MovementFactor >= currentEffect.MovementFactor)
+            return;
+
+        _effects[effect.Id] = effect;
     }
 
     public void Update(double delta)
     {
-        if (_slowRemainingDuration <= 0f)
-            return;
+        foreach (StatusEffect effect in _effects.Values)
+            effect.Update(delta);
 
-        _slowRemainingDuration -= (float)delta;
-        if (_slowRemainingDuration <= 0f)
-            _slowFactor = 1f;
+        List<string> expiredEffects = new();
+        foreach (KeyValuePair<string, StatusEffect> entry in _effects)
+        {
+            if (entry.Value.IsExpired)
+                expiredEffects.Add(entry.Key);
+        }
+
+        foreach (string effectId in expiredEffects)
+            _effects.Remove(effectId);
     }
 }
