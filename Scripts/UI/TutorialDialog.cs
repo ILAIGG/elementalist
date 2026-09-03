@@ -27,10 +27,25 @@ public partial class TutorialDialog : CanvasLayer
                 _steps.Add(step);
         }
 
+        GetTree().Root.SizeChanged += OnWindowResized;
+
         if (_steps.Count > 0)
             ShowStep(0);
         else
             QueueFree();
+    }
+
+    public override void _ExitTree()
+    {
+        GetTree().Root.SizeChanged -= OnWindowResized;
+    }
+
+    private void OnWindowResized()
+    {
+        if (IsInsideTree() && _currentStep < _steps.Count)
+        {
+            ShowStep(_currentStep);
+        }
     }
 
     private void ShowStep(int index)
@@ -51,19 +66,20 @@ public partial class TutorialDialog : CanvasLayer
         //Actualiza el texto
         _dialogText.Text = step.Text;
 
+        Vector2 screenSize = GetViewport().GetVisibleRect().Size;
+
         //Posiciona la caja de texto
         if (step.DialogPosition != Vector2.Zero)
-            _dialogBox.Position = step.DialogPosition;
+            _dialogBox.Position = step.GetDialogPosition(screenSize);
         else
         {
             //Centra la caja en pantalla
-            Vector2 screenSize = GetViewport().GetVisibleRect().Size;
             _dialogBox.Position = (screenSize - _dialogBox.Size) / 2f;
         }
 
         //Muestra u oculta el highlight
         if (step.HighlightSize != Vector2.Zero)
-            DrawHighlight(step.HighlightPosition, step.HighlightSize);
+            DrawHighlight(step.GetHighlightPosition(screenSize), step.HighlightSize);
         else
             _overlay.Material = null;
     }

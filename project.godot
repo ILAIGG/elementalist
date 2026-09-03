@@ -11,9 +11,9 @@ config_version=5
 [application]
 
 config/name="Elementalist"
-config/version="0.2.0"
+config/version="0.3.0"
 run/main_scene="uid://b8q2hnprib8b8"
-config/features=PackedStringArray("4.6", "C#", "GL Compatibility")
+config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]

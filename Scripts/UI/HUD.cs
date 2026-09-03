@@ -18,18 +18,20 @@ public partial class HUD : CanvasLayer
     private float _gameTime = 0f;
     public override void _Ready()
     {
+        VBoxContainer _contentContainer = GetNode<VBoxContainer>("Container/PlayerInfoPanel/Margin/ContentContainer");
+
         //Se obtienen referencias a todos los nodos
-        _healthBar = GetNode<TextureProgressBar>("Container/HealthBar");
-        _healthLabel = GetNode<Label>("Container/HealthLabel");
-        _xpBar = GetNode<TextureProgressBar>("Container/XPBar");
-        _xpLabel = GetNode<Label>("Container/XPBar/XPLabel");
-        _levelLabel = GetNode<Label>("Container/LevelLabel");
-        _timeLabel = GetNode<Label>("Container/TimeLabel");
-        _difficultyLabel = GetNode<Label>("Container/DifficultyLabel");
-        _novaLabel = GetNode<Label>("Container/Cooldowns/NovaLabel");
-        _meteorLabel = GetNode<Label>("Container/Cooldowns/MeteorLabel");
-        _dashLabel = GetNode<Label>("Container/Cooldowns/DashLabel");
-        _objectiveLabel = GetNode<Label>("Container/ObjectiveLabel");
+        _healthBar = _contentContainer.GetNode<TextureProgressBar>("HealthBar");
+        _healthLabel = _contentContainer.GetNode<Label>("HealthLabel");
+        _xpBar = _contentContainer.GetNode<TextureProgressBar>("XPBar");
+        _xpLabel = _contentContainer.GetNode<Label>("XPBar/XPLabel");
+        _levelLabel = _contentContainer.GetNode<Label>("LevelLabel");
+        _timeLabel = _contentContainer.GetNode<Label>("TimeLabel");
+        _difficultyLabel = _contentContainer.GetNode<Label>("DifficultyLabel");
+        _novaLabel = _contentContainer.GetNode<Label>("Cooldowns/NovaLabel");
+        _meteorLabel = _contentContainer.GetNode<Label>("Cooldowns/MeteorLabel");
+        _dashLabel = _contentContainer.GetNode<Label>("Cooldowns/DashLabel");
+        _objectiveLabel = GetNode<Label>("Container/ObjectivePanel/Margin/ObjectiveLabel");
 
         _player = GetTree().GetFirstNodeInGroup("player") as Player;
 
