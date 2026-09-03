@@ -17,8 +17,7 @@ public partial class Boss : CharacterBody2D, IEnemy
     private Player _player;
     private int _currentPhase = 1;
 
-    private float _slowFactor = 1f;
-    private float _slowTimer = 0f;
+    private readonly StatusEffectSystem _statusEffects = new();
     //Factor mínimo de slow que se puede aplicar al jefe, 0.4 significa que nunca irá a menos del 40% de su velocidad
     private const float MinSlowFactor = 0.4f;
 
@@ -49,12 +48,7 @@ public partial class Boss : CharacterBody2D, IEnemy
             return;
         }
 
-        if (_slowTimer > 0f)
-        {
-            _slowTimer -= (float)delta;
-            if (_slowTimer <= 0f)
-                _slowFactor = 1f;
-        }
+        _statusEffects.Update(delta);
 
         if (_damageCooldown > 0f)
             _damageCooldown -= (float)delta;
@@ -65,7 +59,7 @@ public partial class Boss : CharacterBody2D, IEnemy
         if (direction.X != 0)
             _sprite.FlipH = direction.X < 0;
 
-        Velocity = direction * Speed * _slowFactor;
+        Velocity = direction * Speed * _statusEffects.MovementFactor;
         MoveAndSlide();
 
         bool touchingPlayer = false;
@@ -105,11 +99,7 @@ public partial class Boss : CharacterBody2D, IEnemy
         //El jefe resiste el slow, nunca puede quedar completamente inmóvil
         float resistedFactor = Mathf.Max(actualFactor, MinSlowFactor);
 
-        if (actualFactor < _slowFactor)
-        {
-            _slowFactor = resistedFactor;
-            _slowTimer = duration;
-        }
+        _statusEffects.ApplySlow(resistedFactor, duration);
     }
 
     public void ApplyKnockback(Vector2 force)

@@ -21,9 +21,7 @@ public partial class Enemy : CharacterBody2D, IEnemy
     //Una referencia al jugador, la usamos para saber hacia donde debe moverse el enemigo. No usamos export ya que sino tendríamos que referenciar al jugador desde el inspector, lo cual es tedioso.
     private Player _player;
 
-    //Variables para el slow
-    private float _slowFactor = 1f; //1 = velocidad normal, 0.4 = 40% de velocidad
-    private float _slowTimer = 0f;
+    private readonly StatusEffectSystem _statusEffects = new();
 
     //Variables para el knockback
     private Vector2 _knockbackVelocity = Vector2.Zero;
@@ -56,13 +54,7 @@ public partial class Enemy : CharacterBody2D, IEnemy
             return; //Mientras no haya knockback, se ignora el movimiento normal
         }
 
-        //Reduce el timer del slow
-        if (_slowTimer > 0f)
-        {
-            _slowTimer -= (float)delta;
-            if (_slowTimer <= 0f)
-                _slowFactor = 1f; //Se restaura la velocidad normal
-        }
+        _statusEffects.Update(delta);
 
         //Se reduce el cooldown de daño
         if (_damageCooldown > 0f)
@@ -75,7 +67,7 @@ public partial class Enemy : CharacterBody2D, IEnemy
         if (direction.X != 0)
             _sprite.FlipH = direction.X < 0;
 
-        Velocity = direction * Speed * _slowFactor;
+        Velocity = direction * Speed * _statusEffects.MovementFactor;
         MoveAndSlide();
 
         bool touchingPlayer = false;
@@ -113,12 +105,7 @@ public partial class Enemy : CharacterBody2D, IEnemy
 
     public void ApplySlow(float factor, float duration)
     {
-        //Solo se aplica el slow si es más fuerte que el actual. Esto evita que otro slow más débil sobreescriba a otro más fuerte
-        if (factor < _slowFactor)
-        {
-            _slowFactor = factor;
-            _slowTimer = duration;
-        }
+        _statusEffects.ApplySlow(factor, duration);
     }
 
     public void ApplyKnockback(Vector2 force)
