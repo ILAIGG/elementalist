@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public static class RunMapGenerator
 {
-    public const int CurrentMapVersion = 3;
+    public const int CurrentMapVersion = 4;
     private const int LayerCount = 5;
     private const int MinimumNodesPerLayer = 2;
     private const int MaximumNodesPerLayer = 3;
@@ -43,8 +43,9 @@ public static class RunMapGenerator
             for (int position = 0; position < nodeCount; position++)
             {
                 LevelDefinition level = levels[random.Next(levels.Length)];
-                float progressionMultiplier = 1.0f + ((layer - 1) * 0.2f);
-                float variation = (float)(random.NextDouble() * 0.1 - 0.05);
+                float layerDifficulty = 1.0f + (layer * 0.25f);
+                float levelAdjustment = (level.BaseDifficulty - 1.0f) * 0.1f;
+                float variation = (float)(random.NextDouble() * 0.04 - 0.02);
 
                 RunMapNode node = new()
                 {
@@ -53,7 +54,7 @@ public static class RunMapGenerator
                     Position = positions[position],
                     LevelId = level.Id,
                     DisplayName = level.DisplayName,
-                    DifficultyMultiplier = MathF.Max(1.0f, level.BaseDifficulty + progressionMultiplier - 1.0f + variation),
+                    DifficultyMultiplier = MathF.Max(1.0f, layerDifficulty + levelAdjustment + variation),
                     IsFinal = layer == LayerCount
                 };
 

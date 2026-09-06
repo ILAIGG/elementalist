@@ -84,7 +84,7 @@ public partial class GameManager : Node
         SaveGame();
     }
 
-    private void EnsureRunMap()
+    public void EnsureRunMap()
     {
         if (ActiveSave == null)
             return;

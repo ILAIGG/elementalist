@@ -25,6 +25,20 @@ public partial class MapNode : Node2D
         _nodeLabel.Text = NodeName;
     }
 
+    public void Configure(RunMapNode data, PackedScene levelScene, Vector2 mapPosition)
+    {
+        NodeId = data.Id;
+        NodeName = data.DisplayName;
+        DifficultyMultiplier = data.DifficultyMultiplier;
+        ConnectedNodeIds = data.ConnectedNodeIds;
+        IsFinal = data.IsFinal;
+        LevelScene = levelScene;
+        Position = mapPosition;
+
+        if (_nodeLabel != null)
+            _nodeLabel.Text = NodeName;
+    }
+
     //Configura el estado visual del nodo según si está desbloqueado o completado
     public void SetState(bool unlocked, bool completed)
     {

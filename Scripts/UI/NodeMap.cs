@@ -28,11 +28,23 @@ public partial class NodeMap : Node2D
 
     public override void _Ready()
     {
-        _nodesContainer = GetNode<Node2D>("Nodes");
+        _nodesContainer = GetNodeOrNull<Node2D>("Nodes");
+        if (_nodesContainer == null)
+        {
+            _nodesContainer = new Node2D { Name = "Nodes" };
+            AddChild(_nodesContainer);
+        }
+
         _camera = GetNode<Camera2D>("Camera2D");
         _popUp = GetNode<Control>("PopUp");
 
-        _pathsContainer = GetNode<Node2D>("Paths");
+        _pathsContainer = GetNodeOrNull<Node2D>("Paths");
+        if (_pathsContainer == null)
+        {
+            _pathsContainer = new Node2D { Name = "Paths" };
+            AddChild(_pathsContainer);
+        }
+
         BuildGeneratedMap();
         DrawPaths();
 
@@ -67,23 +79,30 @@ public partial class NodeMap : Node2D
         foreach (Node child in _pathsContainer.GetChildren())
             child.Free();
 
+        GameManager.Instance.EnsureRunMap();
         RunMapNode[] runMap = GameManager.Instance.CurrentRunMap;
+        if (runMap.Length == 0)
+        {
+            GD.PushError("NodeMap could not build the run map: no generated nodes are available.");
+            return;
+        }
 
         PackedScene mapNodeScene = GD.Load<PackedScene>("res://Scenes/UI/MapNode.tscn");
+        if (mapNodeScene == null)
+        {
+            GD.PushError("NodeMap could not load res://Scenes/UI/MapNode.tscn.");
+            return;
+        }
+
         foreach (RunMapNode data in runMap)
         {
             LevelDefinition level = data.IsTutorial ? null : LevelCatalog.GetLevel(data.LevelId);
             MapNode mapNode = mapNodeScene.Instantiate<MapNode>();
             mapNode.Name = $"MapNode{data.Id}";
-            mapNode.NodeId = data.Id;
-            mapNode.NodeName = data.DisplayName;
-            mapNode.DifficultyMultiplier = data.DifficultyMultiplier;
-            mapNode.ConnectedNodeIds = data.ConnectedNodeIds;
-            mapNode.IsFinal = data.IsFinal;
-            mapNode.LevelScene = level?.Scene ?? GD.Load<PackedScene>("res://Scenes/World/Level_0_0.tscn");
-            mapNode.Position = GetNodePosition(data, runMap);
             mapNode.ZIndex = 2;
             _nodesContainer.AddChild(mapNode);
+            PackedScene levelScene = level?.Scene ?? GD.Load<PackedScene>("res://Scenes/World/Level_0_0.tscn");
+            mapNode.Configure(data, levelScene, GetNodePosition(data, runMap));
         }
 
         _camera.LimitLeft = -500;
