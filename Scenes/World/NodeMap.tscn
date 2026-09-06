@@ -123,13 +123,13 @@ NodeId = 5
 visible = false
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 220.0
+offset_bottom = 100.0
 
 [node name="Panel" type="PanelContainer" parent="PopUp" unique_id=396904450]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 220.0
+offset_bottom = 100.0
 
 [node name="Margin" type="MarginContainer" parent="PopUp/Panel" unique_id=1483623296]
 layout_mode = 2

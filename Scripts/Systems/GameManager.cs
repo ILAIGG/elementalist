@@ -69,7 +69,7 @@ public partial class GameManager : Node
         if (ActiveSave == null)
             return;
 
-        if (ActiveSave.MapNodes.Length > 0 && ActiveSave.MapVersion == RunMapGenerator.CurrentMapVersion)
+        if (ActiveSave.MapVersion == RunMapGenerator.CurrentMapVersion && RunMapGenerator.IsValid(ActiveSave.MapNodes))
             return;
 
         ActiveSave.MapNodes = RunMapGenerator.Generate(ActiveSave.MapSeed);

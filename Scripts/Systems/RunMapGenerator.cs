@@ -64,6 +64,44 @@ public static class RunMapGenerator
         return nodes.ToArray();
     }
 
+    public static bool IsValid(RunMapNode[] nodes)
+    {
+        if (nodes == null || nodes.Length == 0)
+            return false;
+
+        bool hasTutorial = false;
+        bool hasFinal = false;
+        HashSet<int> nodeIds = new();
+        Dictionary<int, RunMapNode> nodesById = new();
+
+        foreach (RunMapNode node in nodes)
+        {
+            if (node == null || !nodeIds.Add(node.Id))
+                return false;
+
+            nodesById[node.Id] = node;
+            hasTutorial |= node.IsTutorial && node.Id == TutorialNodeId && node.Layer == 0;
+            hasFinal |= node.IsFinal && node.Layer == LayerCount;
+        }
+
+        if (!hasTutorial || !hasFinal)
+            return false;
+
+        foreach (RunMapNode node in nodes)
+        {
+            foreach (int connectedId in node.ConnectedNodeIds)
+            {
+                if (!nodesById.TryGetValue(connectedId, out RunMapNode connectedNode))
+                    return false;
+
+                if (connectedNode.Layer != node.Layer + 1)
+                    return false;
+            }
+        }
+
+        return true;
+    }
+
     private static void ConnectLayers(List<RunMapNode> previousLayer, List<RunMapNode> currentLayer, Random random)
     {
         for (int currentIndex = 0; currentIndex < currentLayer.Count; currentIndex++)

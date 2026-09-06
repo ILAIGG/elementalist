@@ -81,6 +81,7 @@ public partial class NodeMap : Node2D
             mapNode.IsFinal = data.IsFinal;
             mapNode.LevelScene = level?.Scene ?? GD.Load<PackedScene>("res://Scenes/World/Level_0_0.tscn");
             mapNode.Position = GetNodePosition(data, runMap);
+            mapNode.ZIndex = 2;
             _nodesContainer.AddChild(mapNode);
         }
 
@@ -173,14 +174,35 @@ public partial class NodeMap : Node2D
 
     private void OnEnterPressed()
     {
-        if (_selectedNode == null || _selectedNode.LevelScene == null) return;
+        if (_selectedNode == null)
+        {
+            GD.PushError("Cannot enter level: no map node is selected.");
+            return;
+        }
+
+        if (_selectedNode.LevelScene == null)
+        {
+            GD.PushError($"Cannot enter level: node {_selectedNode.NodeId} has no scene.");
+            return;
+        }
 
         //Guarda el nodo activo y su dificultad en el GameManager
         GameManager.Instance.ActiveNodeId = _selectedNode.NodeId;
         GameManager.Instance.ActiveNodeDifficulty = _selectedNode.DifficultyMultiplier;
         GameManager.Instance.ActiveNodeIsFinal = _selectedNode.IsFinal;
 
-        GetTree().ChangeSceneToPacked(_selectedNode.LevelScene);
+        _popUp.Visible = false;
+        CallDeferred(nameof(ChangeToSelectedLevel));
+    }
+
+    private void ChangeToSelectedLevel()
+    {
+        if (_selectedNode == null || _selectedNode.LevelScene == null)
+            return;
+
+        Error result = GetTree().ChangeSceneToPacked(_selectedNode.LevelScene);
+        if (result != Error.Ok)
+            GD.PushError($"Could not load level for node {_selectedNode.NodeId}: {result}");
     }
 
     private void OnClosePressed()
@@ -215,7 +237,7 @@ public partial class NodeMap : Node2D
                 {
                     DefaultColor = pathColor,
                     Width = pathWidth,
-                    ZIndex = -1
+                    ZIndex = 1
                 };
                 line.AddPoint(source.Position);
                 line.AddPoint(target.Position);
