@@ -21,6 +21,7 @@ public partial class Level : Node2D
     private List<VictoryCondition> _victoryConditions = new();
     private KillBossCondition _killBossCondition;
     private SurviveTimeCondition _surviveTimeCondition;
+    private RunCompleted _runCompleted;
 
     //Hud
     private HUD _hud;
@@ -42,8 +43,23 @@ public partial class Level : Node2D
         //Busca específicamente KillBossCondition para notificarle cuando spawnee el jefe
         _killBossCondition = GetNodeOrNull<KillBossCondition>("KillBossCondition");
 
+        bool isFinalNode = GameManager.Instance.ActiveNodeIsFinal;
+        if (_killBossCondition != null)
+            _killBossCondition.Enabled = isFinalNode;
+
         _hud = GetTree().Root.FindChild("HUD", true, false) as HUD;
         _surviveTimeCondition = GetNodeOrNull<SurviveTimeCondition>("SurviveTimeCondition");
+
+        if (_surviveTimeCondition != null)
+            _surviveTimeCondition.Enabled = !isFinalNode;
+
+        if (isFinalNode)
+        {
+            PackedScene runCompletedScene = GD.Load<PackedScene>("res://Scenes/UI/RunCompleted.tscn");
+            _runCompleted = runCompletedScene.Instantiate<RunCompleted>();
+            _runCompleted.ProcessMode = Node.ProcessModeEnum.Always;
+            GetNode<CanvasLayer>("UI").AddChild(_runCompleted);
+        }
 
         //Inicializa el objetivo en el HUD
         if (_surviveTimeCondition != null && _surviveTimeCondition.Enabled)
@@ -189,8 +205,13 @@ public partial class Level : Node2D
         if (GameManager.Instance.ActiveNodeIsFinal)
             GameManager.Instance.CompleteRun();
 
-        Victory victory = GetTree().Root.FindChild("Victory", true, false) as Victory;
-        victory?.ShowVictory();
+        if (GameManager.Instance.ActiveNodeIsFinal)
+            _runCompleted?.ShowRunCompleted();
+        else
+        {
+            Victory victory = GetTree().Root.FindChild("Victory", true, false) as Victory;
+            victory?.ShowVictory();
+        }
     }
 
     public override void _Input(InputEvent @event)
