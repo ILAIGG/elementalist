@@ -19,7 +19,8 @@ public partial class MainMenu : Control
         _playButton.Pressed += OnPlayPressed;
         _continueButton.Pressed += OnContinuePressed;
         _quitButton.Pressed += OnQuitPressed;
-        _continueButton.Disabled = !SaveSystem.RunExists();
+        SaveData savedRun = SaveSystem.LoadRun();
+        _continueButton.Disabled = savedRun == null || savedRun.IsRunComplete;
     }
 
     private void OnPlayPressed()

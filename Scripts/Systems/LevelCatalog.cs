@@ -37,4 +37,15 @@ public static class LevelCatalog
 
         return ForestLevels;
     }
+
+    public static LevelDefinition GetLevel(string levelId)
+    {
+        foreach (LevelDefinition level in ForestLevels)
+        {
+            if (level.Id == levelId)
+                return level;
+        }
+
+        return null;
+    }
 }

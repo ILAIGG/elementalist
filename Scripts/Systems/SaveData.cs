@@ -8,4 +8,5 @@ public class SaveData
     public int MapSeed { get; set; }
     public int MapVersion { get; set; } = 1;
     public RunMapNode[] MapNodes { get; set; } = Array.Empty<RunMapNode>();
+    public bool IsRunComplete { get; set; }
 }

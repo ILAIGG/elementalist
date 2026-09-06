@@ -8,6 +8,7 @@ public partial class MapNode : Node2D
     [Export] public PackedScene LevelScene { get; set; }
     [Export] public int NodeId { get; set; } = 0;
     [Export] public int[] ConnectedNodeIds { get; set; } = Array.Empty<int>();
+    [Export] public bool IsFinal { get; set; }
 
     private Button _nodeButton;
     private Label _nodeLabel;

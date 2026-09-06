@@ -9,6 +9,8 @@ public partial class GameManager : Node
     public int ActiveNodeId { get; set; } = -1;
     public SaveData ActiveSave { get; private set; }
     public RunMapNode[] CurrentRunMap => ActiveSave?.MapNodes ?? Array.Empty<RunMapNode>();
+    public bool IsRunComplete => ActiveSave?.IsRunComplete ?? false;
+    public bool ActiveNodeIsFinal { get; set; }
 
     //Dificultad
     public float ActiveNodeDifficulty { get; set; } = 1.0f;
@@ -90,6 +92,15 @@ public partial class GameManager : Node
         newCompleted[newCompleted.Length - 1] = nodeId;
         ActiveSave.CompletedNodes = newCompleted;
 
+        SaveGame();
+    }
+
+    public void CompleteRun()
+    {
+        if (ActiveSave == null)
+            return;
+
+        ActiveSave.IsRunComplete = true;
         SaveGame();
     }
 

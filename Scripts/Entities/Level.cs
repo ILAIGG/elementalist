@@ -186,6 +186,9 @@ public partial class Level : Node2D
         // Marca el nodo como completado en el GameManager
         GameManager.Instance.CompleteNode(GameManager.Instance.ActiveNodeId);
 
+        if (GameManager.Instance.ActiveNodeIsFinal)
+            GameManager.Instance.CompleteRun();
+
         Victory victory = GetTree().Root.FindChild("Victory", true, false) as Victory;
         victory?.ShowVictory();
     }

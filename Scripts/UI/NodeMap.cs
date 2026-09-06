@@ -1,4 +1,5 @@
 using Godot;
+using System.Collections.Generic;
 
 public partial class NodeMap : Node2D
 {
@@ -32,6 +33,7 @@ public partial class NodeMap : Node2D
         _popUp = GetNode<Control>("PopUp");
 
         _pathsContainer = GetNode<Node2D>("Paths");
+        BuildGeneratedMap();
         DrawPaths();
 
         string popUpPath = "PopUp/Panel/Margin/Content";
@@ -54,6 +56,55 @@ public partial class NodeMap : Node2D
         RefreshNodeStates();
 
         _popUp.Visible = false;
+    }
+
+    private void BuildGeneratedMap()
+    {
+        foreach (Node child in _nodesContainer.GetChildren())
+            child.Free();
+
+        foreach (Node child in _pathsContainer.GetChildren())
+            child.Free();
+
+        RunMapNode[] runMap = GameManager.Instance.CurrentRunMap;
+
+        PackedScene mapNodeScene = GD.Load<PackedScene>("res://Scenes/UI/MapNode.tscn");
+        foreach (RunMapNode data in runMap)
+        {
+            LevelDefinition level = data.IsTutorial ? null : LevelCatalog.GetLevel(data.LevelId);
+            MapNode mapNode = mapNodeScene.Instantiate<MapNode>();
+            mapNode.Name = $"MapNode{data.Id}";
+            mapNode.NodeId = data.Id;
+            mapNode.NodeName = data.DisplayName;
+            mapNode.DifficultyMultiplier = data.DifficultyMultiplier;
+            mapNode.ConnectedNodeIds = data.ConnectedNodeIds;
+            mapNode.IsFinal = data.IsFinal;
+            mapNode.LevelScene = level?.Scene ?? GD.Load<PackedScene>("res://Scenes/World/Level_0_0.tscn");
+            mapNode.Position = GetNodePosition(data, runMap);
+            _nodesContainer.AddChild(mapNode);
+        }
+
+        _camera.LimitLeft = -500;
+        _camera.LimitRight = 500;
+        _camera.LimitTop = -500;
+        _camera.LimitBottom = 300;
+    }
+
+    private Vector2 GetNodePosition(RunMapNode node, RunMapNode[] runMap)
+    {
+        if (node.IsTutorial)
+            return new Vector2(0, 230);
+
+        int layerNodeCount = 0;
+        foreach (RunMapNode other in runMap)
+        {
+            if (other.Layer == node.Layer)
+                layerNodeCount++;
+        }
+
+        float x = (node.Position - ((layerNodeCount - 1) / 2.0f)) * 180.0f;
+        float y = 230.0f - (node.Layer * 130.0f);
+        return new Vector2(x, y);
     }
 
     public override void _Process(double delta)
@@ -127,6 +178,7 @@ public partial class NodeMap : Node2D
         //Guarda el nodo activo y su dificultad en el GameManager
         GameManager.Instance.ActiveNodeId = _selectedNode.NodeId;
         GameManager.Instance.ActiveNodeDifficulty = _selectedNode.DifficultyMultiplier;
+        GameManager.Instance.ActiveNodeIsFinal = _selectedNode.IsFinal;
 
         GetTree().ChangeSceneToPacked(_selectedNode.LevelScene);
     }
@@ -141,27 +193,32 @@ public partial class NodeMap : Node2D
     {
         Color pathColor = new Color(0.76f, 0.60f, 0.42f); // Marrón claro estilo tierra
         int pathWidth = 6;
+        Dictionary<int, MapNode> mapNodes = new();
 
         foreach (Node child in _pathsContainer.GetChildren())
+            child.Free();
+
+        foreach (Node child in _nodesContainer.GetChildren())
         {
-            if (child is Path2D path2D)
+            if (child is MapNode mapNode)
+                mapNodes[mapNode.NodeId] = mapNode;
+        }
+
+        foreach (MapNode source in mapNodes.Values)
+        {
+            foreach (int connectedId in source.ConnectedNodeIds)
             {
-                Line2D line = new Line2D();
-                line.DefaultColor = pathColor;
-                line.Width = pathWidth;
+                if (!mapNodes.TryGetValue(connectedId, out MapNode target))
+                    continue;
 
-                //SampleBaked recorre la curva completa uniformemente
-                Curve2D curve = path2D.Curve;
-                float totalLength = curve.GetBakedLength();
-                int sampleCount = 50;
-
-                for (int i = 0; i <= sampleCount; i++)
+                Line2D line = new Line2D
                 {
-                    float distance = (float)i / sampleCount * totalLength;
-                    Vector2 point = curve.SampleBaked(distance);
-                    line.AddPoint(point + path2D.Position);
-                }
-
+                    DefaultColor = pathColor,
+                    Width = pathWidth,
+                    ZIndex = -1
+                };
+                line.AddPoint(source.Position);
+                line.AddPoint(target.Position);
                 _pathsContainer.AddChild(line);
             }
         }
