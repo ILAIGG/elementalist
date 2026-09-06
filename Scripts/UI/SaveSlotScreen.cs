@@ -24,6 +24,12 @@ public partial class SaveSlotScreen : Control
         _newGameButton = GetNode<Button>($"{runPath}/SlotButtons0/NewGameButton0");
         _deleteButton = GetNode<Button>($"{runPath}/SlotButtons0/DeleteButton0");
 
+        GetNode<Label>($"{runPath}/SlotInfo0/SlotNumber0").Text = LocalizationManager.Translate("screen.current_run");
+        _continueButton.Text = LocalizationManager.Translate("common.continue");
+        _newGameButton.Text = LocalizationManager.Translate("common.new_game");
+        _deleteButton.Text = LocalizationManager.Translate("common.delete");
+        _backButton.Text = LocalizationManager.Translate("common.back");
+
         _continueButton.Pressed += OnContinuePressed;
         _newGameButton.Pressed += OnNewGamePressed;
         _deleteButton.Pressed += OnDeletePressed;
@@ -45,8 +51,8 @@ public partial class SaveSlotScreen : Control
             return;
         }
 
-        _runName.Text = "No active run";
-        _runDetails.Text = "Empty";
+        _runName.Text = LocalizationManager.Translate("save.no_active_run");
+        _runDetails.Text = LocalizationManager.Translate("save.empty");
         _continueButton.Visible = false;
         _newGameButton.Visible = true;
         _deleteButton.Visible = false;
@@ -57,7 +63,7 @@ public partial class SaveSlotScreen : Control
         int hours = (int)(seconds / 3600);
         int minutes = (int)((seconds % 3600) / 60);
         int remainingSeconds = (int)(seconds % 60);
-        return $"Play time: {hours}h {minutes}m {remainingSeconds}s";
+        return LocalizationManager.Translate("screen.play_time", hours, minutes, remainingSeconds);
     }
 
     private void OnContinuePressed()

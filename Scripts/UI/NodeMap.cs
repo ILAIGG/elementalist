@@ -54,6 +54,9 @@ public partial class NodeMap : Node2D
         _enterButton = GetNode<Button>($"{popUpPath}/EnterButton");
         _closeButton = GetNode<Button>($"{popUpPath}/Header/CloseButton");
 
+        _enterButton.Text = LocalizationManager.Translate("common.enter");
+        _closeButton.Text = "X";
+
         _enterButton.Pressed += OnEnterPressed;
         _closeButton.Pressed += OnClosePressed;
         _popUp.ZIndex = 3;
@@ -186,7 +189,7 @@ public partial class NodeMap : Node2D
 
         //Actualiza el pop-up con los datos del nodo
         _nodeNameLabel.Text = node.NodeName;
-        _difficultyLabel.Text = $"Difficulty: x{node.DifficultyMultiplier}";
+        _difficultyLabel.Text = LocalizationManager.Translate("hud.difficulty", $"x{node.DifficultyMultiplier}");
 
         //Posiciona el pop-up en coordenadas del mapa y lo mantiene dentro de la vista.
         Vector2 popupSize = _popUp.Size;

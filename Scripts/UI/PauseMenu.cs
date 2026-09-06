@@ -14,6 +14,11 @@ public partial class PauseMenu : Control
         _returnToMapButton = GetNode<Button>("Panel/Margin/Content/ReturnToMapButton");
         _mainMenuButton = GetNode<Button>("Panel/Margin/Content/MainMenuButton");
 
+        _resumeButton.Text = LocalizationManager.Translate("common.resume");
+        _returnToMapButton.Text = LocalizationManager.Translate("common.return_to_map");
+        _mainMenuButton.Text = LocalizationManager.Translate("common.main_menu");
+        GetNode<Label>("Panel/Margin/Content/Title").Text = LocalizationManager.Translate("common.paused");
+
         _resumeButton.Pressed += OnResumePressed;
         _returnToMapButton.Pressed += OnReturnToMapPressed;
         _mainMenuButton.Pressed += OnMainMenuPressed;
@@ -35,7 +40,7 @@ public partial class PauseMenu : Control
     {
         ConfirmDialog dialog = _confirmDialog.Instantiate<ConfirmDialog>();
         AddChild(dialog);
-        dialog.SetMessage("return to the map? Your progress will be lost!");
+        dialog.SetMessage(LocalizationManager.Translate("confirm.return_to_map"));
 
         dialog.OnConfirmed += () =>
         {
@@ -48,7 +53,7 @@ public partial class PauseMenu : Control
     {
         ConfirmDialog dialog = _confirmDialog.Instantiate<ConfirmDialog>();
         AddChild(dialog);
-        dialog.SetMessage("return to the main menu? Your progress will be lost!");
+        dialog.SetMessage(LocalizationManager.Translate("confirm.return_to_menu"));
 
         dialog.OnConfirmed += () =>
         {

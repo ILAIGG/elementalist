@@ -1,0 +1,110 @@
+keys,en,es
+menu.title,Elementalist,Elementalista
+menu.new_game,Start A New Game,Nueva partida
+menu.continue,Continue,Continuar
+menu.quit,Quit,Salir
+menu.language,Language,Idioma
+menu.version,Elementalist v0.3.0 (Journey Update - Part I),Elementalist v0.3.0 (Actualización del viaje - Parte I)
+common.cancel,Cancel,Cancelar
+common.confirm,Confirm,Confirmar
+common.close,Close,Cerrar
+common.back,Back,Atrás
+common.resume,Resume,Continuar
+common.main_menu,Main Menu,Menú principal
+common.return_to_map,Return to Map,Volver al mapa
+common.save_and_quit,Save & Quit,Guardar y salir
+common.retry,Retry,Reintentar
+common.delete,Delete,Eliminar
+common.new_game,New Game,Nueva partida
+common.enter,Enter,Entrar
+common.continue,Continue,Continuar
+common.paused,Paused,Pausa
+common.are_you_sure,Are you sure?,¿Estás seguro?
+confirm.start_run,Are you sure you want to start a new run? Your current run will be overwritten,¿Seguro que quieres iniciar una partida nueva? Tu partida actual será sobrescrita
+confirm.continue_run,Are you sure you want to continue your current run?,¿Seguro que quieres continuar tu partida actual?
+confirm.return_to_map,Are you sure you want to return to the map? Your progress will be lost!,¿Seguro que quieres volver al mapa? ¡Perderás tu progreso!
+confirm.return_to_menu,Are you sure you want to return to the main menu? Your progress will be lost!,¿Seguro que quieres volver al menú principal? ¡Perderás tu progreso!
+confirm.save_to_menu,Are you sure you want to save and quit to the main menu?,¿Seguro que quieres guardar y salir al menú principal?
+screen.defeat,Defeat,Derrota
+screen.victory,Victory!,¡Victoria!
+screen.run_completed,Run Completed,Partida completada
+screen.run_completed_message,You completed the run.,Has completado la partida.
+screen.new_save,Enter your save name,Introduce el nombre de tu partida
+screen.save_name_placeholder,Save name...,Nombre de la partida...
+screen.current_run,Current Run,Partida actual
+screen.play_time,Play time: {0}h {1}m {2}s,Tiempo de juego: {0}h {1}m {2}s
+tutorial.step0,Welcome Elementalist! Move with W - A - S - D or the arrow keys.,¡Bienvenido Elementalista! Muévete con W - A - S - D o las flechas.
+tutorial.step1,Your objective is shown in the top right corner. Survive as long as you can!,Tu objetivo aparece en la esquina superior derecha. ¡Sobrevive tanto como puedas!
+tutorial.step2,This is your health bar. Do not let it reach zero!,Esta es tu barra de vida. ¡No dejes que llegue a cero!
+tutorial.step3,Use Q for Fire Nova and E for Meteor Shower. Space to dash!,¡Usa Q para Nova de fuego y E para Lluvia de meteoros! Pulsa Espacio para hacer dash.
+tutorial.step4,You attack automatically so focus on moving and surviving!,Atacas automáticamente así que concéntrate en moverte y sobrevivir.
+hud.level,Level {0},Nivel {0}
+hud.time,Time: {0:00}:{1:00},Tiempo: {0:00}:{1:00}
+hud.difficulty,Difficulty: {0},Dificultad: {0}
+hud.objective,Objective: {0},Objetivo: {0}
+hud.survive,Objective: Survive {0:00}:{1:00},Objetivo: Sobrevive {0:00}:{1:00}
+hud.fire_nova_ready,Fire Nova (Q): Ready,Nova de fuego (Q): Lista
+hud.fire_nova_cooldown,Fire Nova (Q): {0:F1}s,Nova de fuego (Q): {0:F1}s
+hud.meteor_ready,Meteor Shower (E): Ready,Lluvia de meteoros (E): Lista
+hud.meteor_cooldown,Meteor Shower (E): {0:F1}s,Lluvia de meteoros (E): {0:F1}s
+hud.dash_ready,Dash (Space): Ready,Dash (Espacio): Lista
+hud.dash_cooldown,Dash (Space): {0:F1}s,Dash (Espacio): {0:F1}s
+save.no_active_run,No active run,No hay partida activa
+save.empty,Empty,Vacío
+save.play_time,Play time: {0}h {1}m {2}s,Tiempo de juego: {0}h {1}m {2}s
+language.english,English,Inglés
+language.spanish,Spanish,Español
+howto.title,How to Play,Cómo jugar
+howto.controls,Controls - Movement -> WASD - Dash -> Space - Fire Nova -> Q - Meteor Shower -> E,Controles - Movimiento -> WASD - Dash -> Espacio - Nova de fuego -> Q - Lluvia de meteoros -> E
+howto.upgrades,Upgrades - Choose one upgrade card from three options when you level up.,Mejoras - Elige una carta de mejora entre tres opciones al subir de nivel.
+howto.objective,Objective - Survive for 10 minutes and defeat the final boss.,Objetivo - Sobrevive 10 minutos y derrota al jefe final.
+upgrade.type.spell,Spell,Hechizo
+upgrade.type.ability,Ability,Habilidad
+upgrade.type.dash,Dash,Dash
+upgrade.type.stat,Stat,Estadística
+upgrade.stat_health.name,Arcane Vitality,Vitalidad arcana
+upgrade.stat_speed.name,Ethereal Stride,Paso etéreo
+upgrade.stat_damage.name,Arcane Might,Poder arcano
+upgrade.stat_regen.name,Arcane Regeneration,Regeneración arcana
+upgrade.dash_invincible.name,Shadow Dash,Dash sombrío
+upgrade.dash_cooldown.name,Arcane Impulse,Impulso arcano
+upgrade.fireball_burst.name,Burst Fire,Fuego en ráfaga
+upgrade.fireball_piercing.name,Piercing Fireball,Bola de fuego perforante
+upgrade.fireball_multishot.name,Multishot,Disparo múltiple
+upgrade.fireball_explosive.name,Explosive Fireball,Bola de fuego explosiva
+upgrade.fireball_damage.name,Igneous Fury,Furia ígnea
+upgrade.unlock_frost_ray.name,Frost Ray,Rayo de hielo
+upgrade.frost_ray_permafrost.name,Permafrost,Permafrost
+upgrade.frost_ray_wide.name,Wide Beam,Rayo amplio
+upgrade.frost_ray_chain.name,Chaining Frost,Hielo encadenado
+upgrade.frost_ray_slow_duration.name,Lingering Chill,Frío persistente
+upgrade.unlock_repulsion_burst.name,Repulsion Burst,Estallido de repulsión
+upgrade.repulsion_burst_damage.name,Arcane Repulsion,Repulsión arcana
+upgrade.repulsion_burst_shockwave.name,Shockwave,Onda expansiva
+upgrade.repulsion_burst_extended.name,Extended Burst,Estallido ampliado
+upgrade.nova_chain.name,Nova Chain,Cadena de nova
+upgrade.nova_cooldown.name,Nova Frenzy,Frenesí de nova
+upgrade.stat_health.description,+20 Maximum Health.,+20 de vida máxima.
+upgrade.stat_speed.description,+15 Movement Speed.,+15 de velocidad de movimiento.
+upgrade.stat_damage.description,+6 Damage to all spells and abilities.,+6 de daño a todos los hechizos y habilidades.
+upgrade.stat_regen.description,+{0} HP regenerated every 3 seconds.,+{0} de vida regenerada cada 3 segundos.
+upgrade.dash_invincible.description,The mage is invincible and passes through enemies during the dash.,El mago es invencible y atraviesa enemigos durante el dash.
+upgrade.dash_cooldown.description,-0.2s Dash Cooldown (Current: {0:F2}s),-0.2 s de cooldown del dash (actual: {0:F2} s)
+upgrade.fireball_burst.description,+1 Fireball projectile fired in burst. (Current: {0}),+1 proyectil de Bola de fuego en ráfaga (actual: {0})
+upgrade.fireball_burst.first_description,Fires 2 Fireball projectiles in burst. Fireball damage is reduced by 15%. (Current: {0}),Dispara 2 proyectiles de Bola de fuego en ráfaga. El daño de la Bola de fuego se reduce un 15% (actual: {0}).
+upgrade.fireball_piercing.description,Fireball now pierces through enemies.,La Bola de fuego atraviesa a los enemigos.
+upgrade.fireball_multishot.description,+2 Fireball projectile (Current: {0}),+2 proyectiles de Bola de fuego (actual: {0})
+upgrade.fireball_explosive.description,Fireball explodes on impact and deals area damage.,La Bola de fuego explota al impactar y causa daño de área.
+upgrade.fireball_damage.description,+{0} Fireball Damage. This bonus scales up further every time you choose this upgrade card.,+{0} de daño de Bola de fuego. Esta bonificación aumenta cada vez que eliges esta carta.
+upgrade.unlock_frost_ray.description,A beam that pierces and slows enemies it hits.,Un rayo que atraviesa y ralentiza a los enemigos.
+upgrade.frost_ray_permafrost.description,Frost Ray completely freezes enemies hit.,El Rayo de hielo congela por completo a los enemigos alcanzados.
+upgrade.frost_ray_wide.description,Frost Ray becomes wider and hits more enemies.,El Rayo de hielo se hace más ancho y alcanza a más enemigos.
+upgrade.frost_ray_chain.description,Frost Ray bounces to the nearest enemy after hitting one.,El Rayo de hielo rebota al enemigo más cercano tras golpear a uno.
+upgrade.frost_ray_slow_duration.description,+1s Frost Ray slow duration.,+1 s de duración de ralentización del Rayo de hielo.
+upgrade.frost_ray_slow_duration.freeze_description,+0.5s Frost Ray freeze duration.,+0.5 s de duración de congelación del Rayo de hielo.
+upgrade.unlock_repulsion_burst.description,Periodically releases a burst that pushes nearby enemies away. Triggers every {0:F1} seconds.,Libera periódicamente un estallido que repele a los enemigos cercanos. Se activa cada {0:F1} segundos.
+upgrade.repulsion_burst_damage.description,+2 Repulsion Burst damage (Current: {0:F2}s).,+2 de daño del Estallido de repulsión (actual: {0:F2} s).
+upgrade.repulsion_burst_shockwave.description,Repulsion Burst leaves a damaging shockwave.,El Estallido de repulsión deja una onda expansiva dañina.
+upgrade.repulsion_burst_extended.description,Increase Repulsion Burst range and push force.,Aumenta el alcance y la fuerza de empuje del Estallido de repulsión.
+upgrade.nova_chain.description,Fire Nova launches Fireballs when detonating.,La Nova de fuego lanza Bolas de fuego al detonar.
+upgrade.nova_cooldown.description,-0.5s Fire Nova Cooldown (Current: {0:F2}s),-0.5 s de cooldown de la Nova de fuego (actual: {0:F2} s)

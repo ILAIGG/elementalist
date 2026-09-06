@@ -12,6 +12,10 @@ public partial class NodeMapPauseMenu : Control
         _resumeButton = GetNode<Button>("Panel/Margin/Content/ResumeButton");
         _saveAndQuitButton = GetNode<Button>("Panel/Margin/Content/SaveAndQuitButton");
 
+        _resumeButton.Text = LocalizationManager.Translate("common.resume");
+        _saveAndQuitButton.Text = LocalizationManager.Translate("common.save_and_quit");
+        GetNode<Label>("Panel/Margin/Content/Title").Text = LocalizationManager.Translate("common.paused");
+
         _resumeButton.Pressed += OnResumePressed;
         _saveAndQuitButton.Pressed += OnSaveAndQuitPressed;
     }
@@ -32,7 +36,7 @@ public partial class NodeMapPauseMenu : Control
     {
         ConfirmDialog dialog = _confirmDialog.Instantiate<ConfirmDialog>();
         AddChild(dialog);
-        dialog.SetMessage("save and quit to the main menu?");
+        dialog.SetMessage(LocalizationManager.Translate("confirm.save_to_menu"));
 
         dialog.OnConfirmed += () =>
         {

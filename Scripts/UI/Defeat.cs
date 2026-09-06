@@ -14,6 +14,11 @@ public partial class Defeat : Control
         _returnToMapButton = GetNode<Button>("UIContainer/Panel/Margin/Content/ReturnToMapButton");
         _mainMenuButton = GetNode<Button>("UIContainer/Panel/Margin/Content/MainMenuButton");
 
+        GetNode<Label>("UIContainer/Title").Text = LocalizationManager.Translate("screen.defeat");
+        _retryButton.Text = LocalizationManager.Translate("common.retry");
+        _returnToMapButton.Text = LocalizationManager.Translate("common.return_to_map");
+        _mainMenuButton.Text = LocalizationManager.Translate("common.main_menu");
+
         _retryButton.Pressed += OnRetryPressed;
         _returnToMapButton.Pressed += OnReturnToMapPressed;
         _mainMenuButton.Pressed += OnMainMenuPressed;

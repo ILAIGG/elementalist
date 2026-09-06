@@ -3,6 +3,7 @@ using Godot;
 public partial class DialogStep : Node
 {
     [Export] public string Text { get; set; } = "";
+    [Export] public string TranslationKey { get; set; } = "";
 
     public enum AnchorType
     {

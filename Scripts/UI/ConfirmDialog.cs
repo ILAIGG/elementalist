@@ -17,6 +17,9 @@ public partial class ConfirmDialog : Control
         _confirmButton = GetNode<Button>("Panel/Margin/Content/Buttons/ConfirmButton");
         _cancelButton = GetNode<Button>("Panel/Margin/Content/Buttons/CancelButton");
 
+        _confirmButton.Text = LocalizationManager.Translate("common.confirm");
+        _cancelButton.Text = LocalizationManager.Translate("common.cancel");
+
         _confirmButton.Pressed += OnConfirmPressed;
         _cancelButton.Pressed += OnCancelPressed;
     }
@@ -28,10 +31,9 @@ public partial class ConfirmDialog : Control
         var title = GetNodeOrNull<Label>("Panel/Margin/Content/Title");
         if (title == null) return;
 
-        if (string.IsNullOrEmpty(specificText))
-            title.Text = "Are you sure?";
-        else
-            title.Text = $"Are you sure you want to {specificText}";
+        title.Text = string.IsNullOrEmpty(specificText)
+            ? LocalizationManager.Translate("common.are_you_sure")
+            : specificText;
     }
 
     private void OnConfirmPressed()

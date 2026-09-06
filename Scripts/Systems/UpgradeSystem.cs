@@ -27,12 +27,27 @@ public class Upgrade
 
     //En vez de un string fijo, es una función que calcula la descripción según cuantas veces fue aplicado
     public Func<int, string> GetDescription; //Descripción visible
+    public Func<int, string> GetDescriptionKey;
+    public Func<int, object[]> GetDescriptionArguments;
 
     //Condición opcional, si es null el upgrade siempre estará disponible, si no es null, solo aparecerá si la condición devuelve true.
     public Func<Player, bool> Condition = null;
 
     //Ids de upgrades que se bloquean cuando este se toma
     public string[] Excludes = System.Array.Empty<string>();
+
+    public string NameKey => $"upgrade.{Id}.name";
+    public string DescriptionKey => $"upgrade.{Id}.description";
+
+    public string GetLocalizedDescriptionKey(int times)
+    {
+        return GetDescriptionKey?.Invoke(times) ?? DescriptionKey;
+    }
+
+    public object[] GetLocalizedDescriptionArguments(int times)
+    {
+        return GetDescriptionArguments?.Invoke(times) ?? System.Array.Empty<object>();
+    }
 }
 
 public class UpgradeSystem
@@ -167,6 +182,7 @@ public class UpgradeSystem
             Id = "stat_regen",
             Name = "Arcane Regeneration",
             GetDescription = (times) => $"+{times} HP regenerated every 3 seconds.",
+            GetDescriptionArguments = (times) => new object[] { times },
             Type = UpgradeType.Stat,
             IsInfinite = true,
             Apply = (player, times) =>
@@ -196,6 +212,7 @@ public class UpgradeSystem
             Id = "dash_cooldown",
             Name = "Arcane Impulse",
             GetDescription = (times) => $"-0.2s Dash Cooldown (Current: {_player.DashCooldown:F2}s)",
+            GetDescriptionArguments = (times) => new object[] { _player.DashCooldown },
             Type = UpgradeType.Dash,
             IsInfinite = true,
             Apply = (player, times) =>
@@ -215,6 +232,10 @@ public class UpgradeSystem
             GetDescription = (times) => _stats.FireballBurstCount == 0
                 ? $"Fires 2 Fireball projectiles in burst. Fireball damage is reduced by 15%. (Current: {_stats.FireballBurstCount})"
                 : $"+1 Fireball projectile fired in burst. (Current: {_stats.FireballBurstCount})",
+            GetDescriptionKey = (times) => _stats.FireballBurstCount == 0
+                ? "upgrade.fireball_burst.first_description"
+                : "upgrade.fireball_burst.description",
+            GetDescriptionArguments = (times) => new object[] { _stats.FireballBurstCount },
             Type = UpgradeType.Spell,
             IsInfinite = true,
             MaxAcquisitions = 9, //Primera vez +2, luego 8 veces +1 = 10 proyectiles máximo
@@ -247,6 +268,7 @@ public class UpgradeSystem
             Id = "fireball_multishot",
             Name = "Multishot",
             GetDescription = (times) => $"+2 Fireball projectile (Current: {_stats.FireballCount})",
+            GetDescriptionArguments = (times) => new object[] { _stats.FireballCount },
             Type = UpgradeType.Spell,
             IsInfinite = false,
             Condition = (player) => _stats.FireballCount <= 10 && !_excludedIds.Contains("fireball_multishot"),
@@ -279,6 +301,7 @@ public class UpgradeSystem
             Id = "fireball_damage",
             Name = "Igneous Fury",
             GetDescription = (times) => $"+{2f * times} Fireball Damage. This bonus scales up further every time you choose this upgrade card.", //Descripción dinámica. Muestra exactamente cuánto daño va a sumar esta vez
+            GetDescriptionArguments = (times) => new object[] { 2f * times },
             Type = UpgradeType.Spell,
             IsInfinite = true,
             Apply = (player, times) =>
@@ -355,6 +378,9 @@ public class UpgradeSystem
             Id = "frost_ray_slow_duration",
             Name = "Lingering Chill",
             GetDescription = (times) => (_stats.FrostRaySlowFactor != 0) ? $"+1s Frost Ray slow duration." : $"+0.5s Frost Ray freeze duration.",
+            GetDescriptionKey = (times) => _stats.FrostRaySlowFactor != 0
+                ? "upgrade.frost_ray_slow_duration.description"
+                : "upgrade.frost_ray_slow_duration.freeze_description",
             Type = UpgradeType.Spell,
             IsInfinite = true,
             Condition = (player) => _stats.HasFrostRay,
@@ -371,6 +397,7 @@ public class UpgradeSystem
             Id = "unlock_repulsion_burst",
             Name = "Repulsion Burst",
             GetDescription = (times) => $"Periodically releases a burst that pushes nearby enemies away. Triggers every {_stats.RepulsionBurstFireRate:F1} seconds.",
+            GetDescriptionArguments = (times) => new object[] { _stats.RepulsionBurstFireRate },
             Type = UpgradeType.Spell,
             IsInfinite = false,
             Apply = (player, times) =>
@@ -384,6 +411,7 @@ public class UpgradeSystem
             Id = "repulsion_burst_damage",
             Name = "Arcane Repulsion",
             GetDescription = (times) => $"+2 Repulsion Burst damage (Current: {_stats.BonusRepulsionBurstDamage:F2}s).",
+            GetDescriptionArguments = (times) => new object[] { _stats.BonusRepulsionBurstDamage },
             Type = UpgradeType.Spell,
             IsInfinite = true,
             Condition = (player) => _stats.HasRepulsionBurst,
@@ -445,6 +473,7 @@ public class UpgradeSystem
             Id = "nova_cooldown",
             Name = "Nova Frenzy",
             GetDescription = (times) => $"-0.5s Fire Nova Cooldown (Current: {_stats.FireNovaCooldown:F2}s)",
+            GetDescriptionArguments = (times) => new object[] { _stats.FireNovaCooldown },
             Type = UpgradeType.Ability,
             IsInfinite = true,
             Apply = (player, times) =>

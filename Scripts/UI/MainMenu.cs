@@ -6,6 +6,10 @@ public partial class MainMenu : Control
     private Button _continueButton;
     private Button _endlessModeButton;
     private Button _quitButton;
+    private Label _titleLabel;
+    private Label _languageLabel;
+    private Label _versionLabel;
+    private OptionButton _languageOption;
     private PackedScene _confirmDialog = GD.Load<PackedScene>("res://Scenes/UI/ConfirmDialog.tscn");
 
     public override void _Ready()
@@ -15,19 +19,52 @@ public partial class MainMenu : Control
         _continueButton = GetNode<Button>("ContinueButton");
         _endlessModeButton = GetNode<Button>("EndlessModeButton");
         _quitButton = GetNode<Button>("QuitButton");
+        _titleLabel = GetNode<Label>("Title");
+        _languageLabel = GetNode<Label>("LanguageLabel");
+        _versionLabel = GetNode<Label>("VersionLabel");
+        _languageOption = GetNode<OptionButton>("LanguageOption");
 
         _playButton.Pressed += OnPlayPressed;
         _continueButton.Pressed += OnContinuePressed;
         _quitButton.Pressed += OnQuitPressed;
+        _languageOption.ItemSelected += OnLanguageSelected;
+
+        PopulateLanguages();
+        RefreshLocalizedText();
         SaveData savedRun = SaveSystem.LoadRun();
         _continueButton.Disabled = savedRun == null || savedRun.IsRunComplete;
+    }
+
+    private void PopulateLanguages()
+    {
+        _languageOption.Clear();
+        _languageOption.AddItem(LocalizationManager.Translate("language.english"));
+        _languageOption.AddItem(LocalizationManager.Translate("language.spanish"));
+        _languageOption.Selected = LocalizationManager.Instance.CurrentLocale == LocalizationManager.SpanishLocale ? 1 : 0;
+    }
+
+    private void OnLanguageSelected(long index)
+    {
+        LocalizationManager.Instance.SetLocale(index == 1 ? LocalizationManager.SpanishLocale : LocalizationManager.DefaultLocale);
+        PopulateLanguages();
+        RefreshLocalizedText();
+    }
+
+    private void RefreshLocalizedText()
+    {
+        _titleLabel.Text = LocalizationManager.Translate("menu.title");
+        _playButton.Text = LocalizationManager.Translate("menu.new_game");
+        _continueButton.Text = LocalizationManager.Translate("menu.continue");
+        _quitButton.Text = LocalizationManager.Translate("menu.quit");
+        _languageLabel.Text = LocalizationManager.Translate("menu.language");
+        _versionLabel.Text = LocalizationManager.Translate("menu.version");
     }
 
     private void OnPlayPressed()
     {
         ConfirmDialog dialog = _confirmDialog.Instantiate<ConfirmDialog>();
         AddChild(dialog);
-        dialog.SetMessage("start a new run? Your current run will be overwritten");
+        dialog.SetMessage(LocalizationManager.Translate("confirm.start_run"));
 
         dialog.OnConfirmed += () =>
         {
@@ -40,7 +77,7 @@ public partial class MainMenu : Control
     {
         ConfirmDialog dialog = _confirmDialog.Instantiate<ConfirmDialog>();
         AddChild(dialog);
-        dialog.SetMessage("continue your current run?");
+        dialog.SetMessage(LocalizationManager.Translate("confirm.continue_run"));
 
         dialog.OnConfirmed += () =>
         {

@@ -16,6 +16,11 @@ public partial class NewGameDialog : Control
         _confirmButton = GetNode<Button>("Panel/Margin/Content/Buttons/ConfirmButton");
         _cancelButton = GetNode<Button>("Panel/Margin/Content/Buttons/CancelButton");
 
+        GetNode<Label>("Panel/Margin/Content/Title").Text = LocalizationManager.Translate("screen.new_save");
+        _nameInput.PlaceholderText = LocalizationManager.Translate("screen.save_name_placeholder");
+        _cancelButton.Text = LocalizationManager.Translate("common.cancel");
+        _confirmButton.Text = LocalizationManager.Translate("common.confirm");
+
         _confirmButton.Pressed += OnConfirmPressed;
         _cancelButton.Pressed += OnCancelPressed;
     }

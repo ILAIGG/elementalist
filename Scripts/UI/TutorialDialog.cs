@@ -18,6 +18,7 @@ public partial class TutorialDialog : CanvasLayer
         _dialogText = GetNode<Label>("DialogBox/Margin/Content/DialogText");
         _continueButton = GetNode<Button>("DialogBox/Margin/Content/ContinueButton");
 
+        _continueButton.Text = LocalizationManager.Translate("common.continue");
         _continueButton.Pressed += OnContinuePressed;
 
         //Recopila todos los DialogStep hijos en orden
@@ -64,7 +65,9 @@ public partial class TutorialDialog : CanvasLayer
         GetTree().Paused = true;
 
         //Actualiza el texto
-        _dialogText.Text = step.Text;
+        _dialogText.Text = string.IsNullOrEmpty(step.TranslationKey)
+            ? step.Text
+            : LocalizationManager.Translate(step.TranslationKey);
 
         Vector2 screenSize = GetViewport().GetVisibleRect().Size;
 

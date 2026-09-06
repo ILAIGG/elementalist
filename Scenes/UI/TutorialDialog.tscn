@@ -42,10 +42,10 @@ size_flags_vertical = 8
 text = "Continue"
 
 [node name="Step0" parent="." unique_id=1360271452 instance=ExtResource("2_w22n0")]
-Text = "Welcome, Elementalist! Move with W, A, S, D or the arrow keys."
+TranslationKey = "tutorial.step0"
 
 [node name="Step1" parent="." unique_id=1870783597 instance=ExtResource("2_w22n0")]
-Text = "Your objective is shown in the top right corner. Survive as long as you can!"
+TranslationKey = "tutorial.step1"
 HighlightPosition = Vector2(927, 28)
 HighlightSize = Vector2(200, 25)
 HighlightAnchor = 1
@@ -53,13 +53,13 @@ DialogPosition = Vector2(612, 20)
 DialogAnchor = 1
 
 [node name="Step2" parent="." unique_id=727293340 instance=ExtResource("2_w22n0")]
-Text = "This is your health bar. Don't let it reach zero!"
+TranslationKey = "tutorial.step2"
 HighlightPosition = Vector2(20, 22)
 HighlightSize = Vector2(210, 50)
 DialogPosition = Vector2(240, 20)
 
 [node name="Step3" parent="." unique_id=1596020267 instance=ExtResource("2_w22n0")]
-Text = "Use Q for Fire Nova and E for Meteor Shower. Space to dash!"
+TranslationKey = "tutorial.step3"
 
 [node name="Step4" parent="." unique_id=1752463035 instance=ExtResource("2_w22n0")]
-Text = "You attack automatically, so focus on moving and surviving!"
+TranslationKey = "tutorial.step4"

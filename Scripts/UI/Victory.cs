@@ -8,6 +8,8 @@ public partial class Victory : Control
     {
         Visible = false;
         _returnToMapButton = GetNode<Button>("ReturnToMapButton");
+        GetNode<Label>("Title").Text = LocalizationManager.Translate("screen.victory");
+        _returnToMapButton.Text = LocalizationManager.Translate("common.return_to_map");
         _returnToMapButton.Pressed += OnReturnToMapPressed;
     }
 

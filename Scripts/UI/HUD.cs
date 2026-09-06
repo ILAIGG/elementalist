@@ -46,6 +46,9 @@ public partial class HUD : CanvasLayer
             _healthBar.MaxValue = _player.Stats.MaxHealth;
             _healthBar.Value = _player.Stats.MaxHealth;
             _healthLabel.Text = $"{_player.Stats.MaxHealth} / {_player.Stats.MaxHealth}";
+            _levelLabel.Text = LocalizationManager.Translate("hud.level", 1);
+            UpdateTimeLabel();
+            UpdateCooldownLabels();
         }
     }
 
@@ -61,7 +64,7 @@ public partial class HUD : CanvasLayer
     //Llamado desde EnemySpawner cuando sube la dificultad
     public void UpdateDifficulty(int level)
     {
-        _difficultyLabel.Text = $"Difficulty: {level}";
+        _difficultyLabel.Text = LocalizationManager.Translate("hud.difficulty", level);
     }
 
     private void OnHealthChanged(float current, float max)
@@ -80,14 +83,14 @@ public partial class HUD : CanvasLayer
 
     private void OnLevelUp(int newLevel)
     {
-        _levelLabel.Text = $"Level {newLevel}";
+        _levelLabel.Text = LocalizationManager.Translate("hud.level", newLevel);
     }
 
     private void UpdateTimeLabel()
     {
         int minutes = (int)(_gameTime / 60f);
         int seconds = (int)(_gameTime % 60f);
-        _timeLabel.Text = $"Time: {minutes:00}:{seconds:00}";
+        _timeLabel.Text = LocalizationManager.Translate("hud.time", minutes, seconds);
     }
 
     private void UpdateCooldownLabels()
@@ -95,31 +98,31 @@ public partial class HUD : CanvasLayer
         //Nova
         float novaCooldown = _player.AbilityManager.GetNovaCooldownRemaining();
         _novaLabel.Text = novaCooldown > 0
-            ? $"Fire Nova (Q): {novaCooldown:F1}s"
-            : "Fire Nova (Q): Ready";
+            ? LocalizationManager.Translate("hud.fire_nova_cooldown", novaCooldown)
+            : LocalizationManager.Translate("hud.fire_nova_ready");
 
         //Meteoros
         float meteorCooldown = _player.AbilityManager.GetMeteorShowerCooldownRemaining();
         _meteorLabel.Text = meteorCooldown > 0
-            ? $"Meteor Shower (E): {meteorCooldown:F1}s"
-            : "Meteor Shower (E): Ready";
+            ? LocalizationManager.Translate("hud.meteor_cooldown", meteorCooldown)
+            : LocalizationManager.Translate("hud.meteor_ready");
 
         //Dash
         float dashCooldown = _player.GetDashCooldownRemaining();
         _dashLabel.Text = dashCooldown > 0
-            ? $"Dash (Space): {dashCooldown:F1}s"
-            : "Dash (Space): Ready";
+            ? LocalizationManager.Translate("hud.dash_cooldown", dashCooldown)
+            : LocalizationManager.Translate("hud.dash_ready");
     }
 
     public void SetObjective(string objective)
     {
-        _objectiveLabel.Text = $"Objective: {objective}";
+        _objectiveLabel.Text = LocalizationManager.Translate("hud.objective", objective);
     }
 
     public void UpdateObjectiveTime(float secondsRemaining)
     {
         int minutes = (int)(secondsRemaining / 60f);
         int seconds = (int)(secondsRemaining % 60f);
-        _objectiveLabel.Text = $"Objective: Survive {minutes:00}:{seconds:00}";
+        _objectiveLabel.Text = LocalizationManager.Translate("hud.survive", minutes, seconds);
     }
 }
