@@ -2,11 +2,11 @@ using Godot;
 
 public partial class SaveSlotScreen : Control
 {
-    private Button[] _continueButtons = new Button[3];
-    private Button[] _newGameButtons = new Button[3];
-    private Button[] _deleteButtons = new Button[3];
-    private Label[] _slotNames = new Label[3];
-    private Label[] _slotDetails = new Label[3];
+    private Button _continueButton;
+    private Button _newGameButton;
+    private Button _deleteButton;
+    private Label _runName;
+    private Label _runDetails;
     private Button _backButton;
 
     private PackedScene _newGameDialog = GD.Load<PackedScene>("res://Scenes/UI/NewGameDialog.tscn");
@@ -17,48 +17,39 @@ public partial class SaveSlotScreen : Control
         _backButton = GetNode<Button>("SlotsContainer/BackButton");
         _backButton.Pressed += OnBackPressed;
 
-        for (int i = 0; i < 3; i++)
-        {
-            string slotPath = $"SlotsContainer/Slot{i}/SlotMargin{i}/SlotContent{i}";
+        const string runPath = "SlotsContainer/Slot0/SlotMargin0/SlotContent0";
+        _runName = GetNode<Label>($"{runPath}/SlotInfo0/SlotName0");
+        _runDetails = GetNode<Label>($"{runPath}/SlotInfo0/SlotDetails0");
+        _continueButton = GetNode<Button>($"{runPath}/SlotButtons0/ContinueButton0");
+        _newGameButton = GetNode<Button>($"{runPath}/SlotButtons0/NewGameButton0");
+        _deleteButton = GetNode<Button>($"{runPath}/SlotButtons0/DeleteButton0");
 
-            _slotNames[i] = GetNode<Label>($"{slotPath}/SlotInfo{i}/SlotName{i}");
-            _slotDetails[i] = GetNode<Label>($"{slotPath}/SlotInfo{i}/SlotDetails{i}");
-            _continueButtons[i] = GetNode<Button>($"{slotPath}/SlotButtons{i}/ContinueButton{i}");
-            _newGameButtons[i] = GetNode<Button>($"{slotPath}/SlotButtons{i}/NewGameButton{i}");
-            _deleteButtons[i] = GetNode<Button>($"{slotPath}/SlotButtons{i}/DeleteButton{i}");
-
-            int slotIndex = i; //Captura para el lambda
-            _continueButtons[i].Pressed += () => OnContinuePressed(slotIndex);
-            _newGameButtons[i].Pressed += () => OnNewGamePressed(slotIndex);
-            _deleteButtons[i].Pressed += () => OnDeletePressed(slotIndex);
-        }
+        _continueButton.Pressed += OnContinuePressed;
+        _newGameButton.Pressed += OnNewGamePressed;
+        _deleteButton.Pressed += OnDeletePressed;
 
         RefreshSlots();
     }
 
-    //Actualiza la UI de los tres slots según los datos guardados
+    //Actualiza la UI de la run guardada
     private void RefreshSlots()
     {
-        for (int i = 0; i < 3; i++)
+        if (SaveSystem.RunExists())
         {
-            if (SaveSystem.SlotExists(i))
-            {
-                SaveData data = SaveSystem.LoadSlot(i);
-                _slotNames[i].Text = data.Name;
-                _slotDetails[i].Text = FormatPlaytime(data.PlaytimeSeconds);
-                _continueButtons[i].Visible = true;
-                _newGameButtons[i].Visible = false;
-                _deleteButtons[i].Visible = true;
-            }
-            else
-            {
-                _slotNames[i].Text = $"Slot {i + 1}";
-                _slotDetails[i].Text = "Empty";
-                _continueButtons[i].Visible = false;
-                _newGameButtons[i].Visible = true;
-                _deleteButtons[i].Visible = false;
-            }
+            SaveData data = SaveSystem.LoadRun();
+            _runName.Text = data.Name;
+            _runDetails.Text = FormatPlaytime(data.PlaytimeSeconds);
+            _continueButton.Visible = true;
+            _newGameButton.Visible = false;
+            _deleteButton.Visible = true;
+            return;
         }
+
+        _runName.Text = "No active run";
+        _runDetails.Text = "Empty";
+        _continueButton.Visible = false;
+        _newGameButton.Visible = true;
+        _deleteButton.Visible = false;
     }
 
     private string FormatPlaytime(float seconds)
@@ -69,33 +60,33 @@ public partial class SaveSlotScreen : Control
         return $"Play time: {hours}h {minutes}m {remainingSeconds}s";
     }
 
-    private void OnContinuePressed(int slot)
+    private void OnContinuePressed()
     {
-        GameManager.Instance.LoadGame(slot);
+        GameManager.Instance.LoadGame();
         GetTree().ChangeSceneToFile("res://Scenes/World/NodeMap.tscn");
     }
 
-    private void OnNewGamePressed(int slot)
+    private void OnNewGamePressed()
     {
         NewGameDialog dialog = _newGameDialog.Instantiate<NewGameDialog>();
         AddChild(dialog);
 
         dialog.OnConfirmed += (string saveName) =>
         {
-            GameManager.Instance.NewGame(slot, saveName);
+            GameManager.Instance.NewGame(saveName);
             GetTree().ChangeSceneToFile("res://Scenes/World/NodeMap.tscn");
         };
     }
 
-    private void OnDeletePressed(int slot)
+    private void OnDeletePressed()
     {
         ConfirmDialog dialog = _confirmDialog.Instantiate<ConfirmDialog>();
         AddChild(dialog);
-        dialog.SetMessage($"delete \"{SaveSystem.LoadSlot(slot).Name}\"");
+        dialog.SetMessage($"delete \"{SaveSystem.LoadRun().Name}\"");
 
         dialog.OnConfirmed += () =>
         {
-            SaveSystem.DeleteSlot(slot);
+            SaveSystem.DeleteRun();
             RefreshSlots();
         };
     }

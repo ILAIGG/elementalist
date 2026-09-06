@@ -5,7 +5,6 @@ public partial class GameManager : Node
     public static GameManager Instance { get; private set; }
 
     //Slot activo y datos de la partida actual
-    public int ActiveSlot { get; private set; } = -1;
     public int ActiveNodeId { get; set; } = -1;
     public SaveData ActiveSave { get; private set; }
 
@@ -31,30 +30,31 @@ public partial class GameManager : Node
 
     public void ClearActiveSave()
     {
-        ActiveSlot = -1;
         ActiveSave = null;
     }
 
-    //Carga una partida existente
-    public void LoadGame(int slot)
+    //Carga la run existente
+    public void LoadGame()
     {
-        ActiveSlot = slot;
-        ActiveSave = SaveSystem.LoadSlot(slot);
+        ActiveSave = SaveSystem.LoadRun();
     }
 
-    //Crea una nueva partida
-    public void NewGame(int slot, string saveName)
+    //Crea una nueva run
+    public void NewGame(string saveName)
     {
-        ActiveSlot = slot;
-        ActiveSave = new SaveData { Name = saveName };
-        SaveSystem.SaveSlot(slot, ActiveSave);
+        ActiveSave = new SaveData
+        {
+            Name = saveName,
+            MapSeed = unchecked((int)GD.Randi())
+        };
+        SaveSystem.SaveRun(ActiveSave);
     }
 
     //Guarda el estado actual
     public void SaveGame()
     {
-        if (ActiveSlot == -1 || ActiveSave == null) return;
-        SaveSystem.SaveSlot(ActiveSlot, ActiveSave);
+        if (ActiveSave == null) return;
+        SaveSystem.SaveRun(ActiveSave);
     }
 
     //Marca un nodo como completado y guarda

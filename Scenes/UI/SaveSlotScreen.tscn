@@ -32,7 +32,7 @@ offset_bottom = 73.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0.7529412, 0.5176471, 0.9882353, 1)
 theme_override_font_sizes/font_size = 32
-text = "Start Game"
+text = "Run"
 
 [node name="SlotsContainer" type="VBoxContainer" parent="." unique_id=1878047263]
 layout_mode = 1
@@ -67,7 +67,7 @@ layout_mode = 2
 
 [node name="SlotNumber0" type="Label" parent="SlotsContainer/Slot0/SlotMargin0/SlotContent0/SlotInfo0" unique_id=168527244]
 layout_mode = 2
-text = "Save Slot 0"
+text = "Current Run"
 
 [node name="SlotName0" type="Label" parent="SlotsContainer/Slot0/SlotMargin0/SlotContent0/SlotInfo0" unique_id=2112818742]
 layout_mode = 2
@@ -94,6 +94,7 @@ layout_mode = 2
 text = "Delete"
 
 [node name="Slot1" type="PanelContainer" parent="SlotsContainer" unique_id=750407252]
+visible = false
 layout_mode = 2
 
 [node name="SlotMargin1" type="MarginContainer" parent="SlotsContainer/Slot1" unique_id=425664331]
@@ -138,6 +139,7 @@ layout_mode = 2
 text = "Delete"
 
 [node name="Slot2" type="PanelContainer" parent="SlotsContainer" unique_id=2001112379]
+visible = false
 layout_mode = 2
 
 [node name="SlotMargin2" type="MarginContainer" parent="SlotsContainer/Slot2" unique_id=2021596592]

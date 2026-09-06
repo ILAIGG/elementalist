@@ -3,23 +3,49 @@ using Godot;
 public partial class MainMenu : Control
 {
     private Button _playButton;
+    private Button _continueButton;
     private Button _endlessModeButton;
     private Button _quitButton;
+    private PackedScene _confirmDialog = GD.Load<PackedScene>("res://Scenes/UI/ConfirmDialog.tscn");
 
     public override void _Ready()
     {
         GameManager.Instance?.ClearActiveSave();
         _playButton = GetNode<Button>("PlayButton");
+        _continueButton = GetNode<Button>("ContinueButton");
         _endlessModeButton = GetNode<Button>("EndlessModeButton");
         _quitButton = GetNode<Button>("QuitButton");
 
         _playButton.Pressed += OnPlayPressed;
+        _continueButton.Pressed += OnContinuePressed;
         _quitButton.Pressed += OnQuitPressed;
+        _continueButton.Disabled = !SaveSystem.RunExists();
     }
 
     private void OnPlayPressed()
     {
-        GetTree().ChangeSceneToFile("res://Scenes/UI/SaveSlotScreen.tscn");
+        ConfirmDialog dialog = _confirmDialog.Instantiate<ConfirmDialog>();
+        AddChild(dialog);
+        dialog.SetMessage("start a new run? Your current run will be overwritten");
+
+        dialog.OnConfirmed += () =>
+        {
+            GameManager.Instance.NewGame("Run");
+            GetTree().ChangeSceneToFile("res://Scenes/World/NodeMap.tscn");
+        };
+    }
+
+    private void OnContinuePressed()
+    {
+        ConfirmDialog dialog = _confirmDialog.Instantiate<ConfirmDialog>();
+        AddChild(dialog);
+        dialog.SetMessage("continue your current run?");
+
+        dialog.OnConfirmed += () =>
+        {
+            GameManager.Instance.LoadGame();
+            GetTree().ChangeSceneToFile("res://Scenes/World/NodeMap.tscn");
+        };
     }
 
     private void OnQuitPressed()

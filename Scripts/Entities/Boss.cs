@@ -3,6 +3,8 @@ using Godot;
 
 public partial class Boss : CharacterBody2D, IEnemy
 {
+    private static readonly Color FrozenTint = new(0.72f, 0.9f, 1f);
+
     [Export] public float Speed = 160f;
     [Export] public float MaxHealth = 7000f;
     [Export] public float ContactDamage = 80f;
@@ -39,6 +41,7 @@ public partial class Boss : CharacterBody2D, IEnemy
     public override void _PhysicsProcess(double delta)
     {
         _statusEffects.Update(delta);
+        UpdateStatusEffectVisuals();
 
         if (_player == null) return;
 
@@ -100,6 +103,12 @@ public partial class Boss : CharacterBody2D, IEnemy
         float resistedFactor = Mathf.Max(actualFactor, MinSlowFactor);
 
         _statusEffects.Apply(new FrozenEffect(resistedFactor, effect.RemainingDuration));
+        UpdateStatusEffectVisuals();
+    }
+
+    private void UpdateStatusEffectVisuals()
+    {
+        _sprite.Modulate = _statusEffects.Has<FrozenEffect>() ? FrozenTint : Colors.White;
     }
 
     public void ApplyKnockback(Vector2 force)

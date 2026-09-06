@@ -4,11 +4,11 @@
 [ext_resource type="PackedScene" uid="uid://b22ly5jjwd034" path="res://Scenes/UI/MapNode.tscn" id="2_mgjav"]
 [ext_resource type="TileSet" uid="uid://ddi1a4dgycg4a" path="res://Assets/Tilesets/Terrain.tres" id="2_xbq6r"]
 [ext_resource type="PackedScene" uid="uid://bel41tib81pne" path="res://Scenes/World/Level_0_0.tscn" id="3_e3h8j"]
-[ext_resource type="PackedScene" uid="uid://b35cyshjwd62y" path="res://Scenes/World/Level_1_0.tscn" id="4_xbq6r"]
-[ext_resource type="PackedScene" uid="uid://bf34jykfrywii" path="res://Scenes/World/Level_1_1_0.tscn" id="5_d7720"]
-[ext_resource type="PackedScene" uid="uid://d6akfy6b0rfu" path="res://Scenes/World/Level_1_2_0.tscn" id="6_xr7py"]
-[ext_resource type="PackedScene" uid="uid://cavjju3o0dqmo" path="res://Scenes/World/Level_1_1_1.tscn" id="7_qhs27"]
-[ext_resource type="PackedScene" uid="uid://d0vlq6kb87dv0" path="res://Scenes/World/Level_1_2_1.tscn" id="8_24bpp"]
+[ext_resource type="PackedScene" uid="uid://b35cyshjwd62y" path="res://Scenes/World/Level_Forest_1.tscn" id="4_xbq6r"]
+[ext_resource type="PackedScene" uid="uid://bf34jykfrywii" path="res://Scenes/World/Level_Forest_2.tscn" id="5_d7720"]
+[ext_resource type="PackedScene" uid="uid://d6akfy6b0rfu" path="res://Scenes/World/Level_Forest_3.tscn" id="6_xr7py"]
+[ext_resource type="PackedScene" uid="uid://cavjju3o0dqmo" path="res://Scenes/World/Level_Forest_4.tscn" id="7_qhs27"]
+[ext_resource type="PackedScene" uid="uid://d0vlq6kb87dv0" path="res://Scenes/World/Level_Forest_5.tscn" id="8_24bpp"]
 
 [sub_resource type="Curve2D" id="Curve2D_mgjav"]
 _data = {

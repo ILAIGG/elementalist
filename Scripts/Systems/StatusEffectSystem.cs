@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 public abstract class StatusEffect
 {
@@ -43,6 +44,11 @@ public sealed class StatusEffectSystem
 
             return movementFactor;
         }
+    }
+
+    public bool Has<T>() where T : StatusEffect
+    {
+        return _effects.Values.Any(effect => effect is T);
     }
 
     public void Apply(StatusEffect effect)

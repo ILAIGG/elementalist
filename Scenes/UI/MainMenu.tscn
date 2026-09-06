@@ -51,7 +51,7 @@ offset_right = 20.5
 offset_bottom = 35.5
 grow_horizontal = 2
 grow_vertical = 2
-text = "Play Game"
+text = "Start A New Game"
 
 [node name="EndlessModeButton" type="Button" parent="." unique_id=1057560365]
 visible = false
@@ -78,12 +78,28 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -100.0
+offset_top = 115.0
+offset_right = 100.0
+offset_bottom = 165.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Quit"
+
+[node name="ContinueButton" type="Button" parent="." unique_id=2097346183]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
 offset_top = 55.0
 offset_right = 100.0
 offset_bottom = 105.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Quit"
+text = "Continue"
 
 [node name="Label" type="Label" parent="." unique_id=1953164412]
 layout_mode = 1
