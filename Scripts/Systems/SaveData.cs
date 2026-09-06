@@ -10,4 +10,6 @@ public class SaveData
     public RunMapNode[] MapNodes { get; set; } = Array.Empty<RunMapNode>();
     public bool IsRunComplete { get; set; }
     public int CurrentNodeId { get; set; } = -1;
+    public float CameraPositionX { get; set; }
+    public float CameraPositionY { get; set; }
 }

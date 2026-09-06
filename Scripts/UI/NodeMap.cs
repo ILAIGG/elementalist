@@ -44,6 +44,7 @@ public partial class NodeMap : Node2D
 
         _enterButton.Pressed += OnEnterPressed;
         _closeButton.Pressed += OnClosePressed;
+        _popUp.ZIndex = 3;
 
         //Conecta todos los nodos hijos del contenedor
         foreach (Node child in _nodesContainer.GetChildren())
@@ -87,8 +88,9 @@ public partial class NodeMap : Node2D
 
         _camera.LimitLeft = -500;
         _camera.LimitRight = 500;
-        _camera.LimitTop = -500;
+        _camera.LimitTop = -600;
         _camera.LimitBottom = 300;
+        _camera.Position = GameManager.Instance.GetNodeMapCameraPosition();
     }
 
     private Vector2 GetNodePosition(RunMapNode node, RunMapNode[] runMap)
@@ -167,8 +169,23 @@ public partial class NodeMap : Node2D
         _nodeNameLabel.Text = node.NodeName;
         _difficultyLabel.Text = $"Difficulty: x{node.DifficultyMultiplier}";
 
-        //Posiciona el pop-up encima del nodo clickeado
-        _popUp.Position = _camera.Position + node.Position - new Vector2(_popUp.Size.X / 2, _popUp.Size.Y + 20);
+        //Posiciona el pop-up en coordenadas del mapa y lo mantiene dentro de la vista.
+        Vector2 popupSize = _popUp.Size;
+        Vector2 desiredPosition = node.Position - new Vector2(popupSize.X / 2, popupSize.Y + 20);
+        Vector2 viewportSize = GetViewportRect().Size / _camera.Zoom;
+        Vector2 viewTopLeft = _camera.Position - (viewportSize / 2);
+        Vector2 viewBottomRight = _camera.Position + (viewportSize / 2);
+
+        desiredPosition.X = Mathf.Clamp(
+            desiredPosition.X,
+            viewTopLeft.X + 10,
+            viewBottomRight.X - popupSize.X - 10);
+        desiredPosition.Y = Mathf.Clamp(
+            desiredPosition.Y,
+            viewTopLeft.Y + 10,
+            viewBottomRight.Y - popupSize.Y - 10);
+
+        _popUp.Position = desiredPosition;
         _popUp.Visible = true;
     }
 
@@ -190,6 +207,7 @@ public partial class NodeMap : Node2D
         GameManager.Instance.ActiveNodeId = _selectedNode.NodeId;
         GameManager.Instance.ActiveNodeDifficulty = _selectedNode.DifficultyMultiplier;
         GameManager.Instance.ActiveNodeIsFinal = _selectedNode.IsFinal;
+        GameManager.Instance.SaveNodeMapCameraPosition(_camera.Position);
 
         _popUp.Visible = false;
         CallDeferred(nameof(ChangeToSelectedLevel));

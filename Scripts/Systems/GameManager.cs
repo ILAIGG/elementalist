@@ -66,6 +66,24 @@ public partial class GameManager : Node
         SaveSystem.SaveRun(ActiveSave);
     }
 
+    public Vector2 GetNodeMapCameraPosition()
+    {
+        if (ActiveSave == null)
+            return Vector2.Zero;
+
+        return new Vector2(ActiveSave.CameraPositionX, ActiveSave.CameraPositionY);
+    }
+
+    public void SaveNodeMapCameraPosition(Vector2 position)
+    {
+        if (ActiveSave == null)
+            return;
+
+        ActiveSave.CameraPositionX = position.X;
+        ActiveSave.CameraPositionY = position.Y;
+        SaveGame();
+    }
+
     private void EnsureRunMap()
     {
         if (ActiveSave == null)
