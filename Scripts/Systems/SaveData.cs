@@ -9,4 +9,5 @@ public class SaveData
     public int MapVersion { get; set; } = 1;
     public RunMapNode[] MapNodes { get; set; } = Array.Empty<RunMapNode>();
     public bool IsRunComplete { get; set; }
+    public int CurrentNodeId { get; set; } = -1;
 }

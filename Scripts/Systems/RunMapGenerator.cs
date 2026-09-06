@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public static class RunMapGenerator
 {
-    public const int CurrentMapVersion = 2;
+    public const int CurrentMapVersion = 3;
     private const int LayerCount = 5;
     private const int MinimumNodesPerLayer = 2;
     private const int MaximumNodesPerLayer = 3;
@@ -35,6 +35,10 @@ public static class RunMapGenerator
                 ? 1
                 : random.Next(MinimumNodesPerLayer, MaximumNodesPerLayer + 1);
             List<RunMapNode> currentLayer = new(nodeCount);
+            List<int> positions = new(nodeCount);
+            for (int position = 0; position < nodeCount; position++)
+                positions.Add(position);
+            Shuffle(positions, random);
 
             for (int position = 0; position < nodeCount; position++)
             {
@@ -46,7 +50,7 @@ public static class RunMapGenerator
                 {
                     Id = FirstGeneratedNodeId + (layer * 10) + position,
                     Layer = layer,
-                    Position = position,
+                    Position = positions[position],
                     LevelId = level.Id,
                     DisplayName = level.DisplayName,
                     DifficultyMultiplier = MathF.Max(1.0f, level.BaseDifficulty + progressionMultiplier - 1.0f + variation),
@@ -57,7 +61,9 @@ public static class RunMapGenerator
                 nodes.Add(node);
             }
 
-            ConnectLayers(previousLayer, currentLayer, random);
+            currentLayer.Sort((left, right) => left.Position.CompareTo(right.Position));
+            previousLayer.Sort((left, right) => left.Position.CompareTo(right.Position));
+            ConnectLayers(previousLayer, currentLayer);
             previousLayer = currentLayer;
         }
 
@@ -102,32 +108,29 @@ public static class RunMapGenerator
         return true;
     }
 
-    private static void ConnectLayers(List<RunMapNode> previousLayer, List<RunMapNode> currentLayer, Random random)
+    private static void ConnectLayers(List<RunMapNode> previousLayer, List<RunMapNode> currentLayer)
     {
         for (int currentIndex = 0; currentIndex < currentLayer.Count; currentIndex++)
         {
             RunMapNode currentNode = currentLayer[currentIndex];
-            RunMapNode prerequisite = previousLayer[Math.Min(currentIndex, previousLayer.Count - 1)];
+            int prerequisiteIndex = currentIndex * previousLayer.Count / currentLayer.Count;
+            RunMapNode prerequisite = previousLayer[prerequisiteIndex];
             AddConnection(prerequisite, currentNode.Id);
         }
 
-        foreach (RunMapNode previousNode in previousLayer)
+        for (int previousIndex = 0; previousIndex < previousLayer.Count; previousIndex++)
         {
-            bool hasConnection = false;
-            foreach (int connectedId in previousNode.ConnectedNodeIds)
-            {
-                if (ContainsNode(currentLayer, connectedId))
-                {
-                    hasConnection = true;
-                    break;
-                }
-            }
+            int targetIndex = previousIndex * currentLayer.Count / previousLayer.Count;
+            AddConnection(previousLayer[previousIndex], currentLayer[targetIndex].Id);
+        }
+    }
 
-            if (!hasConnection)
-            {
-                int targetIndex = random.Next(currentLayer.Count);
-                AddConnection(previousNode, currentLayer[targetIndex].Id);
-            }
+    private static void Shuffle(List<int> values, Random random)
+    {
+        for (int index = values.Count - 1; index > 0; index--)
+        {
+            int swapIndex = random.Next(index + 1);
+            (values[index], values[swapIndex]) = (values[swapIndex], values[index]);
         }
     }
 
@@ -145,14 +148,4 @@ public static class RunMapGenerator
         node.ConnectedNodeIds = connections;
     }
 
-    private static bool ContainsNode(List<RunMapNode> nodes, int nodeId)
-    {
-        foreach (RunMapNode node in nodes)
-        {
-            if (node.Id == nodeId)
-                return true;
-        }
-
-        return false;
-    }
 }

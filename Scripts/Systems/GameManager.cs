@@ -10,6 +10,7 @@ public partial class GameManager : Node
     public SaveData ActiveSave { get; private set; }
     public RunMapNode[] CurrentRunMap => ActiveSave?.MapNodes ?? Array.Empty<RunMapNode>();
     public bool IsRunComplete => ActiveSave?.IsRunComplete ?? false;
+    public int CurrentRunNodeId => ActiveSave?.CurrentNodeId ?? -1;
     public bool ActiveNodeIsFinal { get; set; }
 
     //Dificultad
@@ -42,6 +43,7 @@ public partial class GameManager : Node
     {
         ActiveSave = SaveSystem.LoadRun();
         EnsureRunMap();
+        EnsureCurrentRunNode();
     }
 
     //Crea una nueva run
@@ -77,6 +79,29 @@ public partial class GameManager : Node
         SaveGame();
     }
 
+    private void EnsureCurrentRunNode()
+    {
+        if (ActiveSave == null || ActiveSave.CurrentNodeId != -1)
+            return;
+
+        int latestLayer = -1;
+        int latestNodeId = -1;
+        foreach (RunMapNode node in ActiveSave.MapNodes)
+        {
+            if (IsNodeCompleted(node.Id) && node.Layer > latestLayer)
+            {
+                latestLayer = node.Layer;
+                latestNodeId = node.Id;
+            }
+        }
+
+        if (latestNodeId != -1)
+        {
+            ActiveSave.CurrentNodeId = latestNodeId;
+            SaveGame();
+        }
+    }
+
     //Marca un nodo como completado y guarda
     public void CompleteNode(int nodeId)
     {
@@ -91,6 +116,7 @@ public partial class GameManager : Node
         ActiveSave.CompletedNodes.CopyTo(newCompleted, 0);
         newCompleted[newCompleted.Length - 1] = nodeId;
         ActiveSave.CompletedNodes = newCompleted;
+        ActiveSave.CurrentNodeId = nodeId;
 
         SaveGame();
     }
