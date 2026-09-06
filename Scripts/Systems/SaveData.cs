@@ -1,4 +1,4 @@
-using System.Diagnostics.Metrics;
+using System;
 
 public class SaveData
 {
@@ -7,4 +7,5 @@ public class SaveData
     public int[] CompletedNodes { get; set; } = System.Array.Empty<int>();
     public int MapSeed { get; set; }
     public int MapVersion { get; set; } = 1;
+    public RunMapNode[] MapNodes { get; set; } = Array.Empty<RunMapNode>();
 }

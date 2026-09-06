@@ -1,4 +1,5 @@
 using Godot;
+using System;
 
 public partial class GameManager : Node
 {
@@ -7,6 +8,7 @@ public partial class GameManager : Node
     //Slot activo y datos de la partida actual
     public int ActiveNodeId { get; set; } = -1;
     public SaveData ActiveSave { get; private set; }
+    public RunMapNode[] CurrentRunMap => ActiveSave?.MapNodes ?? Array.Empty<RunMapNode>();
 
     //Dificultad
     public float ActiveNodeDifficulty { get; set; } = 1.0f;
@@ -37,6 +39,7 @@ public partial class GameManager : Node
     public void LoadGame()
     {
         ActiveSave = SaveSystem.LoadRun();
+        EnsureRunMap();
     }
 
     //Crea una nueva run
@@ -45,8 +48,10 @@ public partial class GameManager : Node
         ActiveSave = new SaveData
         {
             Name = saveName,
-            MapSeed = unchecked((int)GD.Randi())
+            MapSeed = unchecked((int)GD.Randi()),
+            MapVersion = RunMapGenerator.CurrentMapVersion
         };
+        EnsureRunMap();
         SaveSystem.SaveRun(ActiveSave);
     }
 
@@ -55,6 +60,19 @@ public partial class GameManager : Node
     {
         if (ActiveSave == null) return;
         SaveSystem.SaveRun(ActiveSave);
+    }
+
+    private void EnsureRunMap()
+    {
+        if (ActiveSave == null)
+            return;
+
+        if (ActiveSave.MapNodes.Length > 0 && ActiveSave.MapVersion == RunMapGenerator.CurrentMapVersion)
+            return;
+
+        ActiveSave.MapNodes = RunMapGenerator.Generate(ActiveSave.MapSeed);
+        ActiveSave.MapVersion = RunMapGenerator.CurrentMapVersion;
+        SaveGame();
     }
 
     //Marca un nodo como completado y guarda
