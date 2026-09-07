@@ -62,6 +62,14 @@ upgrade.type.spell,Spell,Hechizo
 upgrade.type.ability,Ability,Habilidad
 upgrade.type.dash,Dash,Dash
 upgrade.type.stat,Stat,Estadística
+upgrade.element.neutral,Neutral,Neutral
+upgrade.element.fire,Fire,Fuego
+upgrade.element.water,Water,Agua
+upgrade.element.earth,Earth,Tierra
+upgrade.element.wind,Wind,Viento
+upgrade.element.plant,Plant,Planta
+upgrade.element.lightning,Lightning,Rayo
+upgrade.element.ice,Ice,Hielo
 upgrade.stat_health.name,Arcane Vitality,Vitalidad arcana
 upgrade.stat_speed.name,Ethereal Stride,Paso etéreo
 upgrade.stat_damage.name,Arcane Might,Poder arcano
@@ -73,6 +81,7 @@ upgrade.fireball_piercing.name,Piercing Fireball,Bola de fuego perforante
 upgrade.fireball_multishot.name,Multishot,Disparo múltiple
 upgrade.fireball_explosive.name,Explosive Fireball,Bola de fuego explosiva
 upgrade.fireball_damage.name,Igneous Fury,Furia ígnea
+upgrade.unlock_water_bolt.name,Water Bolt,Proyectil de agua
 upgrade.unlock_frost_ray.name,Frost Ray,Rayo de hielo
 upgrade.frost_ray_permafrost.name,Permafrost,Permafrost
 upgrade.frost_ray_wide.name,Wide Beam,Rayo amplio
@@ -96,7 +105,10 @@ upgrade.fireball_piercing.description,Fireball now pierces through enemies.,La B
 upgrade.fireball_multishot.description,+2 Fireball projectile (Current: {0}),+2 proyectiles de Bola de fuego (actual: {0})
 upgrade.fireball_explosive.description,Fireball explodes on impact and deals area damage.,La Bola de fuego explota al impactar y causa daño de área.
 upgrade.fireball_damage.description,+{0} Fireball Damage. This bonus scales up further every time you choose this upgrade card.,+{0} de daño de Bola de fuego. Esta bonificación aumenta cada vez que eliges esta carta.
-upgrade.unlock_frost_ray.description,A beam that pierces and slows enemies it hits.,Un rayo que atraviesa y ralentiza a los enemigos.
+upgrade.unlock_water_bolt.description,Fires a water projectile that applies Water to enemies.,Dispara un proyectil de agua que aplica Agua a los enemigos.
+upgrade.water_bolt_damage.name,Pressurized Current,Corriente presurizada
+upgrade.water_bolt_damage.description,+2 Water Bolt Damage. (Current: {0:F0}),+2 de daño del Proyectil de agua (actual: {0:F0})
+upgrade.unlock_frost_ray.description,A beam that pierces and damages enemies it hits.,Un rayo que atraviesa y causa daño a los enemigos.
 upgrade.frost_ray_permafrost.description,Frost Ray completely freezes enemies hit.,El Rayo de hielo congela por completo a los enemigos alcanzados.
 upgrade.frost_ray_wide.description,Frost Ray becomes wider and hits more enemies.,El Rayo de hielo se hace más ancho y alcanza a más enemigos.
 upgrade.frost_ray_chain.description,Frost Ray bounces to the nearest enemy after hitting one.,El Rayo de hielo rebota al enemigo más cercano tras golpear a uno.

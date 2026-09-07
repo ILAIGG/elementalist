@@ -25,6 +25,12 @@ theme_override_colors/font_color = Color(0.6666667, 0.6666667, 0.6666667, 1)
 text = "Upgrade Type"
 horizontal_alignment = 1
 
+[node name="UpgradeElement" type="Label" parent="CardContent"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.45, 0.75, 0.9, 1)
+text = "Upgrade Element"
+horizontal_alignment = 1
+
 [node name="UpgradeDescription" type="Label" parent="CardContent" unique_id=1391859365]
 layout_mode = 2
 text = "Text Description"

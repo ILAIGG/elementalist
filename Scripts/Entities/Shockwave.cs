@@ -2,7 +2,7 @@ using Godot;
 
 public partial class Shockwave : Area2D
 {
-    [Export] public Element ElementType { get; set; } = Element.Neutral;
+    [Export] public Element ElementType { get; set; } = Element.Earth;
     [Export] public float Damage = 5f;
     [Export] public float Duration = 2f;
     [Export] public float Radius = 120f;
@@ -32,9 +32,9 @@ public partial class Shockwave : Area2D
     public override void _Draw()
     {
         float alpha = 1f - (_timer / Duration);
-        Color color = new Color(0.7f, 0.3f, 1f, Mathf.Max(0, alpha) * 0.25f);
+        Color color = new(0.60f, 0.35f, 0.15f, Mathf.Max(0, alpha) * 0.4f);
         DrawCircle(Vector2.Zero, Radius, color);
-        DrawArc(Vector2.Zero, Radius, 0, Mathf.Tau, 64, new Color(0.7f, 0.3f, 1f, Mathf.Max(0, alpha)), 1.5f);
+        DrawArc(Vector2.Zero, Radius, 0, Mathf.Tau, 64, new Color(0.45f, 0.25f, 0.10f, Mathf.Max(0, alpha) * 0.8f), 1.5f);
     }
 
     private void ApplyDamage()

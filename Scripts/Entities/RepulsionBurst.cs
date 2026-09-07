@@ -2,7 +2,7 @@ using Godot;
 
 public partial class RepulsionBurst : Area2D
 {
-    [Export] public Element ElementType { get; set; } = Element.Neutral;
+    [Export] public Element ElementType { get; set; } = Element.Earth;
     [Export] public float Damage = 2f;
     [Export] public float Duration = 0.3f;
     [Export] public float Force = 200f;
@@ -33,8 +33,8 @@ public partial class RepulsionBurst : Area2D
     public override void _Draw()
     {
         float alpha = 1f - (_timer / Duration);
-        Color fillColor = new(0.5f, 0f, 1f, Mathf.Max(0, alpha) * 0.3f);
-        Color borderColor = new(0.7f, 0.3f, 1f, Mathf.Max(0, alpha));
+        Color fillColor = new(0.60f, 0.35f, 0.15f, Mathf.Max(0, alpha) * 0.4f);
+        Color borderColor = new(0.45f, 0.25f, 0.10f, Mathf.Max(0, alpha) * 0.8f);
 
         DrawCircle(Vector2.Zero, Radius, fillColor);
         DrawArc(Vector2.Zero, Radius, 0, Mathf.Tau, 64, borderColor, 2f);

@@ -5,15 +5,18 @@ using Godot;
 public partial class SpellCaster : Node
 {
     [Export] public PackedScene FireballScene { get; set; }
+    [Export] public PackedScene WaterBoltScene { get; set; }
     [Export] public PackedScene FrostRayScene { get; set; }
     [Export] public PackedScene ExplosionEffectScene { get; set; }
     [Export] public PackedScene RepulsionBurstScene { get; set; }
     [Export] public PackedScene ShockwaveScene { get; set; }
 
     [Export] public float FireballFireRate = 1f;
+    [Export] public float WaterBoltFireRate = 1.5f;
     [Export] public float FrostRayFireRate = 2f;
 
     private float _fireballTimer = 0f;
+    private float _waterBoltTimer = 0f;
     private float _frostRayTimer = 0f;
     private float _repulsionBurstTimer = 0f;
     private bool _isBurstFiring = false; //Evita que se superpongan ráfagas concurrentes
@@ -30,6 +33,7 @@ public partial class SpellCaster : Node
     public void Process(float delta)
     {
         HandleFireball(delta);
+        HandleWaterBolt(delta);
         HandleFrostRay(delta);
         HandleRepulsionBurst(delta);
     }
@@ -62,6 +66,29 @@ public partial class SpellCaster : Node
             if (didShoot)
                 _frostRayTimer = 0f;
         }
+    }
+
+    private void HandleWaterBolt(float delta)
+    {
+        if (!_stats.HasWaterBolt) return;
+
+        _waterBoltTimer += delta;
+        if (_waterBoltTimer < WaterBoltFireRate) return;
+
+        Node2D nearest = FindNearestEnemy(_stats.WaterBoltRange);
+        if (nearest == null) return;
+
+        _waterBoltTimer = 0f;
+        ShootWaterBolt(nearest);
+    }
+
+    private void ShootWaterBolt(Node2D target)
+    {
+        Fireball waterBolt = WaterBoltScene.Instantiate<Fireball>();
+        GetProjectileContainer().AddChild(waterBolt);
+        waterBolt.GlobalPosition = _player.GlobalPosition;
+        waterBolt.Direction = _player.GlobalPosition.DirectionTo(target.GlobalPosition);
+        waterBolt.Damage += _stats.BonusWaterBoltDamage + _stats.BonusDamage;
     }
 
     private void HandleRepulsionBurst(float delta)

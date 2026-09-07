@@ -20,6 +20,7 @@ public partial class Enemy : CharacterBody2D, IEnemy
     public float XPValue => 10 * (MaxHealth / 30f);
 
     public HealthSystem Health { get; private set; }
+    public ElementalAccumulator ElementalEffects { get; } = new();
 
     //Una referencia al jugador, la usamos para saber hacia donde debe moverse el enemigo. No usamos export ya que sino tendríamos que referenciar al jugador desde el inspector, lo cual es tedioso.
     private Player _player;
@@ -32,6 +33,7 @@ public partial class Enemy : CharacterBody2D, IEnemy
 
     public override void _Ready()
     {
+        ElementalEffects.ElementApplied += OnElementApplied;
         Health = new HealthSystem(MaxHealth);
 
         _sprite = GetNode<Sprite2D>("Sprite2D");
@@ -47,6 +49,7 @@ public partial class Enemy : CharacterBody2D, IEnemy
     public override void _PhysicsProcess(double delta)
     {
         _statusEffects.Update(delta);
+        ElementalEffects.Update(delta);
         UpdateStatusEffectVisuals();
 
         if (_player == null) return;
@@ -116,7 +119,31 @@ public partial class Enemy : CharacterBody2D, IEnemy
     public void TakeElementalDamage(float amount, Element attackElement, Vector2 position, SceneTree tree, ulong entityId = 0)
     {
         float multiplier = ElementalChart.GetDamageMultiplier(attackElement, ElementType);
-        Health.TakeDamage(amount * multiplier, position, tree, entityId);
+        float finalDamage = amount * multiplier;
+        Health.TakeDamage(finalDamage, position, tree, entityId);
+        ElementalEffects.Apply(attackElement, finalDamage);
+    }
+
+    private void OnElementApplied(Element appliedElement, float amount)
+    {
+        if (!ElementalReactionResolver.TryResolve(ElementalEffects, appliedElement, out ElementalReaction reaction, out float reactionDamage))
+            return;
+
+        Element elementToConsume = appliedElement switch
+        {
+            Element.Fire when ElementalEffects.Has(Element.Water) => Element.Water,
+            Element.Water when ElementalEffects.Has(Element.Fire) => Element.Fire,
+            Element.Water when ElementalEffects.Has(Element.Ice) => Element.Ice,
+            _ => Element.Water
+        };
+
+        ElementalEffects.Consume(appliedElement);
+        ElementalEffects.Consume(elementToConsume);
+
+        if (reaction == ElementalReaction.Vaporization)
+            Health.TakeDamage(reactionDamage, GlobalPosition, GetTree(), GetInstanceId());
+        else if (reaction == ElementalReaction.Freezing)
+            ApplyStatusEffect(new FrozenEffect(0f, 1.5f));
     }
 
     private void UpdateStatusEffectVisuals()

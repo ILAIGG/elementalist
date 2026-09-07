@@ -16,6 +16,11 @@ public class PlayerStats
     public bool FireballExplosive = false;
     public bool FireballPiercing = false;
 
+    //Water Bolt
+    public bool HasWaterBolt = false;
+    public float BonusWaterBoltDamage = 0f;
+    public float WaterBoltRange = 550f;
+
     //Frost Ray
     public bool HasFrostRay = false;
     public float BonusFrostRayDamage = 0;

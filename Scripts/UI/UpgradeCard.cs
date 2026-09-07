@@ -16,6 +16,7 @@ public partial class UpgradeCard : PanelContainer
 		string localizedName = LocalizationManager.Translate(upgrade.NameKey);
 		GetNode<Label>("CardContent/UpgradeName").Text = localizedName == upgrade.NameKey ? upgrade.Name : localizedName;
 		GetNode<Label>("CardContent/UpgradeType").Text = LocalizationManager.Translate($"upgrade.type.{upgrade.Type.ToString().ToLowerInvariant()}");
+		GetNode<Label>("CardContent/UpgradeElement").Text = LocalizationManager.Translate($"upgrade.element.{upgrade.ElementType.ToString().ToLowerInvariant()}");
 
 		//Se muestra la descripción con el valor de la próxima aplicación
 		int nextApplication = upgrade.TimesApplied + 1;

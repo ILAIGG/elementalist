@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bj35f6k7iw14u" path="res://Assets/Sprites/Player.png" id="2_wmg1a"]
 [ext_resource type="Script" uid="uid://bq2v3ej6avsiq" path="res://Scripts/Entities/AbilityManager.cs" id="3_g4oe6"]
 [ext_resource type="PackedScene" uid="uid://4jf41esh0ijh" path="res://Scenes/Entities/Fireball.tscn" id="3_km4ui"]
+[ext_resource type="PackedScene" uid="uid://e6w4t3r2q1p0" path="res://Scenes/Entities/WaterBolt.tscn" id="3_waterbolt"]
 [ext_resource type="PackedScene" uid="uid://c2ogmcik846mm" path="res://Scenes/Entities/FrostRay.tscn" id="4_rsj4h"]
 [ext_resource type="PackedScene" uid="uid://qxo46jqxfpax" path="res://Scenes/Entities/ExplosionEffect.tscn" id="5_4kc40"]
 [ext_resource type="PackedScene" uid="uid://cghcap5da2m21" path="res://Scenes/Entities/RepulsionBurst.tscn" id="6_rsj4h"]
@@ -34,6 +35,7 @@ texture = ExtResource("2_wmg1a")
 [node name="SpellCaster" type="Node" parent="." unique_id=857088393]
 script = ExtResource("2_agccv")
 FireballScene = ExtResource("3_km4ui")
+WaterBoltScene = ExtResource("3_waterbolt")
 FrostRayScene = ExtResource("4_rsj4h")
 ExplosionEffectScene = ExtResource("5_4kc40")
 RepulsionBurstScene = ExtResource("6_rsj4h")
