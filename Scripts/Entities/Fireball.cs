@@ -2,6 +2,7 @@ using Godot;
 
 public partial class Fireball : Area2D
 {
+    [Export] public Element ElementType { get; set; } = Element.Fire;
     [Export] public float Speed = 400f;
     [Export] public float Damage = 20f;
     [Export] public float ExplosionRadius = 80f;
@@ -39,7 +40,7 @@ public partial class Fireball : Area2D
         //Si toca a un enemigo, le hace daño
         if (body is IEnemy enemy)
         {
-            enemy.Health.TakeDamage(Damage, body.GlobalPosition, GetTree(), body.GetInstanceId());
+            enemy.TakeElementalDamage(Damage, ElementType, body.GlobalPosition, GetTree(), body.GetInstanceId());
 
             if (IsExplosive)
                 Explode();
@@ -68,7 +69,7 @@ public partial class Fireball : Area2D
             {
                 float distance = GlobalPosition.DistanceTo(enemy.GlobalPosition);
                 if (distance <= ExplosionRadius)
-                    (enemy as IEnemy)?.Health.TakeDamage(Damage * 0.5f, enemy.GlobalPosition, GetTree(), enemy.GetInstanceId()); //(enemy as IEnemy)
+                    (enemy as IEnemy)?.TakeElementalDamage(Damage * 0.5f, ElementType, enemy.GlobalPosition, GetTree(), enemy.GetInstanceId());
             }
         }
 

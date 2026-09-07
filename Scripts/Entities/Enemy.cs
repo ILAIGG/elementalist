@@ -5,6 +5,7 @@ public partial class Enemy : CharacterBody2D, IEnemy
 {
     private static readonly Color FrozenTint = new(0.72f, 0.9f, 1f);
 
+    [Export] public Element ElementType { get; set; } = Element.Neutral;
     [Export] public float Speed = 80f;
     [Export] public float MaxHealth = 30f;
 
@@ -110,6 +111,12 @@ public partial class Enemy : CharacterBody2D, IEnemy
     {
         _statusEffects.Apply(effect);
         UpdateStatusEffectVisuals();
+    }
+
+    public void TakeElementalDamage(float amount, Element attackElement, Vector2 position, SceneTree tree, ulong entityId = 0)
+    {
+        float multiplier = ElementalChart.GetDamageMultiplier(attackElement, ElementType);
+        Health.TakeDamage(amount * multiplier, position, tree, entityId);
     }
 
     private void UpdateStatusEffectVisuals()

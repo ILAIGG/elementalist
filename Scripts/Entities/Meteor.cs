@@ -2,6 +2,7 @@ using Godot;
 
 public partial class Meteor : Area2D
 {
+    [Export] public Element ElementType { get; set; } = Element.Fire;
     [Export] public float Damage = 35f;
     [Export] public float FallSpeed = 800f;
 
@@ -61,7 +62,7 @@ public partial class Meteor : Area2D
         foreach (Node2D body in GetOverlappingBodies())
         {
             if (body is IEnemy enemy)
-                enemy.Health.TakeDamage(Damage, body.GlobalPosition, GetTree());
+                enemy.TakeElementalDamage(Damage, ElementType, body.GlobalPosition, GetTree());
         }
 
         //El meteoro desaparece después de impactar

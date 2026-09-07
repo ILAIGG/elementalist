@@ -3,6 +3,7 @@ using Godot;
 
 public partial class FrostRay : Area2D
 {
+    [Export] public Element ElementType { get; set; } = Element.Ice;
     [Export] public float Damage = 8f;
     [Export] public float Duration = 0.15f; //Segundos que dura el rayo
     // [Export] public float SlowFactor = 0.4f; //Reservado para reactivar FrozenEffect
@@ -44,7 +45,7 @@ public partial class FrostRay : Area2D
             if (body is IEnemy enemy)
             {
                 //Daño
-                enemy.Health.TakeDamage(Damage, body.GlobalPosition, GetTree(),body.GetInstanceId());
+                enemy.TakeElementalDamage(Damage, ElementType, body.GlobalPosition, GetTree(), body.GetInstanceId());
 
                 // FrozenEffect desactivado temporalmente: FrostRay solo hace daño.
 

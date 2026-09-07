@@ -2,6 +2,7 @@ using Godot;
 
 public partial class RepulsionBurst : Area2D
 {
+    [Export] public Element ElementType { get; set; } = Element.Neutral;
     [Export] public float Damage = 2f;
     [Export] public float Duration = 0.3f;
     [Export] public float Force = 200f;
@@ -46,7 +47,7 @@ public partial class RepulsionBurst : Area2D
             if (body is Enemy enemy)
             {
                 //Daño mínimo
-                enemy.Health.TakeDamage(Damage, body.GlobalPosition, body.GetTree(), body.GetInstanceId());
+                enemy.TakeElementalDamage(Damage, ElementType, body.GlobalPosition, body.GetTree(), body.GetInstanceId());
 
                 //Fuerza de empuje hacia afuera
                 Vector2 pushDirection = (body.GlobalPosition - GlobalPosition).Normalized();

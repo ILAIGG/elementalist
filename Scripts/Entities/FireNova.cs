@@ -2,6 +2,7 @@ using Godot;
 
 public partial class FireNova : Area2D
 {
+    [Export] public Element ElementType { get; set; } = Element.Fire;
     [Export] public float Damage = 40f;
     [Export] public float Duration = 0.3f; //Segundos que dura visualmente
     [Export] public float Radius = 150f;
@@ -48,7 +49,7 @@ public partial class FireNova : Area2D
         foreach (Node2D body in GetOverlappingBodies())
         {
             if (body is IEnemy enemy)
-                enemy.Health.TakeDamage(Damage, body.GlobalPosition, GetTree());
+                enemy.TakeElementalDamage(Damage, ElementType, body.GlobalPosition, GetTree());
                 
         }
     }
