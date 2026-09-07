@@ -19,8 +19,8 @@ public class PlayerStats
     //Frost Ray
     public bool HasFrostRay = false;
     public float BonusFrostRayDamage = 0;
-    public float FrostRaySlowFactor = 0.4f;
-    public float FrostRaySlowDuration = 2f;
+    // public float FrostRaySlowFactor = 0.4f; // Reservado para reactivar FrozenEffect
+    // public float FrostRaySlowDuration = 2f; // Reservado para reactivar FrozenEffect
     public float FrostRayRange = 200f;
     public float FrostRayWidth = 8f;  //ancho base del rayo
     public bool FrostRayChain = false;

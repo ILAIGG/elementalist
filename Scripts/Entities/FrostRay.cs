@@ -5,8 +5,8 @@ public partial class FrostRay : Area2D
 {
     [Export] public float Damage = 8f;
     [Export] public float Duration = 0.15f; //Segundos que dura el rayo
-    [Export] public float SlowFactor = 0.4f; //Multiplica la velocidad del enemigo
-    [Export] public float SlowDuration = 2f; //Segundos que dura el slow
+    // [Export] public float SlowFactor = 0.4f; //Reservado para reactivar FrozenEffect
+    // [Export] public float SlowDuration = 2f; //Reservado para reactivar FrozenEffect
 
     public bool IsChaining { get; set; } = false;
     private bool _hasChained = false;
@@ -46,8 +46,7 @@ public partial class FrostRay : Area2D
                 //Daño
                 enemy.Health.TakeDamage(Damage, body.GlobalPosition, GetTree(),body.GetInstanceId());
 
-                //Aplica el estado de congelación con la intensidad configurada por las mejoras.
-                enemy.ApplyStatusEffect(new FrozenEffect(SlowFactor, SlowDuration));
+                // FrozenEffect desactivado temporalmente: FrostRay solo hace daño.
 
                 //Si tiene chain y no ha rebotado aún, entonces busca al siguiente enemigo
                 if (IsChaining && !_hasChained)

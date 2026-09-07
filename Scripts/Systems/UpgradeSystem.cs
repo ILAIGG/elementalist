@@ -317,7 +317,7 @@ public class UpgradeSystem
         {
             Id = "unlock_frost_ray",
             Name = "Frost Ray",
-            GetDescription = (times) => "A beam that pierces and slows enemies it hits.",
+            GetDescription = (times) => "A beam that pierces and damages enemies it hits.",
             Type = UpgradeType.Spell,
             IsInfinite = false,
             Apply = (player, times) =>
@@ -326,21 +326,21 @@ public class UpgradeSystem
             }
         });
 
-        //Congela completamente al enemigo.
-        _allUpgrades.Add(new Upgrade
-        {
-            Id = "frost_ray_permafrost",
-            Name = "Permafrost",
-            GetDescription = (times) => "Frost Ray now COMPLETELY freezes enemies hit. Freeze duration is halved. The bosses can't be completely frozen.",
-            Type = UpgradeType.Spell,
-            IsInfinite = false,
-            Condition = (player) => _stats.HasFrostRay,
-            Apply = (player, times) =>
-            {
-                _stats.FrostRaySlowFactor = 0f;
-                _stats.FrostRaySlowDuration /= 2f;
-            }
-        });
+        // Permafrost desactivado temporalmente junto con FrozenEffect.
+        // _allUpgrades.Add(new Upgrade
+        // {
+        //     Id = "frost_ray_permafrost",
+        //     Name = "Permafrost",
+        //     GetDescription = (times) => "Frost Ray now COMPLETELY freezes enemies hit. Freeze duration is halved. The bosses can't be completely frozen.",
+        //     Type = UpgradeType.Spell,
+        //     IsInfinite = false,
+        //     Condition = (player) => _stats.HasFrostRay,
+        //     Apply = (player, times) =>
+        //     {
+        //         _stats.FrostRaySlowFactor = 0f;
+        //         _stats.FrostRaySlowDuration /= 2f;
+        //     }
+        // });
 
         _allUpgrades.Add(new Upgrade
         {
@@ -372,23 +372,23 @@ public class UpgradeSystem
             }
         });
 
-        //+1 segundo al slow del Rayo de Hielo
-        _allUpgrades.Add(new Upgrade
-        {
-            Id = "frost_ray_slow_duration",
-            Name = "Lingering Chill",
-            GetDescription = (times) => (_stats.FrostRaySlowFactor != 0) ? $"+1s Frost Ray slow duration." : $"+0.5s Frost Ray freeze duration.",
-            GetDescriptionKey = (times) => _stats.FrostRaySlowFactor != 0
-                ? "upgrade.frost_ray_slow_duration.description"
-                : "upgrade.frost_ray_slow_duration.freeze_description",
-            Type = UpgradeType.Spell,
-            IsInfinite = true,
-            Condition = (player) => _stats.HasFrostRay,
-            Apply = (player, times) =>
-            {
-                _stats.FrostRaySlowDuration += (_stats.FrostRaySlowFactor != 0) ? 1f : 0.5f;
-            }
-        });
+        // Lingering Chill desactivado temporalmente junto con FrozenEffect.
+        // _allUpgrades.Add(new Upgrade
+        // {
+        //     Id = "frost_ray_slow_duration",
+        //     Name = "Lingering Chill",
+        //     GetDescription = (times) => (_stats.FrostRaySlowFactor != 0) ? $"+1s Frost Ray slow duration." : $"+0.5s Frost Ray freeze duration.",
+        //     GetDescriptionKey = (times) => _stats.FrostRaySlowFactor != 0
+        //         ? "upgrade.frost_ray_slow_duration.description"
+        //         : "upgrade.frost_ray_slow_duration.freeze_description",
+        //     Type = UpgradeType.Spell,
+        //     IsInfinite = true,
+        //     Condition = (player) => _stats.HasFrostRay,
+        //     Apply = (player, times) =>
+        //     {
+        //         _stats.FrostRaySlowDuration += (_stats.FrostRaySlowFactor != 0) ? 1f : 0.5f;
+        //     }
+        // });
 
         //-------- REPULSION BURST --------
         //Desbloquea el RepulsionBurst

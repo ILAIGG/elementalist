@@ -155,9 +155,7 @@ public partial class SpellCaster : Node
 
         ray.Damage += _stats.BonusFrostRayDamage + _stats.BonusDamage;
 
-        //Se usan las propiedades del jugador en vez de los valores fijos en el script
-        ray.SlowFactor = _stats.FrostRaySlowFactor;
-        ray.SlowDuration = _stats.FrostRaySlowDuration;
+        // FrozenEffect desactivado temporalmente: FrostRay solo hace daño.
         ray.IsChaining = _stats.FrostRayChain;
 
         //Se actualiza el ancho del rayo según los stats
