@@ -14,6 +14,7 @@ public partial class Boss : CharacterBody2D, IEnemy
     private const float DamageInterval = 0.5f;
 
     private Sprite2D _sprite;
+    private Sprite2D _reactionSprite;
 
     public HealthSystem Health { get; private set; }
     public ElementalAccumulator ElementalEffects { get; } = new();
@@ -37,6 +38,20 @@ public partial class Boss : CharacterBody2D, IEnemy
         Health.OnHealthChanged += OnHealthChanged;
 
         _sprite = GetNode<Sprite2D>("Sprite2D");
+        _reactionSprite = GetNodeOrNull<Sprite2D>("ReactionSprite");
+        if (_reactionSprite == null)
+        {
+            _reactionSprite = new Sprite2D
+            {
+                Name = "ReactionSprite",
+                ZIndex = _sprite.ZIndex + 1,
+                Visible = false,
+                Position = Vector2.Zero,
+                Scale = _sprite.Scale,
+                TextureFilter = CanvasItem.TextureFilterEnum.Nearest
+            };
+            AddChild(_reactionSprite);
+        }
 
         _player = GetTree().GetFirstNodeInGroup("player") as Player;
     }
@@ -135,14 +150,36 @@ public partial class Boss : CharacterBody2D, IEnemy
         ElementalEffects.Consume(elementToConsume);
 
         if (reaction == ElementalReaction.Vaporization)
+        {
             Health.TakeDamage(reactionDamage, GlobalPosition, GetTree(), GetInstanceId());
+            ApplyStatusEffect(new VaporizedEffect(0.65f, 1.2f));
+        }
         else if (reaction == ElementalReaction.Freezing)
+        {
             ApplyStatusEffect(new FrozenEffect(0f, 1.5f));
+        }
     }
 
     private void UpdateStatusEffectVisuals()
     {
-        _sprite.Modulate = _statusEffects.Has<FrozenEffect>() ? FrozenTint : Colors.White;
+        if (_statusEffects.Has<FrozenEffect>())
+        {
+            _sprite.Modulate = FrozenTint;
+            _reactionSprite.Texture = ResourceLoader.Load<Texture2D>("res://Assets/Sprites/Reactions/frozen_reaction.png");
+            _reactionSprite.Visible = true;
+            return;
+        }
+
+        if (_statusEffects.Has<VaporizedEffect>())
+        {
+            _sprite.Modulate = Colors.White;
+            _reactionSprite.Texture = ResourceLoader.Load<Texture2D>("res://Assets/Sprites/Reactions/vaporization_reaction.png");
+            _reactionSprite.Visible = true;
+            return;
+        }
+
+        _sprite.Modulate = Colors.White;
+        _reactionSprite.Visible = false;
     }
 
     public void ApplyKnockback(Vector2 force)

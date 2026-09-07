@@ -30,6 +30,14 @@ public sealed class FrozenEffect : StatusEffect
     }
 }
 
+public sealed class VaporizedEffect : StatusEffect
+{
+    public VaporizedEffect(float movementFactor, float duration)
+        : base("vaporized", movementFactor, duration)
+    {
+    }
+}
+
 public sealed class StatusEffectSystem
 {
     private readonly Dictionary<string, StatusEffect> _effects = new();

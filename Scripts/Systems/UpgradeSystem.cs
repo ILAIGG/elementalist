@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 using Godot;
 
 //Define los tipos de upgrades que existen
@@ -16,7 +15,6 @@ public enum UpgradeType
 public class Upgrade
 {
     public string Id; //Identificador único, por ejemplo "fireball_damage"
-    public string Name; //Nombre visible, por ejemplo "Furia Arcana"
     public UpgradeType Type;
     public Element ElementType = Element.Neutral;
     public bool IsInfinite; //Se puede tomar más de una vez?
@@ -26,8 +24,7 @@ public class Upgrade
     //Función que modifica al jugador cuando se elige esta mejora
     public Action<Player, int> Apply;
 
-    //En vez de un string fijo, es una función que calcula la descripción según cuantas veces fue aplicado
-    public Func<int, string> GetDescription; //Descripción visible
+    //Permite seleccionar una clave alternativa para descripciones dinámicas.
     public Func<int, string> GetDescriptionKey;
     public Func<int, object[]> GetDescriptionArguments;
 
@@ -140,8 +137,6 @@ public class UpgradeSystem
         _allUpgrades.Add(new Upgrade
         {
             Id = "stat_health",
-            Name = "Arcane Vitality",
-            GetDescription = (times) => "+20 Maximum Health.", //Descripción fija
             Type = UpgradeType.Stat,
             IsInfinite = true,
             Apply = (player, times) =>
@@ -154,8 +149,6 @@ public class UpgradeSystem
         _allUpgrades.Add(new Upgrade
         {
             Id = "stat_speed",
-            Name = "Ethereal Stride",
-            GetDescription = (times) => "+15 Movement Speed.",
             Type = UpgradeType.Stat,
             IsInfinite = true,
             Apply = (player, times) =>
@@ -167,8 +160,6 @@ public class UpgradeSystem
         _allUpgrades.Add(new Upgrade
         {
             Id = "stat_damage",
-            Name = "Arcane Might",
-            GetDescription = (times) => "+6 Damage to ALL spells and abilities.",
             Type = UpgradeType.Stat,
             IsInfinite = true,
             Apply = (player, times) =>
@@ -181,8 +172,6 @@ public class UpgradeSystem
         _allUpgrades.Add(new Upgrade
         {
             Id = "stat_regen",
-            Name = "Arcane Regeneration",
-            GetDescription = (times) => $"+{times} HP regenerated every 3 seconds.",
             GetDescriptionArguments = (times) => new object[] { times },
             Type = UpgradeType.Stat,
             IsInfinite = true,
@@ -197,8 +186,6 @@ public class UpgradeSystem
         _allUpgrades.Add(new Upgrade
         {
             Id = "dash_invincible",
-            Name = "Shadow Dash",
-            GetDescription = (times) => "The mage is invincible and passes through enemies during the dash.",
             Type = UpgradeType.Dash,
             IsInfinite = false,
             Apply = (player, times) =>
@@ -211,8 +198,6 @@ public class UpgradeSystem
         _allUpgrades.Add(new Upgrade
         {
             Id = "dash_cooldown",
-            Name = "Arcane Impulse",
-            GetDescription = (times) => $"-0.2s Dash Cooldown (Current: {_player.DashCooldown:F2}s)",
             GetDescriptionArguments = (times) => new object[] { _player.DashCooldown },
             Type = UpgradeType.Dash,
             IsInfinite = true,
@@ -223,17 +208,12 @@ public class UpgradeSystem
             Condition = (player) => player.DashCooldown > 0.5f,
         });
 
-        //-------- FIREBALL --------
         //Upgrade único de hechizo (cambia su comportamiento)
         //Dispara en ráfaga secuencial en línea recta
         _allUpgrades.Add(new Upgrade
         {
             Id = "fireball_burst",
-            Name = "Burst Fire",
             ElementType = Element.Fire,
-            GetDescription = (times) => _stats.FireballBurstCount == 0
-                ? $"Fires 2 Fireball projectiles in burst. Fireball damage is reduced by 15%. (Current: {_stats.FireballBurstCount})"
-                : $"+1 Fireball projectile fired in burst. (Current: {_stats.FireballBurstCount})",
             GetDescriptionKey = (times) => _stats.FireballBurstCount == 0
                 ? "upgrade.fireball_burst.first_description"
                 : "upgrade.fireball_burst.description",
@@ -253,9 +233,7 @@ public class UpgradeSystem
         _allUpgrades.Add(new Upgrade
         {
             Id = "fireball_piercing",
-            Name = "Piercing Fireball",
             ElementType = Element.Fire,
-            GetDescription = (times) => "Fireball now pierces through enemies.",
             Type = UpgradeType.Spell,
             IsInfinite = false,
             Condition = (player) => !_excludedIds.Contains("fireball_piercing"),
@@ -269,9 +247,7 @@ public class UpgradeSystem
         _allUpgrades.Add(new Upgrade
         {
             Id = "fireball_multishot",
-            Name = "Multishot",
             ElementType = Element.Fire,
-            GetDescription = (times) => $"+2 Fireball projectile (Current: {_stats.FireballCount})",
             GetDescriptionArguments = (times) => new object[] { _stats.FireballCount },
             Type = UpgradeType.Spell,
             IsInfinite = false,
@@ -287,9 +263,7 @@ public class UpgradeSystem
         _allUpgrades.Add(new Upgrade
         {
             Id = "fireball_explosive",
-            Name = "Explosive Fireball",
             ElementType = Element.Fire,
-            GetDescription = (times) => "Fireball now explodes on impact, dealing Area-of-Effect(AoE) damage.",
             Type = UpgradeType.Spell,
             IsInfinite = false,
             Condition = (player) => !_excludedIds.Contains("fireball_explosive"),
@@ -304,9 +278,7 @@ public class UpgradeSystem
         _allUpgrades.Add(new Upgrade
         {
             Id = "fireball_damage",
-            Name = "Igneous Fury",
             ElementType = Element.Fire,
-            GetDescription = (times) => $"+{2f * times} Fireball Damage. This bonus scales up further every time you choose this upgrade card.", //Descripción dinámica. Muestra exactamente cuánto daño va a sumar esta vez
             GetDescriptionArguments = (times) => new object[] { 2f * times },
             Type = UpgradeType.Spell,
             IsInfinite = true,
@@ -321,11 +293,10 @@ public class UpgradeSystem
         _allUpgrades.Add(new Upgrade
         {
             Id = "unlock_water_bolt",
-            Name = "Water Bolt",
             ElementType = Element.Water,
-            GetDescription = (times) => "Fires a water projectile that applies Water to enemies.",
             Type = UpgradeType.Spell,
             IsInfinite = false,
+            Condition = (player) => !_stats.HasWaterBolt,
             Apply = (player, times) =>
             {
                 _stats.HasWaterBolt = true;
@@ -335,9 +306,7 @@ public class UpgradeSystem
         _allUpgrades.Add(new Upgrade
         {
             Id = "water_bolt_damage",
-            Name = "Pressurized Current",
             ElementType = Element.Water,
-            GetDescription = (times) => $"+2 Water Bolt Damage. (Current: {_stats.BonusWaterBoltDamage:F0})",
             GetDescriptionArguments = (times) => new object[] { _stats.BonusWaterBoltDamage },
             Type = UpgradeType.Spell,
             IsInfinite = true,
@@ -345,6 +314,7 @@ public class UpgradeSystem
             Apply = (player, times) =>
             {
                 _stats.BonusWaterBoltDamage += 2f;
+                _stats.HasWaterBolt = true;
             }
         });
 
@@ -353,9 +323,7 @@ public class UpgradeSystem
         _allUpgrades.Add(new Upgrade
         {
             Id = "unlock_frost_ray",
-            Name = "Frost Ray",
             ElementType = Element.Ice,
-            GetDescription = (times) => "A beam that pierces and damages enemies it hits.",
             Type = UpgradeType.Spell,
             IsInfinite = false,
             Apply = (player, times) =>
@@ -383,9 +351,7 @@ public class UpgradeSystem
         _allUpgrades.Add(new Upgrade
         {
             Id = "frost_ray_wide",
-            Name = "Wide Beam",
             ElementType = Element.Ice,
-            GetDescription = (times) => "Frost Ray becomes wider, hitting more enemies at once.",
             Type = UpgradeType.Spell,
             IsInfinite = false,
             Condition = (player) => _stats.HasFrostRay && !_excludedIds.Contains("frost_ray_wide"),
@@ -399,9 +365,7 @@ public class UpgradeSystem
         _allUpgrades.Add(new Upgrade
         {
             Id = "frost_ray_chain",
-            Name = "Chaining Frost",
             ElementType = Element.Ice,
-            GetDescription = (times) => "Frost Ray bounces to the nearest enemy after hitting one.",
             Type = UpgradeType.Spell,
             IsInfinite = false,
             Condition = (player) => _stats.HasFrostRay && !_excludedIds.Contains("frost_ray_chain"),
@@ -435,9 +399,7 @@ public class UpgradeSystem
         _allUpgrades.Add(new Upgrade
         {
             Id = "unlock_repulsion_burst",
-            Name = "Repulsion Burst",
             ElementType = Element.Earth,
-            GetDescription = (times) => $"Periodically releases a burst that pushes nearby enemies away. Triggers every {_stats.RepulsionBurstFireRate:F1} seconds.",
             GetDescriptionArguments = (times) => new object[] { _stats.RepulsionBurstFireRate },
             Type = UpgradeType.Spell,
             IsInfinite = false,
@@ -450,9 +412,7 @@ public class UpgradeSystem
         _allUpgrades.Add(new Upgrade
         {
             Id = "repulsion_burst_damage",
-            Name = "Arcane Repulsion",
             ElementType = Element.Earth,
-            GetDescription = (times) => $"+2 Repulsion Burst damage (Current: {_stats.BonusRepulsionBurstDamage:F2}s).",
             GetDescriptionArguments = (times) => new object[] { _stats.BonusRepulsionBurstDamage },
             Type = UpgradeType.Spell,
             IsInfinite = true,
@@ -466,9 +426,7 @@ public class UpgradeSystem
         _allUpgrades.Add(new Upgrade
         {
             Id = "repulsion_burst_shockwave",
-            Name = "Shockwave",
             ElementType = Element.Earth,
-            GetDescription = (times) => "Repulsion Burst leaves a shockwave that damages enemies for 2 seconds.",
             Type = UpgradeType.Spell,
             IsInfinite = false,
             Condition = (player) => _stats.HasRepulsionBurst && !_excludedIds.Contains("repulsion_burst_shockwave"),
@@ -482,9 +440,7 @@ public class UpgradeSystem
         _allUpgrades.Add(new Upgrade
         {
             Id = "repulsion_burst_extended",
-            Name = "Extended Burst",
             ElementType = Element.Earth,
-            GetDescription = (times) => "+60 Repulsion Burst range and +100 push force.",
             Type = UpgradeType.Spell,
             IsInfinite = false,
             Condition = (player) => _stats.HasRepulsionBurst && !_excludedIds.Contains("repulsion_burst_extended"),
@@ -501,9 +457,7 @@ public class UpgradeSystem
         _allUpgrades.Add(new Upgrade
         {
             Id = "nova_chain",
-            Name = "Nova Chain",
             ElementType = Element.Fire,
-            GetDescription = (times) => "Fire Nova now launches 3 Fireballs upon detonating.",
             Type = UpgradeType.Ability,
             IsInfinite = false,
             Apply = (player, times) =>
@@ -516,9 +470,7 @@ public class UpgradeSystem
         _allUpgrades.Add(new Upgrade
         {
             Id = "nova_cooldown",
-            Name = "Nova Frenzy",
             ElementType = Element.Fire,
-            GetDescription = (times) => $"-0.5s Fire Nova Cooldown (Current: {_stats.FireNovaCooldown:F2}s)",
             GetDescriptionArguments = (times) => new object[] { _stats.FireNovaCooldown },
             Type = UpgradeType.Ability,
             IsInfinite = true,

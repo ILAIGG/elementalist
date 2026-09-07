@@ -84,10 +84,11 @@ public partial class SpellCaster : Node
 
     private void ShootWaterBolt(Node2D target)
     {
-        Fireball waterBolt = WaterBoltScene.Instantiate<Fireball>();
+        WaterBolt waterBolt = WaterBoltScene.Instantiate<WaterBolt>();
         GetProjectileContainer().AddChild(waterBolt);
         waterBolt.GlobalPosition = _player.GlobalPosition;
         waterBolt.Direction = _player.GlobalPosition.DirectionTo(target.GlobalPosition);
+        waterBolt.ElementType = Element.Water;
         waterBolt.Damage += _stats.BonusWaterBoltDamage + _stats.BonusDamage;
     }
 
