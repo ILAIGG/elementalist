@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://cbe2oo7wpmypv"]
+
+[ext_resource type="Script" uid="uid://brotfem0nlfef" path="res://Scripts/Audio/AudioManager.cs" id="1_esrla"]
+[ext_resource type="Resource" uid="uid://enrkwf4vwtp6" path="res://Audio/Data/AudioLibrary.tres" id="2_rhsx5"]
+
+[node name="AudioManager" type="Node" unique_id=326907006]
+script = ExtResource("1_esrla")
+Library = ExtResource("2_rhsx5")

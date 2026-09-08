@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="AudioLibrary" format=3 uid="uid://enrkwf4vwtp6"]
+
+[ext_resource type="Script" uid="uid://70cwp51gkyid" path="res://Scripts/Audio/AudioLibrary.cs" id="1_l8icj"]
+[ext_resource type="Resource" uid="uid://bwa1158yey2n3" path="res://Audio/Data/SFX/UI/UIClick.tres" id="1_mb2tu"]
+
+[resource]
+script = ExtResource("1_l8icj")
+Sfx = [ExtResource("1_mb2tu")]
+metadata/_custom_type_script = "uid://70cwp51gkyid"

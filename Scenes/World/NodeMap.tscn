@@ -54,10 +54,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="CloseButton" type="Button" parent="PopUp/Panel/Margin/Content/Header" unique_id=582591932]
-layout_mode = 2
 custom_minimum_size = Vector2(28, 28)
-text_overrun_behavior = 3
+layout_mode = 2
 text = "X"
+text_overrun_behavior = 3
 
 [node name="DifficultyLabel" type="Label" parent="PopUp/Panel/Margin/Content" unique_id=351256081]
 layout_mode = 2

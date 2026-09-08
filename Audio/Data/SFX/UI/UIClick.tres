@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AudioData" format=3 uid="uid://bwa1158yey2n3"]
+
+[ext_resource type="AudioStream" uid="uid://cy3b6b60i5fji" path="res://Audio/SFX/UI/UIClick.wav" id="1_x4hml"]
+[ext_resource type="Script" uid="uid://cthtl8nblqibu" path="res://Scripts/Audio/AudioData.cs" id="2_g8c41"]
+
+[resource]
+script = ExtResource("2_g8c41")
+Id = "ui.click"
+Stream = ExtResource("1_x4hml")
+metadata/_custom_type_script = "uid://cthtl8nblqibu"
