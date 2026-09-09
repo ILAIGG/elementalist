@@ -33,6 +33,10 @@ public partial class MainMenu : Control
         RefreshLocalizedText();
         SaveData savedRun = SaveSystem.LoadRun();
         _continueButton.Disabled = savedRun == null || savedRun.IsRunComplete;
+
+        //TESTS BORRAR LUEGO!!!!!!
+        AudioManager.Instance.PlaySfx("ui.click");
+        AudioManager.Instance.PlayMusic("r!ickes-creation.theme");
     }
 
     private void PopulateLanguages()
