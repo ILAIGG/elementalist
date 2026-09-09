@@ -171,4 +171,60 @@ public partial class AudioManager : Node
     {
         _musicPlayer.Stop();
     }
+
+    public void SetMasterVolume(float volumeDb)
+    {
+        SetBusVolume("Master", volumeDb);
+    }
+
+    public void SetMusicVolume(float volumeDb)
+    {
+        SetBusVolume("Music", volumeDb);
+    }
+
+    public void SetSfxVolume(float volumeDb)
+    {
+        SetBusVolume("SFX", volumeDb);
+    }
+
+    private void SetBusVolume(string busName, float volumeDb)
+    {
+        int busIndex = AudioServer.GetBusIndex(busName);
+
+        if (busIndex == -1)
+        {
+            GD.PushWarning($"AudioManager: No existe el bus '{busName}'.");
+            return;
+        }
+
+        AudioServer.SetBusVolumeDb(busIndex, volumeDb);
+    }
+
+    public float GetMasterVolume()
+    {
+        return GetBusVolume("Master");
+    }
+
+    public float GetMusicVolume()
+    {
+        return GetBusVolume("Music");
+    }
+
+    public float GetSfxVolume()
+    {
+        return GetBusVolume("SFX");
+    }
+
+    private float GetBusVolume(string busName)
+    {
+        int busIndex = AudioServer.GetBusIndex(busName);
+
+        if (busIndex == -1)
+        {
+            GD.PushWarning($"AudioManager: No existe el bus '{busName}'.");
+            return 0.0f;
+        }
+
+        return AudioServer.GetBusVolumeDb(busIndex);
+    }
 }
