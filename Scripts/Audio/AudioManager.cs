@@ -12,7 +12,7 @@ public partial class AudioManager : Node
     private const float NormalMusicCutoffHz = 20000.0f;
     private const float PausedMusicCutoffHz = 900.0f;
     private const float MusicQuitPauseFadeDuration = 0.25f;
-    private const float MusicCrossfadeDuration = 0.5f;
+    private const float MusicCrossfadeDuration = 1.5f;
 
     [Export]
     public AudioLibrary Library { get; set; }
