@@ -34,6 +34,7 @@ public partial class AudioManager : Node
 
     private readonly Dictionary<string, AudioData> _sfxLibrary = new();
     private readonly Dictionary<string, AudioData> _musicLibrary = new();
+    private readonly HashSet<BaseButton> _uiButtons = new();
     private bool _audioWasPaused;
     private float _musicVolumeDb;
     private float _musicPauseProgress;
@@ -47,6 +48,8 @@ public partial class AudioManager : Node
     public override void _Ready()
     {
         ProcessMode = Node.ProcessModeEnum.Always;
+        GetTree().NodeAdded += OnNodeAdded;
+        ConnectExistingButtons(GetTree().Root);
         SetupMusicPlayer();
         SetupSfxPlayers();
         SetupSfxLimiter();
@@ -63,8 +66,29 @@ public partial class AudioManager : Node
 
     public override void _ExitTree()
     {
+        GetTree().NodeAdded -= OnNodeAdded;
+
         if (Instance == this)
             Instance = null;
+    }
+
+    private void OnNodeAdded(Node node)
+    {
+        if (node is BaseButton button && _uiButtons.Add(button))
+            button.Pressed += OnUiButtonPressed;
+    }
+
+    private void ConnectExistingButtons(Node node)
+    {
+        OnNodeAdded(node);
+
+        foreach (Node child in node.GetChildren())
+            ConnectExistingButtons(child);
+    }
+
+    private void OnUiButtonPressed()
+    {
+        AudioManager.Instance.PlaySfx("ui.click");
     }
 
     private void SetupMusicPlayer()
@@ -366,6 +390,7 @@ public partial class AudioManager : Node
         newPlayer.Stream = audio.Stream;
         newPlayer.PitchScale = audio.PitchScale;
         newPlayer.VolumeDb = -80.0f;
+        newPlayer.Autoplay = false;
         newPlayer.Play();
 
         float newVolume = audio.VolumeDb;

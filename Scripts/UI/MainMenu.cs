@@ -35,7 +35,6 @@ public partial class MainMenu : Control
         _continueButton.Disabled = savedRun == null || savedRun.IsRunComplete;
 
         //TESTS BORRAR LUEGO!!!!!!
-        AudioManager.Instance.PlaySfx("ui.click");
         AudioManager.Instance.PlayMusic("r!ckes-desert.theme");
     }
 
