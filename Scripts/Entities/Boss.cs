@@ -34,6 +34,7 @@ public partial class Boss : CharacterBody2D, IEnemy
     {
         ElementalEffects.ElementApplied += OnElementApplied;
         Health = new(MaxHealth);
+        Health.OnDamageTaken += OnEnemyDamageTaken;
         Health.OnDeath += OnBossDeath;
         Health.OnHealthChanged += OnHealthChanged;
 
@@ -212,5 +213,10 @@ public partial class Boss : CharacterBody2D, IEnemy
             ?.Call("OnBossDefeated");
 
         QueueFree();
+    }
+
+    private void OnEnemyDamageTaken()
+    {
+        AudioManager.Instance.PlaySfx("sfx.explosion5");
     }
 }

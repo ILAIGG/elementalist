@@ -17,6 +17,7 @@ public partial class UpgradeScreen : Control
     {
         Visible = true;
         GetTree().Paused = true;
+        AudioManager.Instance?.SetAudioPaused(true);
 
         //Se limpia las cartas anteriores si es que las hubiera
         var container = GetNode<HBoxContainer>("CardsContainer");
@@ -41,5 +42,6 @@ public partial class UpgradeScreen : Control
 
         Visible = false;
         GetTree().Paused = false;
+        AudioManager.Instance?.SetAudioPaused(false);
     }
 }

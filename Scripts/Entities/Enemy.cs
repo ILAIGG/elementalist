@@ -36,6 +36,7 @@ public partial class Enemy : CharacterBody2D, IEnemy
     {
         ElementalEffects.ElementApplied += OnElementApplied;
         Health = new HealthSystem(MaxHealth);
+        Health.OnDamageTaken += OnEnemyDamageTaken;
 
         _sprite = GetNode<Sprite2D>("Sprite2D");
         _reactionSprite = GetNodeOrNull<Sprite2D>("ReactionSprite");
@@ -199,5 +200,10 @@ public partial class Enemy : CharacterBody2D, IEnemy
         _player?.Experience.AddXP(XPValue); //Esto es lo mismo que hacer: "if (_player != null) _player.Experience.AddXP(XPValue);" El "?" hace que diga "Existe el jugador? Si existe, entonces haz esto".
 
         QueueFree();
+    }
+
+    private void OnEnemyDamageTaken()
+    {
+        AudioManager.Instance.PlaySfx("sfx.explosion5");
     }
 }

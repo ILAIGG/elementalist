@@ -43,7 +43,10 @@ public partial class Fireball : Area2D
             enemy.TakeElementalDamage(Damage, ElementType, body.GlobalPosition, GetTree(), body.GetInstanceId());
 
             if (IsExplosive)
+            {
                 Explode();
+                AudioManager.Instance.PlaySfx("sfx.explosion18");
+            }
             else if (!IsPiercing)
                 QueueFree(); //Se elimina el proyectil al impactar solo si no es penetrante
             //Si es penetrante, entonces continúa sin destruirse

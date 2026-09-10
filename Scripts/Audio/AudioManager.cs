@@ -6,15 +6,29 @@ public partial class AudioManager : Node
     public static AudioManager Instance { get; private set; }
 
     private const int SfxPlayerCount = 8;
+    private const int MaxConcurrentSfx = 4;
+    private const ulong SameSfxCooldownMs = 80;
+    private const float PausedMusicVolumeOffsetDb = -10.0f;
+    private const float NormalMusicCutoffHz = 20000.0f;
+    private const float PausedMusicCutoffHz = 900.0f;
+    private const float MusicFadeDuration = 0.25f;
 
     [Export]
     public AudioLibrary Library { get; set; }
 
     private AudioStreamPlayer _musicPlayer;
+    private AudioEffectLowPassFilter _musicPauseFilter;
     private readonly List<AudioStreamPlayer> _sfxPlayers = new();
+    private readonly Dictionary<AudioStreamPlayer, float> _sfxBaseVolumes = new();
+    private readonly Dictionary<AudioStreamPlayer, ulong> _sfxStartTimes = new();
+    private readonly Dictionary<string, ulong> _lastSfxPlayTimes = new();
 
     private readonly Dictionary<string, AudioData> _sfxLibrary = new();
     private readonly Dictionary<string, AudioData> _musicLibrary = new();
+    private bool _audioWasPaused;
+    private float _musicVolumeDb;
+    private float _musicPauseProgress;
+    private Tween _musicPauseTween;
 
     public override void _EnterTree()
     {
@@ -23,11 +37,19 @@ public partial class AudioManager : Node
 
     public override void _Ready()
     {
+        ProcessMode = Node.ProcessModeEnum.Always;
         SetupMusicPlayer();
         SetupSfxPlayers();
+        SetupSfxLimiter();
         LoadLibrary();
 
         GD.Print("AudioManager iniciado.");
+    }
+
+    public override void _Process(double delta)
+    {
+        UpdateAudioPauseState();
+        UpdateSfxMix();
     }
 
     public override void _ExitTree()
@@ -38,9 +60,21 @@ public partial class AudioManager : Node
 
     private void SetupMusicPlayer()
     {
+        int busIndex = AudioServer.GetBusIndex("Music");
+        if (busIndex != -1)
+        {
+            _musicVolumeDb = AudioServer.GetBusVolumeDb(busIndex);
+            _musicPauseFilter = new AudioEffectLowPassFilter
+            {
+                CutoffHz = NormalMusicCutoffHz
+            };
+            AudioServer.AddBusEffect(busIndex, _musicPauseFilter);
+        }
+
         _musicPlayer = new AudioStreamPlayer
         {
-            Bus = "Music"
+            Bus = "Music",
+            ProcessMode = Node.ProcessModeEnum.Pausable
         };
 
         AddChild(_musicPlayer);
@@ -52,12 +86,28 @@ public partial class AudioManager : Node
         {
             var player = new AudioStreamPlayer
             {
-                Bus = "SFX"
+                Bus = "SFX",
+                ProcessMode = Node.ProcessModeEnum.Pausable
             };
 
             AddChild(player);
             _sfxPlayers.Add(player);
         }
+    }
+
+    private void SetupSfxLimiter()
+    {
+        int busIndex = AudioServer.GetBusIndex("SFX");
+        if (busIndex == -1)
+        {
+            GD.PushWarning("AudioManager: No existe el bus 'SFX' para añadir el limitador.");
+            return;
+        }
+
+        AudioServer.AddBusEffect(busIndex, new AudioEffectHardLimiter
+        {
+            CeilingDb = -1.0f
+        });
     }
 
     private void LoadLibrary()
@@ -128,26 +178,143 @@ public partial class AudioManager : Node
 
     public void PlaySfx(string id)
     {
+        if (GetTree().Paused)
+            return;
+
         if (!_sfxLibrary.TryGetValue(id, out var audio))
         {
             GD.PushWarning($"AudioManager: No se encontró el SFX '{id}'.");
             return;
         }
 
-        foreach (var player in _sfxPlayers)
+        ulong now = Time.GetTicksMsec();
+        if (_lastSfxPlayTimes.TryGetValue(id, out ulong lastPlayTime) &&
+            now - lastPlayTime < SameSfxCooldownMs)
         {
-            if (player.Playing)
-                continue;
-
-            player.Stream = audio.Stream;
-            player.VolumeDb = audio.VolumeDb;
-            player.PitchScale = audio.PitchScale;
-            player.Play();
-
             return;
         }
 
-        GD.PushWarning("AudioManager: Todos los reproductores SFX están ocupados.");
+        AudioStreamPlayer player = FindSfxPlayer();
+        if (player == null)
+            return;
+
+        player.Stream = audio.Stream;
+        _sfxBaseVolumes[player] = audio.VolumeDb;
+        _sfxStartTimes[player] = now;
+        _lastSfxPlayTimes[id] = now;
+        player.PitchScale = audio.PitchScale;
+        player.Play();
+        UpdateSfxMix();
+    }
+
+    private void UpdateAudioPauseState()
+    {
+        SetAudioPaused(GetTree().Paused);
+    }
+
+    public void SetAudioPaused(bool shouldPauseAudio)
+    {
+        if (shouldPauseAudio == _audioWasPaused)
+            return;
+
+        _audioWasPaused = shouldPauseAudio;
+
+        foreach (var player in _sfxPlayers)
+            player.StreamPaused = shouldPauseAudio;
+
+        if (_musicPlayer != null)
+            _musicPlayer.StreamPaused = false;
+
+        TweenMusicPauseEffect(shouldPauseAudio);
+    }
+
+    private void TweenMusicPauseEffect(bool shouldPauseAudio)
+    {
+        _musicPauseTween?.Kill();
+
+        float targetProgress = shouldPauseAudio ? 1.0f : 0.0f;
+        _musicPauseTween = CreateTween();
+        _musicPauseTween.SetPauseMode(Tween.TweenPauseMode.Process);
+        _musicPauseTween.TweenMethod(
+            Callable.From<float>(SetMusicPauseProgress),
+            _musicPauseProgress,
+            targetProgress,
+            MusicFadeDuration
+        );
+    }
+
+    private void SetMusicPauseProgress(float progress)
+    {
+        _musicPauseProgress = progress;
+
+        int busIndex = AudioServer.GetBusIndex("Music");
+        if (busIndex == -1)
+            return;
+
+        AudioServer.SetBusVolumeDb(
+            busIndex,
+            _musicVolumeDb + PausedMusicVolumeOffsetDb * progress
+        );
+
+        if (_musicPauseFilter != null)
+            _musicPauseFilter.CutoffHz = Mathf.Lerp(
+                NormalMusicCutoffHz,
+                PausedMusicCutoffHz,
+                progress
+            );
+    }
+
+    private AudioStreamPlayer FindSfxPlayer()
+    {
+        int activeVoiceCount = 0;
+        AudioStreamPlayer oldestPlayer = null;
+        ulong oldestStartTime = ulong.MaxValue;
+
+        foreach (var player in _sfxPlayers)
+        {
+            if (!player.Playing)
+                continue;
+
+            activeVoiceCount++;
+            if (_sfxStartTimes.TryGetValue(player, out ulong startTime) && startTime < oldestStartTime)
+            {
+                oldestStartTime = startTime;
+                oldestPlayer = player;
+            }
+        }
+
+        if (activeVoiceCount < MaxConcurrentSfx)
+        {
+            foreach (var player in _sfxPlayers)
+            {
+                if (!player.Playing)
+                    return player;
+            }
+        }
+
+        // Reemplaza la voz más antigua para que los sonidos nuevos no se pierdan durante una ráfaga.
+        return oldestPlayer;
+    }
+
+    private void UpdateSfxMix()
+    {
+        int activeVoiceCount = 0;
+        foreach (var player in _sfxPlayers)
+        {
+            if (player.Playing)
+                activeVoiceCount++;
+        }
+
+        if (activeVoiceCount == 0)
+            return;
+
+        // Compensa la suma de voces para mantener estable el nivel total y evitar clipping.
+        float attenuationDb = -12f * Mathf.Log(activeVoiceCount) / Mathf.Log(10f);
+        foreach (var player in _sfxPlayers)
+        {
+            if (player.Playing && _sfxBaseVolumes.TryGetValue(player, out float baseVolumeDb))
+                player.VolumeDb = baseVolumeDb + attenuationDb;
+        }
     }
 
     public void PlayMusic(string id)
@@ -179,7 +346,8 @@ public partial class AudioManager : Node
 
     public void SetMusicVolume(float volumeDb)
     {
-        SetBusVolume("Music", volumeDb);
+        _musicVolumeDb = volumeDb;
+        SetMusicPauseProgress(_musicPauseProgress);
     }
 
     public void SetSfxVolume(float volumeDb)
@@ -207,7 +375,7 @@ public partial class AudioManager : Node
 
     public float GetMusicVolume()
     {
-        return GetBusVolume("Music");
+        return _musicVolumeDb;
     }
 
     public float GetSfxVolume()
