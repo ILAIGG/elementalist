@@ -72,6 +72,8 @@ public partial class NodeMap : Node2D
         RefreshNodeStates();
 
         _popUp.Visible = false;
+
+        AudioManager.Instance.PlayMusic("r!ckes-desert.theme");
     }
 
     private void BuildGeneratedMap()

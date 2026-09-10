@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bfy6evp3l7m3r"
+path="res://.godot/imported/R!ckes - creation (theme test).wav-4a8d31179f269c2d4bd456f3af8ff596.sample"
+
+[deps]
+
+source_file="res://Audio/Music/R!ckes - creation (theme test).wav"
+dest_files=["res://.godot/imported/R!ckes - creation (theme test).wav-4a8d31179f269c2d4bd456f3af8ff596.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

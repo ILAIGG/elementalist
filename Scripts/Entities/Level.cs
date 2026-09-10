@@ -79,6 +79,8 @@ public partial class Level : Node2D
             TutorialDialog dialog = TutorialDialogScene.Instantiate<TutorialDialog>();
             GetNode<CanvasLayer>("UI").AddChild(dialog);
         }
+
+        AudioManager.Instance.PlayMusic("r!ckes-creation.theme");
     }
 
     public override void _Process(double delta)

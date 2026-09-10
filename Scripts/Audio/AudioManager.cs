@@ -11,12 +11,21 @@ public partial class AudioManager : Node
     private const float PausedMusicVolumeOffsetDb = -10.0f;
     private const float NormalMusicCutoffHz = 20000.0f;
     private const float PausedMusicCutoffHz = 900.0f;
-    private const float MusicFadeDuration = 0.25f;
+    private const float MusicQuitPauseFadeDuration = 0.25f;
+    private const float MusicCrossfadeDuration = 0.5f;
 
     [Export]
     public AudioLibrary Library { get; set; }
 
-    private AudioStreamPlayer _musicPlayer;
+    private AudioStreamPlayer _musicPlayerA;
+    private AudioStreamPlayer _musicPlayerB;
+
+    private AudioStreamPlayer _activeMusicPlayer;
+    private AudioStreamPlayer _inactiveMusicPlayer;
+
+    private Tween _musicCrossfadeTween;
+
+    private float _activeMusicBaseVolumeDb;
     private AudioEffectLowPassFilter _musicPauseFilter;
     private readonly List<AudioStreamPlayer> _sfxPlayers = new();
     private readonly Dictionary<AudioStreamPlayer, float> _sfxBaseVolumes = new();
@@ -61,23 +70,38 @@ public partial class AudioManager : Node
     private void SetupMusicPlayer()
     {
         int busIndex = AudioServer.GetBusIndex("Music");
+
         if (busIndex != -1)
         {
             _musicVolumeDb = AudioServer.GetBusVolumeDb(busIndex);
+
             _musicPauseFilter = new AudioEffectLowPassFilter
             {
                 CutoffHz = NormalMusicCutoffHz
             };
+
             AudioServer.AddBusEffect(busIndex, _musicPauseFilter);
         }
 
-        _musicPlayer = new AudioStreamPlayer
+        _musicPlayerA = CreateMusicPlayer();
+        _musicPlayerB = CreateMusicPlayer();
+
+        _activeMusicPlayer = _musicPlayerA;
+        _inactiveMusicPlayer = _musicPlayerB;
+    }
+
+    private AudioStreamPlayer CreateMusicPlayer()
+    {
+        var player = new AudioStreamPlayer
         {
             Bus = "Music",
-            ProcessMode = Node.ProcessModeEnum.Pausable
+            ProcessMode = Node.ProcessModeEnum.Pausable,
+            VolumeDb = -80.0f
         };
 
-        AddChild(_musicPlayer);
+        AddChild(player);
+
+        return player;
     }
 
     private void SetupSfxPlayers()
@@ -222,8 +246,11 @@ public partial class AudioManager : Node
         foreach (var player in _sfxPlayers)
             player.StreamPaused = shouldPauseAudio;
 
-        if (_musicPlayer != null)
-            _musicPlayer.StreamPaused = false;
+        if (_musicPlayerA != null)
+            _musicPlayerA.StreamPaused = false;
+
+        if (_musicPlayerB != null)
+            _musicPlayerB.StreamPaused = false;
 
         TweenMusicPauseEffect(shouldPauseAudio);
     }
@@ -239,7 +266,7 @@ public partial class AudioManager : Node
             Callable.From<float>(SetMusicPauseProgress),
             _musicPauseProgress,
             targetProgress,
-            MusicFadeDuration
+            MusicQuitPauseFadeDuration
         );
     }
 
@@ -325,18 +352,74 @@ public partial class AudioManager : Node
             return;
         }
 
-        if (_musicPlayer.Stream == audio.Stream && _musicPlayer.Playing)
+        if (_activeMusicPlayer.Playing &&
+            _activeMusicPlayer.Stream == audio.Stream)
+        {
             return;
+        }
 
-        _musicPlayer.Stream = audio.Stream;
-        _musicPlayer.VolumeDb = audio.VolumeDb;
-        _musicPlayer.PitchScale = audio.PitchScale;
-        _musicPlayer.Play();
+        _musicCrossfadeTween?.Kill();
+
+        AudioStreamPlayer newPlayer = _inactiveMusicPlayer;
+        AudioStreamPlayer oldPlayer = _activeMusicPlayer;
+
+        newPlayer.Stream = audio.Stream;
+        newPlayer.PitchScale = audio.PitchScale;
+        newPlayer.VolumeDb = -80.0f;
+        newPlayer.Play();
+
+        float newVolume = audio.VolumeDb;
+
+        _activeMusicBaseVolumeDb = newVolume;
+
+        _musicCrossfadeTween = CreateTween();
+        _musicCrossfadeTween.SetPauseMode(Tween.TweenPauseMode.Process);
+
+        if (oldPlayer.Playing)
+        {
+            _musicCrossfadeTween.Parallel().TweenProperty(
+                oldPlayer,
+                "volume_db",
+                -80.0f,
+                MusicCrossfadeDuration
+            );
+        }
+
+        _musicCrossfadeTween.Parallel().TweenProperty(
+            newPlayer,
+            "volume_db",
+            newVolume,
+            MusicCrossfadeDuration
+        );
+
+        _musicCrossfadeTween.TweenCallback(
+            Callable.From(() =>
+            {
+                oldPlayer.Stop();
+                oldPlayer.Stream = null;
+                oldPlayer.VolumeDb = -80.0f;
+
+                _activeMusicPlayer = newPlayer;
+                _inactiveMusicPlayer = oldPlayer;
+            })
+        );
     }
 
     public void StopMusic()
     {
-        _musicPlayer.Stop();
+        _musicCrossfadeTween?.Kill();
+
+        _musicPlayerA.Stop();
+        _musicPlayerB.Stop();
+
+        _musicPlayerA.Stream = null;
+        _musicPlayerB.Stream = null;
+
+        _musicPlayerA.VolumeDb = -80.0f;
+        _musicPlayerB.VolumeDb = -80.0f;
+
+        _activeMusicPlayer = _musicPlayerA;
+        _inactiveMusicPlayer = _musicPlayerB;
     }
 
     public void SetMasterVolume(float volumeDb)

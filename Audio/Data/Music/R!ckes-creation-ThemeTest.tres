@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AudioData" format=3 uid="uid://bm6tb57rp0niu"]
+
+[ext_resource type="AudioStream" uid="uid://bfy6evp3l7m3r" path="res://Audio/Music/R!ckes - creation (theme test).wav" id="1_4bnkp"]
+[ext_resource type="Script" uid="uid://cthtl8nblqibu" path="res://Scripts/Audio/AudioData.cs" id="2_yvo4t"]
+
+[resource]
+script = ExtResource("2_yvo4t")
+Id = "r!ckes-creation.theme"
+Stream = ExtResource("1_4bnkp")
+metadata/_custom_type_script = "uid://cthtl8nblqibu"

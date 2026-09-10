@@ -36,7 +36,7 @@ public partial class MainMenu : Control
 
         //TESTS BORRAR LUEGO!!!!!!
         AudioManager.Instance.PlaySfx("ui.click");
-        AudioManager.Instance.PlayMusic("r!ickes-creation.theme");
+        AudioManager.Instance.PlayMusic("r!ckes-desert.theme");
     }
 
     private void PopulateLanguages()
