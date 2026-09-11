@@ -54,6 +54,10 @@ horizontal_alignment = 1
 layout_mode = 2
 text = "Resume"
 
+[node name="SettingsButton" type="Button" parent="Panel/Margin/Content"]
+layout_mode = 2
+text = "Settings"
+
 [node name="SaveAndQuitButton" type="Button" parent="Panel/Margin/Content" unique_id=899753129]
 layout_mode = 2
 text = "Save & Quit"

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AudioData" format=3 uid="uid://ck14mvllc8xxh"]
+
+[ext_resource type="AudioStream" uid="uid://cxelq8utfhmxr" path="res://Audio/SFX/RepulsionBurst.wav" id="1_m3f0t"]
+[ext_resource type="Script" uid="uid://cthtl8nblqibu" path="res://Scripts/Audio/AudioData.cs" id="1_yglbn"]
+
+[resource]
+script = ExtResource("1_yglbn")
+Id = "sfx.repulsionburst"
+Stream = ExtResource("1_m3f0t")
+metadata/_custom_type_script = "uid://cthtl8nblqibu"

@@ -3,6 +3,7 @@ menu.title,Elementalist,Elementalista
 menu.new_game,Start A New Game,Nueva partida
 menu.continue,Continue,Continuar
 menu.quit,Quit,Salir
+menu.settings,Settings,Configuración
 menu.language,Language,Idioma
 menu.version,Elementalist v0.3.0 (Journey Update - Part I),Elementalist v0.3.0 (Actualización del viaje - Parte I)
 common.cancel,Cancel,Cancelar
@@ -54,6 +55,21 @@ save.empty,Empty,Vacío
 save.play_time,Play time: {0}h {1}m {2}s,Tiempo de juego: {0}h {1}m {2}s
 language.english,English,Inglés
 language.spanish,Spanish,Español
+settings.title,Settings,Configuración
+settings.audio,Audio,Audio
+settings.master,Master,General
+settings.music,Music,Música
+settings.sfx,SFX,Efectos
+settings.controls,Controls,Controles
+settings.select_control,Select a control to remap,Selecciona un control para reasignarlo
+settings.press_key,Press a key...,Pulsa una tecla...
+settings.control.move_up,Move up,Mover arriba
+settings.control.move_down,Move down,Mover abajo
+settings.control.move_left,Move left,Mover izquierda
+settings.control.move_right,Move right,Mover derecha
+settings.control.dash,Dash,Dash
+settings.control.ability_q,Fire Nova,Nova de fuego
+settings.control.ability_e,Meteor Shower,Lluvia de meteoros
 howto.title,How to Play,Cómo jugar
 howto.controls,Controls - Movement -> WASD - Dash -> Space - Fire Nova -> Q - Meteor Shower -> E,Controles - Movimiento -> WASD - Dash -> Espacio - Nova de fuego -> Q - Lluvia de meteoros -> E
 howto.upgrades,Upgrades - Choose one upgrade card from three options when you level up.,Mejoras - Elige una carta de mejora entre tres opciones al subir de nivel.

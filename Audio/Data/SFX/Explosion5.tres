@@ -7,5 +7,4 @@
 script = ExtResource("1_413gv")
 Id = "sfx.explosion5"
 Stream = ExtResource("1_sle0y")
-VolumeDb = -8.0
 metadata/_custom_type_script = "uid://cthtl8nblqibu"

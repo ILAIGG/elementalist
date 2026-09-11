@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AudioData" format=3 uid="uid://07edl6wytivf"]
+
+[ext_resource type="AudioStream" uid="uid://bokwyg5g7vyfa" path="res://Audio/SFX/FrostRay.wav" id="1_a2al1"]
+[ext_resource type="Script" uid="uid://cthtl8nblqibu" path="res://Scripts/Audio/AudioData.cs" id="2_wkvhx"]
+
+[resource]
+script = ExtResource("2_wkvhx")
+Id = "sfx.frostray"
+Stream = ExtResource("1_a2al1")
+metadata/_custom_type_script = "uid://cthtl8nblqibu"

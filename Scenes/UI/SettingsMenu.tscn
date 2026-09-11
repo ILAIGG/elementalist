@@ -1,0 +1,116 @@
+[gd_scene format=3 uid="uid://bhamvesitc6sr"]
+
+[ext_resource type="Script" uid="uid://bxif1m1io7lib" path="res://Scripts/UI/SettingsMenu.cs" id="1_settings"]
+
+[node name="SettingsMenu" type="Control" unique_id=462993185]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_settings")
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=1040917339]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0, 0, 0, 0.85)
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=534142114]
+custom_minimum_size = Vector2(420, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -210.0
+offset_top = -260.0
+offset_right = 210.0
+offset_bottom = 260.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="Panel" unique_id=687377893]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Content" type="VBoxContainer" parent="Panel/Margin" unique_id=1518459990]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Panel/Margin/Content" unique_id=2087066456]
+layout_mode = 2
+text = "Settings"
+horizontal_alignment = 1
+
+[node name="Audio" type="VBoxContainer" parent="Panel/Margin/Content" unique_id=1314400533]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Title" type="Label" parent="Panel/Margin/Content/Audio" unique_id=600454782]
+layout_mode = 2
+text = "Audio"
+
+[node name="Sliders" type="VBoxContainer" parent="Panel/Margin/Content/Audio" unique_id=1409449419]
+layout_mode = 2
+
+[node name="MasterLabel" type="Label" parent="Panel/Margin/Content/Audio/Sliders" unique_id=1971777113]
+layout_mode = 2
+text = "Master"
+
+[node name="Master" type="HSlider" parent="Panel/Margin/Content/Audio/Sliders" unique_id=653942509]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+value = 100.0
+
+[node name="MusicLabel" type="Label" parent="Panel/Margin/Content/Audio/Sliders" unique_id=2061128295]
+layout_mode = 2
+text = "Music"
+
+[node name="Music" type="HSlider" parent="Panel/Margin/Content/Audio/Sliders" unique_id=1183840594]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+value = 100.0
+
+[node name="SfxLabel" type="Label" parent="Panel/Margin/Content/Audio/Sliders" unique_id=943700746]
+layout_mode = 2
+text = "SFX"
+
+[node name="Sfx" type="HSlider" parent="Panel/Margin/Content/Audio/Sliders" unique_id=1080743472]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+value = 100.0
+
+[node name="HSeparator" type="HSeparator" parent="Panel/Margin/Content" unique_id=940137078]
+layout_mode = 2
+
+[node name="Controls" type="VBoxContainer" parent="Panel/Margin/Content" unique_id=2143609940]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="Panel/Margin/Content/Controls" unique_id=1969942579]
+layout_mode = 2
+text = "Controls"
+
+[node name="ListeningLabel" type="Label" parent="Panel/Margin/Content/Controls" unique_id=1537419873]
+layout_mode = 2
+text = "Select a control to remap"
+
+[node name="Rows" type="VBoxContainer" parent="Panel/Margin/Content/Controls" unique_id=1974436336]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="CloseButton" type="Button" parent="Panel/Margin/Content" unique_id=2100651477]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+text = "Close"

@@ -53,6 +53,7 @@ public partial class AudioManager : Node
         SetupMusicPlayer();
         SetupSfxPlayers();
         SetupSfxLimiter();
+        LoadSavedVolumes();
         LoadLibrary();
 
         GD.Print("AudioManager iniciado.");
@@ -222,6 +223,27 @@ public partial class AudioManager : Node
             $"AudioLibrary cargada: {_sfxLibrary.Count} SFX, " +
             $"{_musicLibrary.Count} músicas."
         );
+    }
+
+    private void LoadSavedVolumes()
+    {
+        ConfigFile config = new();
+        if (config.Load("user://settings.cfg") != Error.Ok)
+            return;
+
+        SetMasterVolume(VolumePercentToDb(config, "master", GetMasterVolume()));
+        SetMusicVolume(VolumePercentToDb(config, "music", GetMusicVolume()));
+        SetSfxVolume(VolumePercentToDb(config, "sfx", GetSfxVolume()));
+    }
+
+    private float VolumePercentToDb(ConfigFile config, string bus, float currentDb)
+    {
+        float currentPercent = currentDb <= -80.0f ? 0.0f : Mathf.Pow(10.0f, currentDb / 20.0f) * 100.0f;
+        float percent = (float)config.GetValue("audio", $"{bus}_percent", currentPercent);
+        if (percent <= 0.0f)
+            return -80.0f;
+
+        return Mathf.Clamp(20.0f * Mathf.Log(percent / 100.0f) / Mathf.Log(10.0f), -80.0f, 0.0f);
     }
 
     public void PlaySfx(string id, bool ignorePause = false)

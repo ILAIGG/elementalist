@@ -5,6 +5,7 @@ public partial class MainMenu : Control
     private Button _playButton;
     private Button _continueButton;
     private Button _endlessModeButton;
+    private Button _settingsButton;
     private Button _quitButton;
     private Label _titleLabel;
     private Label _languageLabel;
@@ -15,9 +16,11 @@ public partial class MainMenu : Control
     public override void _Ready()
     {
         GameManager.Instance?.ClearActiveSave();
+        SettingsMenu.LoadSavedControls();
         _playButton = GetNode<Button>("PlayButton");
         _continueButton = GetNode<Button>("ContinueButton");
         _endlessModeButton = GetNode<Button>("EndlessModeButton");
+        _settingsButton = GetNode<Button>("SettingsButton");
         _quitButton = GetNode<Button>("QuitButton");
         _titleLabel = GetNode<Label>("Title");
         _languageLabel = GetNode<Label>("LanguageLabel");
@@ -26,6 +29,7 @@ public partial class MainMenu : Control
 
         _playButton.Pressed += OnPlayPressed;
         _continueButton.Pressed += OnContinuePressed;
+        _settingsButton.Pressed += OnSettingsPressed;
         _quitButton.Pressed += OnQuitPressed;
         _languageOption.ItemSelected += OnLanguageSelected;
 
@@ -58,6 +62,7 @@ public partial class MainMenu : Control
         _titleLabel.Text = LocalizationManager.Translate("menu.title");
         _playButton.Text = LocalizationManager.Translate("menu.new_game");
         _continueButton.Text = LocalizationManager.Translate("menu.continue");
+        _settingsButton.Text = LocalizationManager.Translate("menu.settings");
         _quitButton.Text = LocalizationManager.Translate("menu.quit");
         _languageLabel.Text = LocalizationManager.Translate("menu.language");
         _versionLabel.Text = LocalizationManager.Translate("menu.version");
@@ -92,6 +97,11 @@ public partial class MainMenu : Control
     private void OnQuitPressed()
     {
         GetTree().Quit();
+    }
+
+    private void OnSettingsPressed()
+    {
+        AddChild(GD.Load<PackedScene>("res://Scenes/UI/SettingsMenu.tscn").Instantiate());
     }
 
 #if DEBUG

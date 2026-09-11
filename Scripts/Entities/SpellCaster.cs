@@ -152,6 +152,7 @@ public partial class SpellCaster : Node
     {
         Fireball fireball = FireballScene.Instantiate<Fireball>();
         GetProjectileContainer().AddChild(fireball);
+        AudioManager.Instance.PlaySfx("sfx.fireball");
         fireball.GlobalPosition = position;
         fireball.Direction = direction;
 
@@ -173,6 +174,7 @@ public partial class SpellCaster : Node
 
         FrostRay ray = FrostRayScene.Instantiate<FrostRay>();
         GetProjectileContainer().AddChild(ray);
+        AudioManager.Instance.PlaySfx("sfx.frostray");
 
         //Posiciona el rayo en el jugador
         ray.GlobalPosition = _player.GlobalPosition;
@@ -203,6 +205,7 @@ public partial class SpellCaster : Node
     {
         RepulsionBurst burst = RepulsionBurstScene.Instantiate<RepulsionBurst>();
         GetProjectileContainer().AddChild(burst);
+        AudioManager.Instance.PlaySfx("sfx.repulsionburst");
         burst.GlobalPosition = _player.GlobalPosition;
         burst.Damage += _stats.BonusRepulsionBurstDamage + _stats.BonusDamage;
         burst.Force = _stats.RepulsionBurstForce;

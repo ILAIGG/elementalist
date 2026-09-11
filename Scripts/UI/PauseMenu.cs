@@ -3,6 +3,7 @@ using Godot;
 public partial class PauseMenu : Control
 {
     private Button _resumeButton;
+    private Button _settingsButton;
     private Button _returnToMapButton;
     private Button _mainMenuButton;
 
@@ -11,15 +12,18 @@ public partial class PauseMenu : Control
     public override void _Ready()
     {
         _resumeButton = GetNode<Button>("Panel/Margin/Content/ResumeButton");
+        _settingsButton = GetNode<Button>("Panel/Margin/Content/SettingsButton");
         _returnToMapButton = GetNode<Button>("Panel/Margin/Content/ReturnToMapButton");
         _mainMenuButton = GetNode<Button>("Panel/Margin/Content/MainMenuButton");
 
         _resumeButton.Text = LocalizationManager.Translate("common.resume");
+        _settingsButton.Text = LocalizationManager.Translate("menu.settings");
         _returnToMapButton.Text = LocalizationManager.Translate("common.return_to_map");
         _mainMenuButton.Text = LocalizationManager.Translate("common.main_menu");
         GetNode<Label>("Panel/Margin/Content/Title").Text = LocalizationManager.Translate("common.paused");
 
         _resumeButton.Pressed += OnResumePressed;
+        _settingsButton.Pressed += OnSettingsPressed;
         _returnToMapButton.Pressed += OnReturnToMapPressed;
         _mainMenuButton.Pressed += OnMainMenuPressed;
     }
@@ -60,5 +64,10 @@ public partial class PauseMenu : Control
             GetTree().Paused = false;
             GetTree().ChangeSceneToFile("res://Scenes/UI/MainMenu.tscn");
         };
+    }
+
+    private void OnSettingsPressed()
+    {
+        AddChild(GD.Load<PackedScene>("res://Scenes/UI/SettingsMenu.tscn").Instantiate());
     }
 }
