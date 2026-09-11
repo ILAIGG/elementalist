@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AudioData" format=3 uid="uid://dt6c1rdrcghn1"]
+
+[ext_resource type="AudioStream" uid="uid://ckosw0q458puq" path="res://Audio/SFX/FireNova.wav" id="1_5ict4"]
+[ext_resource type="Script" uid="uid://cthtl8nblqibu" path="res://Scripts/Audio/AudioData.cs" id="1_hhl3l"]
+
+[resource]
+script = ExtResource("1_hhl3l")
+Id = "sfx.firenova"
+Stream = ExtResource("1_5ict4")
+metadata/_custom_type_script = "uid://cthtl8nblqibu"

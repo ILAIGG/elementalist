@@ -52,5 +52,6 @@ public partial class FireNova : Area2D
                 enemy.TakeElementalDamage(Damage, ElementType, body.GlobalPosition, GetTree());
                 
         }
+        AudioManager.Instance.PlaySfx("sfx.explosion");
     }
 }

@@ -183,6 +183,7 @@ public partial class Player : CharacterBody2D
 
         _dashDirection = direction.Normalized();
         _isDashing = true;
+        AudioManager.Instance.PlaySfx("sfx.dash");
         _dashTimer = DashDuration;
         _dashCooldownTimer = DashCooldown;
 

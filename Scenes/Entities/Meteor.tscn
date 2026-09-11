@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cyo37b1d37i6d"]
 
 [ext_resource type="Script" uid="uid://wo2wasr8upel" path="res://Scripts/Entities/Meteor.cs" id="1_qjrjl"]
+[ext_resource type="PackedScene" uid="uid://qxo46jqxfpax" path="res://Scenes/Entities/ExplosionEffect.tscn" id="2_explosion"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_eamau"]
 radius = 20.0
@@ -9,6 +10,7 @@ radius = 20.0
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_qjrjl")
+ExplosionEffectScene = ExtResource("2_explosion")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=516872480]
 shape = SubResource("CircleShape2D_eamau")

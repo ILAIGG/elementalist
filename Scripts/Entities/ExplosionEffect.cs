@@ -7,6 +7,11 @@ public partial class ExplosionEffect : Node2D
 
     private float _timer = 0f;
 
+    public override void _Ready()
+    {
+        AudioManager.Instance.PlaySfx("sfx.explosion");
+    }
+
     public override void _Process(double delta)
     {
         _timer += (float)delta;

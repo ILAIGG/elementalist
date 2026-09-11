@@ -5,6 +5,7 @@ public partial class Meteor : Area2D
     [Export] public Element ElementType { get; set; } = Element.Fire;
     [Export] public float Damage = 35f;
     [Export] public float FallSpeed = 800f;
+    [Export] public PackedScene ExplosionEffectScene { get; set; }
 
     private bool _damageApplied = false;
 
@@ -63,6 +64,13 @@ public partial class Meteor : Area2D
         {
             if (body is IEnemy enemy)
                 enemy.TakeElementalDamage(Damage, ElementType, body.GlobalPosition, GetTree());
+        }
+
+        if (ExplosionEffectScene != null)
+        {
+            ExplosionEffect effect = ExplosionEffectScene.Instantiate<ExplosionEffect>();
+            GetTree().Root.FindChild("Projectiles", true, false).AddChild(effect);
+            effect.GlobalPosition = GlobalPosition;
         }
 
         //El meteoro desaparece después de impactar
