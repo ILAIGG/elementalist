@@ -4,15 +4,15 @@
 [ext_resource type="Script" uid="uid://70cwp51gkyid" path="res://Scripts/Audio/AudioLibrary.cs" id="1_l8icj"]
 [ext_resource type="Resource" uid="uid://bwa1158yey2n3" path="res://Audio/Data/SFX/UI/UIClick.tres" id="1_mb2tu"]
 [ext_resource type="Resource" uid="uid://bm6tb57rp0niu" path="res://Audio/Data/Music/R!ckes-creation-ThemeTest.tres" id="2_54vqe"]
-[ext_resource type="Resource" uid="uid://kq1j77pawo5t" path="res://Audio/Data/SFX/Explosion18.tres" id="3_h2xbx"]
-[ext_resource type="Resource" uid="uid://b3x6g27g60itd" path="res://Audio/Data/SFX/Explosion5.tres" id="3_ivhmf"]
-[ext_resource type="Resource" uid="uid://cn4gkwsnmrgd2" path="res://Audio/Data/SFX/Hit_01.tres" id="4_54vqe"]
+[ext_resource type="Resource" uid="uid://cn4gkwsnmrgd2" path="res://Audio/Data/SFX/EnemyHit.tres" id="4_c6hhg"]
+[ext_resource type="Resource" uid="uid://c73ocavea3uhq" path="res://Audio/Data/SFX/PlayerHit.tres" id="5_mf3v8"]
+[ext_resource type="Resource" uid="uid://kq1j77pawo5t" path="res://Audio/Data/SFX/Explosion.tres" id="6_5cd7i"]
 [ext_resource type="Resource" uid="uid://07edl6wytivf" path="res://Audio/Data/SFX/FrostRay.tres" id="7_5cd7i"]
 [ext_resource type="Resource" uid="uid://ciksc1tp6u4w1" path="res://Audio/Data/SFX/Fireball.tres" id="8_c6hhg"]
 [ext_resource type="Resource" uid="uid://ck14mvllc8xxh" path="res://Audio/Data/SFX/RepulsionBurst.tres" id="9_mf3v8"]
 
 [resource]
 script = ExtResource("1_l8icj")
-Sfx = [ExtResource("1_mb2tu"), ExtResource("4_54vqe"), ExtResource("3_ivhmf"), ExtResource("3_h2xbx"), ExtResource("7_5cd7i"), ExtResource("8_c6hhg"), ExtResource("9_mf3v8")]
+Sfx = [ExtResource("1_mb2tu"), ExtResource("4_c6hhg"), ExtResource("5_mf3v8"), ExtResource("6_5cd7i"), ExtResource("7_5cd7i"), ExtResource("8_c6hhg"), ExtResource("9_mf3v8")]
 Music = [ExtResource("1_8qq4o"), ExtResource("2_54vqe")]
 metadata/_custom_type_script = "uid://70cwp51gkyid"

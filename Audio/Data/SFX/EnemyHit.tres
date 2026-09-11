@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="AudioData" format=3 uid="uid://cn4gkwsnmrgd2"]
 
 [ext_resource type="Script" uid="uid://cthtl8nblqibu" path="res://Scripts/Audio/AudioData.cs" id="1_bb0qh"]
-[ext_resource type="AudioStream" uid="uid://cgr7h0gakhm5g" path="res://Audio/SFX/Hit_01.wav" id="1_bwl1o"]
+[ext_resource type="AudioStream" uid="uid://cgr7h0gakhm5g" path="res://Audio/SFX/EnemyHit.wav" id="1_bwl1o"]
 
 [resource]
 script = ExtResource("1_bb0qh")
-Id = "sfx.hit-01"
+Id = "sfx.enemyhit"
 Stream = ExtResource("1_bwl1o")
 metadata/_custom_type_script = "uid://cthtl8nblqibu"

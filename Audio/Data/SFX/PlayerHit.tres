@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AudioData" format=3 uid="uid://c73ocavea3uhq"]
+
+[ext_resource type="Script" uid="uid://cthtl8nblqibu" path="res://Scripts/Audio/AudioData.cs" id="1_c7ykl"]
+[ext_resource type="AudioStream" uid="uid://ds21ku6b1gmjs" path="res://Audio/SFX/PlayerHit.wav" id="1_f6dxo"]
+
+[resource]
+script = ExtResource("1_c7ykl")
+Id = "sfx.playerhit"
+Stream = ExtResource("1_f6dxo")
+metadata/_custom_type_script = "uid://cthtl8nblqibu"

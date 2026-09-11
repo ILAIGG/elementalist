@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://xitbi8u2fy06"
-path="res://.godot/imported/Explosion5.wav-fcadd30c1b96bd83617915004f8c0a30.sample"
+uid="uid://cgr7h0gakhm5g"
+path="res://.godot/imported/EnemyHit.wav-36d07832ba97fc397cabcdf4bb9094eb.sample"
 
 [deps]
 
-source_file="res://Audio/SFX/Explosion5.wav"
-dest_files=["res://.godot/imported/Explosion5.wav-fcadd30c1b96bd83617915004f8c0a30.sample"]
+source_file="res://Audio/SFX/EnemyHit.wav"
+dest_files=["res://.godot/imported/EnemyHit.wav-36d07832ba97fc397cabcdf4bb9094eb.sample"]
 
 [params]
 

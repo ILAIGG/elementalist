@@ -217,6 +217,6 @@ public partial class Boss : CharacterBody2D, IEnemy
 
     private void OnEnemyDamageTaken()
     {
-        AudioManager.Instance.PlaySfx("sfx.hit-01");
+        AudioManager.Instance.PlaySfx("sfx.enemyhit");
     }
 }

@@ -45,7 +45,7 @@ public partial class Fireball : Area2D
             if (IsExplosive)
             {
                 Explode();
-                AudioManager.Instance.PlaySfx("sfx.explosion18");
+                AudioManager.Instance.PlaySfx("sfx.explosion");
             }
             else if (!IsPiercing)
                 QueueFree(); //Se elimina el proyectil al impactar solo si no es penetrante
