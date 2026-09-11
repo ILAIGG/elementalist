@@ -29,6 +29,9 @@ public partial class UpgradeCard : PanelContainer
     {
         //Detecta cuando el jugador clickea la carta
 		if (@event is InputEventMouseButton mb && mb.Pressed)
+		{
+			AudioManager.Instance?.PlaySfx("ui.click", true);
 			OnUpgradeSelected?.Invoke(_upgrade);
+		}
     }
 }

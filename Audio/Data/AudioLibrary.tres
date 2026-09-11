@@ -6,9 +6,10 @@
 [ext_resource type="Resource" uid="uid://bm6tb57rp0niu" path="res://Audio/Data/Music/R!ckes-creation-ThemeTest.tres" id="2_54vqe"]
 [ext_resource type="Resource" uid="uid://kq1j77pawo5t" path="res://Audio/Data/SFX/Explosion18.tres" id="3_h2xbx"]
 [ext_resource type="Resource" uid="uid://b3x6g27g60itd" path="res://Audio/Data/SFX/Explosion5.tres" id="3_ivhmf"]
+[ext_resource type="Resource" uid="uid://cn4gkwsnmrgd2" path="res://Audio/Data/SFX/Hit_01.tres" id="4_54vqe"]
 
 [resource]
 script = ExtResource("1_l8icj")
-Sfx = [ExtResource("1_mb2tu"), ExtResource("3_ivhmf"), ExtResource("3_h2xbx")]
+Sfx = [ExtResource("1_mb2tu"), ExtResource("4_54vqe"), ExtResource("3_ivhmf"), ExtResource("3_h2xbx")]
 Music = [ExtResource("1_8qq4o"), ExtResource("2_54vqe")]
 metadata/_custom_type_script = "uid://70cwp51gkyid"

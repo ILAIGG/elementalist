@@ -88,7 +88,7 @@ public partial class AudioManager : Node
 
     private void OnUiButtonPressed()
     {
-        AudioManager.Instance.PlaySfx("ui.click");
+        AudioManager.Instance.PlaySfx("ui.click", true);
     }
 
     private void SetupMusicPlayer()
@@ -224,9 +224,9 @@ public partial class AudioManager : Node
         );
     }
 
-    public void PlaySfx(string id)
+    public void PlaySfx(string id, bool ignorePause = false)
     {
-        if (GetTree().Paused)
+        if (GetTree().Paused && !ignorePause)
             return;
 
         if (!_sfxLibrary.TryGetValue(id, out var audio))

@@ -204,6 +204,6 @@ public partial class Enemy : CharacterBody2D, IEnemy
 
     private void OnEnemyDamageTaken()
     {
-        AudioManager.Instance.PlaySfx("sfx.explosion5");
+        AudioManager.Instance.PlaySfx("sfx.hit-01");
     }
 }
