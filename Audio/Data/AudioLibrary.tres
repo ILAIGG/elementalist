@@ -10,9 +10,10 @@
 [ext_resource type="Resource" uid="uid://07edl6wytivf" path="res://Audio/Data/SFX/FrostRay.tres" id="7_5cd7i"]
 [ext_resource type="Resource" uid="uid://ciksc1tp6u4w1" path="res://Audio/Data/SFX/Fireball.tres" id="8_c6hhg"]
 [ext_resource type="Resource" uid="uid://ck14mvllc8xxh" path="res://Audio/Data/SFX/RepulsionBurst.tres" id="9_mf3v8"]
+[ext_resource type="Resource" uid="uid://c7ifgo731vp1p" path="res://Audio/Data/SFX/WaterBolt.tres" id="10_c6hhg"]
 
 [resource]
 script = ExtResource("1_l8icj")
-Sfx = [ExtResource("1_mb2tu"), ExtResource("4_c6hhg"), ExtResource("5_mf3v8"), ExtResource("6_5cd7i"), ExtResource("7_5cd7i"), ExtResource("8_c6hhg"), ExtResource("9_mf3v8")]
+Sfx = [ExtResource("1_mb2tu"), ExtResource("4_c6hhg"), ExtResource("5_mf3v8"), ExtResource("6_5cd7i"), ExtResource("7_5cd7i"), ExtResource("8_c6hhg"), ExtResource("9_mf3v8"), ExtResource("10_c6hhg")]
 Music = [ExtResource("1_8qq4o"), ExtResource("2_54vqe")]
 metadata/_custom_type_script = "uid://70cwp51gkyid"

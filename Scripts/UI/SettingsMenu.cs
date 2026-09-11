@@ -288,9 +288,9 @@ public partial class SettingsMenu : Control
     {
         GetNode<Label>("Panel/Margin/Content/Title").Text = LocalizationManager.Translate("settings.title");
         GetNode<Label>("Panel/Margin/Content/Audio/Title").Text = LocalizationManager.Translate("settings.audio");
-        GetNode<Label>("Panel/Margin/Content/Audio/MasterLabel").Text = LocalizationManager.Translate("settings.master");
-        GetNode<Label>("Panel/Margin/Content/Audio/MusicLabel").Text = LocalizationManager.Translate("settings.music");
-        GetNode<Label>("Panel/Margin/Content/Audio/SfxLabel").Text = LocalizationManager.Translate("settings.sfx");
+        GetNode<Label>("Panel/Margin/Content/Audio/Sliders/MasterLabel").Text = LocalizationManager.Translate("settings.master");
+        GetNode<Label>("Panel/Margin/Content/Audio/Sliders/MusicLabel").Text = LocalizationManager.Translate("settings.music");
+        GetNode<Label>("Panel/Margin/Content/Audio/Sliders/SfxLabel").Text = LocalizationManager.Translate("settings.sfx");
         GetNode<Label>("Panel/Margin/Content/Controls/Title").Text = LocalizationManager.Translate("settings.controls");
         _listeningLabel = GetNode<Label>("Panel/Margin/Content/Controls/ListeningLabel");
         _listeningLabel.Text = LocalizationManager.Translate("settings.select_control");

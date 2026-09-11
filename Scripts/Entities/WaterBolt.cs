@@ -4,7 +4,7 @@ public partial class WaterBolt : Area2D
 {
     [Export] public Element ElementType { get; set; } = Element.Water;
     [Export] public float Speed = 400f;
-    [Export] public float Damage = 20f;
+    [Export] public float Damage = 6f;
 
     public Vector2 Direction { get; set; }
     public bool IsPiercing { get; set; } = false;

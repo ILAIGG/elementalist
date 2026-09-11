@@ -86,6 +86,7 @@ public partial class SpellCaster : Node
     {
         WaterBolt waterBolt = WaterBoltScene.Instantiate<WaterBolt>();
         GetProjectileContainer().AddChild(waterBolt);
+        AudioManager.Instance.PlaySfx("sfx.waterbolt");
         waterBolt.GlobalPosition = _player.GlobalPosition;
         waterBolt.Direction = _player.GlobalPosition.DirectionTo(target.GlobalPosition);
         waterBolt.ElementType = Element.Water;

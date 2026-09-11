@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AudioData" format=3 uid="uid://c7ifgo731vp1p"]
+
+[ext_resource type="AudioStream" uid="uid://c2785owevejuv" path="res://Audio/SFX/WaterBolt.wav" id="1_5iilv"]
+[ext_resource type="Script" uid="uid://cthtl8nblqibu" path="res://Scripts/Audio/AudioData.cs" id="1_kvrb2"]
+
+[resource]
+script = ExtResource("1_kvrb2")
+Id = "sfx.waterbolt"
+Stream = ExtResource("1_5iilv")
+metadata/_custom_type_script = "uid://cthtl8nblqibu"

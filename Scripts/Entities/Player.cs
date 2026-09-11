@@ -234,6 +234,7 @@ public partial class Player : CharacterBody2D
     {
         _iFrameTimer = IFrameDuration;
         Health.IsInvulnerable = true;
+        AudioManager.Instance.PlaySfx("sfx.playerhit");
     }
 
     private void OnPlayerDeath()
