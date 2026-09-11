@@ -63,6 +63,7 @@ settings.sfx,SFX,Efectos
 settings.controls,Controls,Controles
 settings.select_control,Select a control to remap,Selecciona un control para reasignarlo
 settings.press_key,Press a key...,Pulsa una tecla...
+settings.reset_defaults,Reset to Defaults,Restablecer valores predeterminados
 settings.control.move_up,Move up,Mover arriba
 settings.control.move_down,Move down,Mover abajo
 settings.control.move_left,Move left,Mover izquierda

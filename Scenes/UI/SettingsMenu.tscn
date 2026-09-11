@@ -64,31 +64,70 @@ text = "Audio"
 [node name="Sliders" type="VBoxContainer" parent="Panel/Margin/Content/Audio" unique_id=1409449419]
 layout_mode = 2
 
-[node name="MasterLabel" type="Label" parent="Panel/Margin/Content/Audio/Sliders" unique_id=1971777113]
+[node name="MasterRow" type="HBoxContainer" parent="Panel/Margin/Content/Audio/Sliders"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="MasterLabel" type="Label" parent="Panel/Margin/Content/Audio/Sliders/MasterRow"]
+custom_minimum_size = Vector2(70, 0)
 layout_mode = 2
 text = "Master"
 
-[node name="Master" type="HSlider" parent="Panel/Margin/Content/Audio/Sliders" unique_id=653942509]
+[node name="Master" type="HSlider" parent="Panel/Margin/Content/Audio/Sliders/MasterRow"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
-value = 100.0
+size_flags_horizontal = 3
+value = 50.0
 
-[node name="MusicLabel" type="Label" parent="Panel/Margin/Content/Audio/Sliders" unique_id=2061128295]
+[node name="MasterValue" type="SpinBox" parent="Panel/Margin/Content/Audio/Sliders/MasterRow"]
+custom_minimum_size = Vector2(62, 0)
+layout_mode = 2
+max_value = 100.0
+suffix = "%"
+value = 50.0
+
+[node name="MusicRow" type="HBoxContainer" parent="Panel/Margin/Content/Audio/Sliders"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="MusicLabel" type="Label" parent="Panel/Margin/Content/Audio/Sliders/MusicRow"]
+custom_minimum_size = Vector2(70, 0)
 layout_mode = 2
 text = "Music"
 
-[node name="Music" type="HSlider" parent="Panel/Margin/Content/Audio/Sliders" unique_id=1183840594]
+[node name="Music" type="HSlider" parent="Panel/Margin/Content/Audio/Sliders/MusicRow"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
+size_flags_horizontal = 3
 value = 100.0
 
-[node name="SfxLabel" type="Label" parent="Panel/Margin/Content/Audio/Sliders" unique_id=943700746]
+[node name="MusicValue" type="SpinBox" parent="Panel/Margin/Content/Audio/Sliders/MusicRow"]
+custom_minimum_size = Vector2(62, 0)
+layout_mode = 2
+max_value = 100.0
+suffix = "%"
+value = 100.0
+
+[node name="SfxRow" type="HBoxContainer" parent="Panel/Margin/Content/Audio/Sliders"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SfxLabel" type="Label" parent="Panel/Margin/Content/Audio/Sliders/SfxRow"]
+custom_minimum_size = Vector2(70, 0)
 layout_mode = 2
 text = "SFX"
 
-[node name="Sfx" type="HSlider" parent="Panel/Margin/Content/Audio/Sliders" unique_id=1080743472]
+[node name="Sfx" type="HSlider" parent="Panel/Margin/Content/Audio/Sliders/SfxRow"]
 custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
+size_flags_horizontal = 3
+value = 100.0
+
+[node name="SfxValue" type="SpinBox" parent="Panel/Margin/Content/Audio/Sliders/SfxRow"]
+custom_minimum_size = Vector2(62, 0)
+layout_mode = 2
+max_value = 100.0
+suffix = "%"
 value = 100.0
 
 [node name="HSeparator" type="HSeparator" parent="Panel/Margin/Content" unique_id=940137078]
@@ -109,6 +148,11 @@ text = "Select a control to remap"
 [node name="Rows" type="VBoxContainer" parent="Panel/Margin/Content/Controls" unique_id=1974436336]
 layout_mode = 2
 theme_override_constants/separation = 4
+
+[node name="ResetButton" type="Button" parent="Panel/Margin/Content"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+text = "Reset to Defaults"
 
 [node name="CloseButton" type="Button" parent="Panel/Margin/Content" unique_id=2100651477]
 custom_minimum_size = Vector2(0, 36)

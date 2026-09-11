@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 public partial class AudioManager : Node
 {
+    private const float DefaultMasterVolumePercent = 50.0f;
+    private const float DefaultMusicVolumePercent = 100.0f;
+    private const float DefaultSfxVolumePercent = 100.0f;
     public static AudioManager Instance { get; private set; }
 
     private const int SfxPlayerCount = 8;
@@ -229,7 +232,12 @@ public partial class AudioManager : Node
     {
         ConfigFile config = new();
         if (config.Load("user://settings.cfg") != Error.Ok)
+        {
+            SetMasterVolume(PercentToDb(DefaultMasterVolumePercent));
+            SetMusicVolume(PercentToDb(DefaultMusicVolumePercent));
+            SetSfxVolume(PercentToDb(DefaultSfxVolumePercent));
             return;
+        }
 
         SetMasterVolume(VolumePercentToDb(config, "master", GetMasterVolume()));
         SetMusicVolume(VolumePercentToDb(config, "music", GetMusicVolume()));
@@ -244,6 +252,14 @@ public partial class AudioManager : Node
             return -80.0f;
 
         return Mathf.Clamp(20.0f * Mathf.Log(percent / 100.0f) / Mathf.Log(10.0f), -80.0f, 0.0f);
+    }
+
+    private static float PercentToDb(float volumePercent)
+    {
+        if (volumePercent <= 0.0f)
+            return -80.0f;
+
+        return Mathf.Clamp(20.0f * Mathf.Log(volumePercent / 100.0f) / Mathf.Log(10.0f), -80.0f, 0.0f);
     }
 
     public void PlaySfx(string id, bool ignorePause = false)

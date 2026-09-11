@@ -11,7 +11,9 @@ public partial class SettingsMenu : Control
     private const string ControlsSection = "controls";
     private const float MinVolumeDb = -80.0f;
     private const float MaxVolumeDb = 0.0f;
-    private const float DefaultVolumePercent = 100.0f;
+    private const float DefaultMasterVolumePercent = 50.0f;
+    private const float DefaultMusicVolumePercent = 100.0f;
+    private const float DefaultSfxVolumePercent = 100.0f;
 
     private static readonly string[] Actions =
     {
@@ -29,14 +31,19 @@ public partial class SettingsMenu : Control
     private HSlider _masterSlider;
     private HSlider _musicSlider;
     private HSlider _sfxSlider;
+    private SpinBox _masterValueInput;
+    private SpinBox _musicValueInput;
+    private SpinBox _sfxValueInput;
     private Label _listeningLabel;
     private string _listeningAction;
     private ConfigFile _config;
+    private Button _resetButton;
 
     public override void _Ready()
     {
         ProcessMode = Node.ProcessModeEnum.Always;
         _config = new ConfigFile();
+        CacheAudioControls();
         LoadSettings();
         BuildControlRows();
         RefreshLocalizedText();
@@ -45,6 +52,11 @@ public partial class SettingsMenu : Control
         _masterSlider.ValueChanged += value => SetVolume("master", value);
         _musicSlider.ValueChanged += value => SetVolume("music", value);
         _sfxSlider.ValueChanged += value => SetVolume("sfx", value);
+        _masterValueInput.ValueChanged += value => SetVolume("master", value);
+        _musicValueInput.ValueChanged += value => SetVolume("music", value);
+        _sfxValueInput.ValueChanged += value => SetVolume("sfx", value);
+        _resetButton = GetNode<Button>("Panel/Margin/Content/ResetButton");
+        _resetButton.Pressed += ResetDefaults;
         _closeButton.Pressed += Close;
     }
 
@@ -82,15 +94,19 @@ public partial class SettingsMenu : Control
     private void LoadSettings()
     {
         Error error = _config.Load(SettingsPath);
-        ApplyAudioSetting("master", DbToPercent(AudioManager.Instance?.GetMasterVolume() ?? 0.0f));
-        ApplyAudioSetting("music", DbToPercent(AudioManager.Instance?.GetMusicVolume() ?? 0.0f));
-        ApplyAudioSetting("sfx", DbToPercent(AudioManager.Instance?.GetSfxVolume() ?? 0.0f));
+        if (error != Error.Ok)
+        {
+            ApplyAudioSetting("master", DefaultMasterVolumePercent);
+            ApplyAudioSetting("music", DefaultMusicVolumePercent);
+            ApplyAudioSetting("sfx", DefaultSfxVolumePercent);
+            return;
+        }
 
         if (error == Error.Ok)
         {
-            ApplyAudioSetting("master", GetSavedVolumePercent("master"));
-            ApplyAudioSetting("music", GetSavedVolumePercent("music"));
-            ApplyAudioSetting("sfx", GetSavedVolumePercent("sfx"));
+            ApplyAudioSetting("master", GetSavedVolumePercent("master", DefaultMasterVolumePercent));
+            ApplyAudioSetting("music", GetSavedVolumePercent("music", DefaultMusicVolumePercent));
+            ApplyAudioSetting("sfx", GetSavedVolumePercent("sfx", DefaultSfxVolumePercent));
 
             foreach (string action in Actions)
             {
@@ -107,36 +123,47 @@ public partial class SettingsMenu : Control
         switch (bus)
         {
             case "master":
-                _masterSlider ??= GetNode<HSlider>("Panel/Margin/Content/Audio/Sliders/Master");
                 _masterSlider.Value = volumePercent;
+                _masterValueInput.Value = volumePercent;
                 AudioManager.Instance?.SetMasterVolume(volumeDb);
                 break;
             case "music":
-                _musicSlider ??= GetNode<HSlider>("Panel/Margin/Content/Audio/Sliders/Music");
                 _musicSlider.Value = volumePercent;
+                _musicValueInput.Value = volumePercent;
                 AudioManager.Instance?.SetMusicVolume(volumeDb);
                 break;
             case "sfx":
-                _sfxSlider ??= GetNode<HSlider>("Panel/Margin/Content/Audio/Sliders/Sfx");
                 _sfxSlider.Value = volumePercent;
+                _sfxValueInput.Value = volumePercent;
                 AudioManager.Instance?.SetSfxVolume(volumeDb);
                 break;
         }
     }
 
-    private float GetSavedVolumePercent(string bus)
+    private void CacheAudioControls()
+    {
+        _masterSlider = GetNode<HSlider>("Panel/Margin/Content/Audio/Sliders/MasterRow/Master");
+        _musicSlider = GetNode<HSlider>("Panel/Margin/Content/Audio/Sliders/MusicRow/Music");
+        _sfxSlider = GetNode<HSlider>("Panel/Margin/Content/Audio/Sliders/SfxRow/Sfx");
+        _masterValueInput = GetNode<SpinBox>("Panel/Margin/Content/Audio/Sliders/MasterRow/MasterValue");
+        _musicValueInput = GetNode<SpinBox>("Panel/Margin/Content/Audio/Sliders/MusicRow/MusicValue");
+        _sfxValueInput = GetNode<SpinBox>("Panel/Margin/Content/Audio/Sliders/SfxRow/SfxValue");
+    }
+
+    private float GetSavedVolumePercent(string bus, float defaultPercent)
     {
         if (_config.HasSectionKey(AudioSection, $"{bus}_percent"))
-            return (float)_config.GetValue(AudioSection, $"{bus}_percent", DefaultVolumePercent);
+            return (float)_config.GetValue(AudioSection, $"{bus}_percent", defaultPercent);
 
         // Compatibility with settings saved by the previous dB-based sliders.
-        float oldVolumeDb = (float)_config.GetValue(AudioSection, bus, MaxVolumeDb);
+        float oldVolumeDb = (float)_config.GetValue(AudioSection, bus, PercentToDb(defaultPercent));
         return DbToPercent(oldVolumeDb);
     }
 
     private void SetVolume(string bus, double value)
     {
         float volumePercent = Mathf.Clamp((float)value, 0.0f, 100.0f);
+        UpdateVolumeControls(bus, volumePercent);
         float volumeDb = PercentToDb(volumePercent);
         if (AudioManager.Instance != null)
         {
@@ -156,6 +183,42 @@ public partial class SettingsMenu : Control
 
         _config.SetValue(AudioSection, $"{bus}_percent", volumePercent);
         _config.Save(SettingsPath);
+    }
+
+    private void UpdateVolumeControls(string bus, float volumePercent)
+    {
+        SpinBox input = bus switch
+        {
+            "master" => _masterValueInput,
+            "music" => _musicValueInput,
+            "sfx" => _sfxValueInput,
+            _ => null
+        };
+        input?.SetValueNoSignal(volumePercent);
+
+        HSlider slider = bus switch
+        {
+            "master" => _masterSlider,
+            "music" => _musicSlider,
+            "sfx" => _sfxSlider,
+            _ => null
+        };
+        slider?.SetValueNoSignal(volumePercent);
+    }
+
+    private void ResetDefaults()
+    {
+        InputMap.LoadFromProjectSettings();
+        _config.EraseSection(AudioSection);
+        _config.EraseSection(ControlsSection);
+        _config.Save(SettingsPath);
+
+        ApplyAudioSetting("master", DefaultMasterVolumePercent);
+        ApplyAudioSetting("music", DefaultMusicVolumePercent);
+        ApplyAudioSetting("sfx", DefaultSfxVolumePercent);
+
+        foreach (string action in Actions)
+            _actionButtons[action].Text = GetActionText(action);
     }
 
     private static float PercentToDb(float volumePercent)
@@ -288,14 +351,16 @@ public partial class SettingsMenu : Control
     {
         GetNode<Label>("Panel/Margin/Content/Title").Text = LocalizationManager.Translate("settings.title");
         GetNode<Label>("Panel/Margin/Content/Audio/Title").Text = LocalizationManager.Translate("settings.audio");
-        GetNode<Label>("Panel/Margin/Content/Audio/Sliders/MasterLabel").Text = LocalizationManager.Translate("settings.master");
-        GetNode<Label>("Panel/Margin/Content/Audio/Sliders/MusicLabel").Text = LocalizationManager.Translate("settings.music");
-        GetNode<Label>("Panel/Margin/Content/Audio/Sliders/SfxLabel").Text = LocalizationManager.Translate("settings.sfx");
+        GetNode<Label>("Panel/Margin/Content/Audio/Sliders/MasterRow/MasterLabel").Text = LocalizationManager.Translate("settings.master");
+        GetNode<Label>("Panel/Margin/Content/Audio/Sliders/MusicRow/MusicLabel").Text = LocalizationManager.Translate("settings.music");
+        GetNode<Label>("Panel/Margin/Content/Audio/Sliders/SfxRow/SfxLabel").Text = LocalizationManager.Translate("settings.sfx");
         GetNode<Label>("Panel/Margin/Content/Controls/Title").Text = LocalizationManager.Translate("settings.controls");
         _listeningLabel = GetNode<Label>("Panel/Margin/Content/Controls/ListeningLabel");
         _listeningLabel.Text = LocalizationManager.Translate("settings.select_control");
         _closeButton = GetNode<Button>("Panel/Margin/Content/CloseButton");
         _closeButton.Text = LocalizationManager.Translate("common.close");
+        _resetButton = GetNode<Button>("Panel/Margin/Content/ResetButton");
+        _resetButton.Text = LocalizationManager.Translate("settings.reset_defaults");
     }
 
     private void Close()
