@@ -6,10 +6,13 @@ public partial class UpgradeCard : PanelContainer
 	//Evento que se dispara cuando el jugador clickea esta carta
 	public event Action<Upgrade> OnUpgradeSelected;
 
+	private bool _inventoryMode = false;
+
 	private Upgrade _upgrade;
 
 	public void Initialize(Upgrade upgrade)
 	{
+		_inventoryMode = false;
 		_upgrade = upgrade;
 
 		string localizedName = LocalizationManager.Translate(upgrade.NameKey);
@@ -25,8 +28,41 @@ public partial class UpgradeCard : PanelContainer
 		GetNode<Label>("CardContent/UpgradeDescription").Text = localizedDescription;
 	}
 
+	public void InitializeInventory(Upgrade upgrade)
+	{
+		_inventoryMode = true;
+		_upgrade = upgrade;
+
+		string localizedName = LocalizationManager.Translate(upgrade.NameKey);
+		GetNode<Label>("CardContent/UpgradeName").Text = localizedName;
+
+		GetNode<Label>("CardContent/UpgradeType").Text =
+			LocalizationManager.Translate(
+				$"upgrade.type.{upgrade.Type.ToString().ToLowerInvariant()}");
+
+		GetNode<Label>("CardContent/UpgradeElement").Text =
+			LocalizationManager.Translate(
+				$"upgrade.element.{upgrade.ElementType.ToString().ToLowerInvariant()}");
+
+		int currentApplication = upgrade.TimesApplied;
+
+		string descriptionKey =
+			upgrade.GetLocalizedDescriptionKey(currentApplication);
+
+		string localizedDescription =
+			LocalizationManager.Translate(
+				descriptionKey,
+				upgrade.GetLocalizedDescriptionArguments(currentApplication));
+
+		GetNode<Label>("CardContent/UpgradeDescription").Text =
+			localizedDescription;
+	}
+
     public override void _GuiInput(InputEvent @event)
     {
+		if (_inventoryMode)
+        	return;
+
         //Detecta cuando el jugador clickea la carta
 		if (@event is InputEventMouseButton mb && mb.Pressed)
 		{

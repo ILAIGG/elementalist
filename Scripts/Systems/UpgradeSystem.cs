@@ -63,6 +63,8 @@ public class UpgradeSystem
     private PlayerStats _stats;
     private Random _random = new();
 
+    public IReadOnlyList<Upgrade> AcquiredUpgrades => _acquiredUpgrades;
+
     public UpgradeSystem(Player player, PlayerStats stats)
     {
         _player = player;

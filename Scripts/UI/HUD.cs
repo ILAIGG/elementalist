@@ -13,8 +13,10 @@ public partial class HUD : CanvasLayer
     private Label _meteorLabel;
     private Label _dashLabel;
     private Label _objectiveLabel;
+    private Button _inventoryButton;
 
     private Player _player;
+    private InventoryScreen _inventoryScreen;
     private float _gameTime = 0f;
     public override void _Ready()
     {
@@ -32,6 +34,9 @@ public partial class HUD : CanvasLayer
         _meteorLabel = _contentContainer.GetNode<Label>("Cooldowns/MeteorLabel");
         _dashLabel = _contentContainer.GetNode<Label>("Cooldowns/DashLabel");
         _objectiveLabel = GetNode<Label>("Container/ObjectivePanel/Margin/ObjectiveLabel");
+        _inventoryButton = GetNode<Button>("Container/InventoryButton");
+        _inventoryButton.Pressed += OnInventoryButtonPressed;
+        _inventoryScreen = GetNode<InventoryScreen>("InventoryScreen");
 
         _player = GetTree().GetFirstNodeInGroup("player") as Player;
 
@@ -124,5 +129,10 @@ public partial class HUD : CanvasLayer
         int minutes = (int)(secondsRemaining / 60f);
         int seconds = (int)(secondsRemaining % 60f);
         _objectiveLabel.Text = LocalizationManager.Translate("hud.survive", minutes, seconds);
+    }
+
+    private void OnInventoryButtonPressed()
+    {
+        _inventoryScreen?.ShowInventory();
     }
 }

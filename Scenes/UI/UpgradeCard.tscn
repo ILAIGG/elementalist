@@ -2,10 +2,22 @@
 
 [ext_resource type="Script" uid="uid://ckac23f3a6idl" path="res://Scripts/UI/UpgradeCard.cs" id="1_bh2l2"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bk8df"]
+bg_color = Color(0.101960786, 0.101960786, 0.101960786, 0.6)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
 [node name="UpgradeCard" type="PanelContainer" unique_id=1145939474]
 custom_minimum_size = Vector2(200, 300)
 offset_right = 40.0
 offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_bk8df")
 script = ExtResource("1_bh2l2")
 
 [node name="CardContent" type="VBoxContainer" parent="." unique_id=1407757178]
@@ -25,7 +37,7 @@ theme_override_colors/font_color = Color(0.6666667, 0.6666667, 0.6666667, 1)
 text = "Upgrade Type"
 horizontal_alignment = 1
 
-[node name="UpgradeElement" type="Label" parent="CardContent"]
+[node name="UpgradeElement" type="Label" parent="CardContent" unique_id=1656409512]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.45, 0.75, 0.9, 1)
 text = "Upgrade Element"

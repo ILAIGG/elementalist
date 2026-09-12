@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://dlyn5gfrfwrsn"]
+
+[ext_resource type="Script" uid="uid://trer7j6hy66x" path="res://Scripts/UI/InventoryScreen.cs" id="1_bln8u"]
+[ext_resource type="PackedScene" uid="uid://ceynpls5g6tfo" path="res://Scenes/UI/UpgradeCard.tscn" id="2_krc5y"]
+
+[node name="InventoryScreen" type="Control" unique_id=441460252]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bln8u")
+UpgradeCardScene = ExtResource("2_krc5y")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=2054866335]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.03876, 0.03876, 0.03876, 0.8)
+
+[node name="Panel" type="Panel" parent="." unique_id=1142216529]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=1921604537]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=837802707]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Panel/VBoxContainer/HBoxContainer" unique_id=1981921157]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Inventory"
+horizontal_alignment = 1
+
+[node name="CloseButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer" unique_id=1816692976]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 8
+text = "X"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/VBoxContainer" unique_id=1929784508]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="UpgradesContainer" type="GridContainer" parent="Panel/VBoxContainer/ScrollContainer" unique_id=1183185317]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 4
