@@ -7,13 +7,13 @@ public partial class EnemySpawner : Node
     [Export] public PackedScene EnemyScene { get; set; }
 
     //Cada cuantos segundos aparece un enemigo al inicio
-    [Export] public float SpawnInterval = 3f;
+    [Export] public float SpawnInterval = 1.5f;
 
     //Cuánto se reduce el intervalo de tiempo por nivel de dificultad
-    [Export] public float SpawnIntervalDecrement = 0.05f;
+    [Export] public float SpawnIntervalDecrement = 0.02f;
 
     //Cuántos enemigos adicionales aparecen a la vez por nivel de dificultad
-    [Export] public float EnemiesPerDifficultyLevel = 0.45f;
+    [Export] public float EnemiesPerDifficultyLevel = 0.25f;
 
     //Intervalo mínimo, ya que no tendría sentido que llegue a 0
     [Export] public float MinSpawnInterval = 0.3f;
@@ -100,7 +100,8 @@ public partial class EnemySpawner : Node
 
         //Se aplica el multiplicador del nodo sobre el escalado progresivo
         float healthMultiplier = nodeDifficulty + (_difficultyLevel * 0.2f);
-        float speedMultiplier = nodeDifficulty + (_difficultyLevel * 0.03f);
+        // Reducimos el impacto de la dificultad del mapa sobre la velocidad
+        float speedMultiplier = 1.0f + ((nodeDifficulty - 1.0f) * 0.5f) + (_difficultyLevel * 0.01f);
 
         enemy.ScaleStats(healthMultiplier, speedMultiplier);
     }

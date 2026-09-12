@@ -6,7 +6,7 @@ public partial class Enemy : CharacterBody2D, IEnemy
     private static readonly Color FrozenTint = new(0.72f, 0.9f, 1f);
 
     [Export] public Element ElementType { get; set; } = Element.Neutral;
-    [Export] public float Speed = 80f;
+    [Export] public float Speed = 155f;
     [Export] public float MaxHealth = 30f;
 
     private Sprite2D _sprite;
@@ -100,20 +100,30 @@ public partial class Enemy : CharacterBody2D, IEnemy
             KinematicCollision2D collision = GetSlideCollision(i);
 
             //Verificamos si el objeto con el que chocamos fue el jugador
-            if (collision.GetCollider() is Player player)
+            if (collision.GetCollider() is Player)
             {
                 touchingPlayer = true;
-                if (_damageCooldown <= 0f)
-                {
-                    player.Health.TakeDamage(ContactDamage, player.GlobalPosition, GetTree(), GetInstanceId());
-                    _damageCooldown = DamageInterval;
-                }
+                break;
             }
         }
 
-        //Si se pierde el contacto, el cooldown se resetea a 0 para el próximo impacto
-        if (!touchingPlayer)
+        //También verificamos por distancia en caso de que estén superpuestos (e.g. rodeado de enemigos o post-dash)
+        if (!touchingPlayer && GlobalPosition.DistanceTo(_player.GlobalPosition) < 22f)
         {
+            touchingPlayer = true;
+        }
+
+        if (touchingPlayer)
+        {
+            if (_damageCooldown <= 0f)
+            {
+                _player.Health.TakeDamage(ContactDamage, _player.GlobalPosition, GetTree(), GetInstanceId());
+                _damageCooldown = DamageInterval;
+            }
+        }
+        else
+        {
+            //Si se pierde el contacto, el cooldown se resetea a 0 para el próximo impacto
             _damageCooldown = 0f;
         }
     }
