@@ -137,3 +137,4 @@ upgrade.repulsion_burst_shockwave.description,Repulsion Burst leaves a damaging 
 upgrade.repulsion_burst_extended.description,Increase Repulsion Burst range and push force.,Aumenta el alcance y la fuerza de empuje del Estallido de repulsión.
 upgrade.nova_chain.description,Fire Nova launches Fireballs when detonating.,La Nova de fuego lanza Bolas de fuego al detonar.
 upgrade.nova_cooldown.description,-0.5s Fire Nova Cooldown (Current: {0:F2}s),-0.5 s de cooldown de la Nova de fuego (actual: {0:F2} s)
+hud.inventory,Inventory,Inventario

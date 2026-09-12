@@ -52,6 +52,7 @@ public partial class HUD : CanvasLayer
             _healthBar.Value = _player.Stats.MaxHealth;
             _healthLabel.Text = $"{_player.Stats.MaxHealth} / {_player.Stats.MaxHealth}";
             _levelLabel.Text = LocalizationManager.Translate("hud.level", 1);
+            _inventoryButton.Text = LocalizationManager.Translate("hud.inventory");
             UpdateTimeLabel();
             UpdateCooldownLabels();
         }
