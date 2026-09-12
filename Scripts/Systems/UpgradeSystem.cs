@@ -131,6 +131,20 @@ public class UpgradeSystem
             _excludedIds.Add(excludedId);
     }
 
+    public void ApplyUpgradeById(string id)
+    {
+        var upgrade = _allUpgrades.Find(u => u.Id == id);
+        if (upgrade != null)
+        {
+            ApplyUpgrade(upgrade);
+        }
+    }
+
+    public Upgrade FindUpgradeById(string id)
+    {
+        return _allUpgrades.Find(u => u.Id == id);
+    }
+
     //Acá se registran todas las upgrades del juego
     private void RegisterUpgrades()
     {
@@ -144,7 +158,7 @@ public class UpgradeSystem
             Apply = (player, times) =>
             {
                 _stats.MaxHealth += 20f;
-                player.Health.IncreaseMaxHealth(20f);
+                player?.Health.IncreaseMaxHealth(20f);
             }
         });
 
@@ -200,14 +214,14 @@ public class UpgradeSystem
         _allUpgrades.Add(new Upgrade
         {
             Id = "dash_cooldown",
-            GetDescriptionArguments = (times) => new object[] { _player.DashCooldown },
+            GetDescriptionArguments = (times) => new object[] { _stats.DashCooldown },
             Type = UpgradeType.Dash,
             IsInfinite = true,
             Apply = (player, times) =>
             {
-                _player.DashCooldown = Mathf.Max(0.5f, player.DashCooldown - 0.2f);
+                _stats.DashCooldown = Mathf.Max(0.5f, _stats.DashCooldown - 0.2f);
             },
-            Condition = (player) => player.DashCooldown > 0.5f,
+            Condition = (player) => _stats.DashCooldown > 0.5f,
         });
 
         //Upgrade único de hechizo (cambia su comportamiento)

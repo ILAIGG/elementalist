@@ -26,6 +26,10 @@ public partial class NodeMap : Node2D
     private float _autosaveTimer = 0f;
     private const float AutosaveInterval = 30f;
 
+    //Inventario
+    private Button _inventoryButton;
+    private InventoryScreen _inventoryScreen;
+
     public override void _Ready()
     {
         _nodesContainer = GetNodeOrNull<Node2D>("Nodes");
@@ -73,7 +77,27 @@ public partial class NodeMap : Node2D
 
         _popUp.Visible = false;
 
+        //Botón de inventario
+        _inventoryButton = GetNodeOrNull<Button>("UI/InventoryButton");
+        if (_inventoryButton != null)
+        {
+            _inventoryButton.Text = LocalizationManager.Translate("hud.inventory");
+            _inventoryButton.Pressed += OnInventoryButtonPressed;
+        }
+
+        PackedScene inventoryScene = GD.Load<PackedScene>("res://Scenes/UI/InventoryScreen.tscn");
+        if (inventoryScene != null)
+        {
+            _inventoryScreen = inventoryScene.Instantiate<InventoryScreen>();
+            GetNode<CanvasLayer>("UI").AddChild(_inventoryScreen);
+        }
+
         AudioManager.Instance.PlayMusic("r!ckes-desert.theme");
+    }
+
+    private void OnInventoryButtonPressed()
+    {
+        _inventoryScreen?.ShowInventory();
     }
 
     private void BuildGeneratedMap()

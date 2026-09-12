@@ -11,7 +11,7 @@ public partial class Player : CharacterBody2D
     //Dash
     [Export] public float DashSpeed = 600f;
     [Export] public float DashDuration = 0.15f; //Segundos que dura el dash
-    [Export] public float DashCooldown = 2f; //Segundos entre dashes
+    [Export] public float BaseDashCooldown = 2f; //Segundos entre dashes
 
     //I-Frames
     [Export] public float IFrameDuration = 0.5f;
@@ -40,6 +40,7 @@ public partial class Player : CharacterBody2D
     {
         //Se inicializan los stats
         Stats = new PlayerStats();
+        Stats.DashCooldown = BaseDashCooldown;
 
         //Se obtienen los componentes nodo desde la escena
         SpellCaster = GetNode<SpellCaster>("SpellCaster");
@@ -62,6 +63,31 @@ public partial class Player : CharacterBody2D
         Experience.OnLevelUp += OnLevelUp;
 
         Upgrades = new UpgradeSystem(this, Stats);
+
+        if (GameManager.Instance != null && GameManager.Instance.ActiveSave != null)
+        {
+            var save = GameManager.Instance.ActiveSave;
+            
+            Experience.SetLevelAndXP(save.PlayerLevel, save.PlayerXP);
+
+            foreach (var kvp in save.AcquiredUpgrades)
+            {
+                for (int i = 0; i < kvp.Value; i++)
+                {
+                    Upgrades.ApplyUpgradeById(kvp.Key);
+                }
+            }
+
+            if (save.PlayerCurrentHealth > 0)
+            {
+                Health.LoadHealth(save.PlayerCurrentHealth);
+            }
+
+            if (save.PlayerDashCooldown > 0)
+            {
+                Stats.DashCooldown = save.PlayerDashCooldown;
+            }
+        }
     }
 
     public override void _PhysicsProcess(double delta)
@@ -185,7 +211,7 @@ public partial class Player : CharacterBody2D
         _isDashing = true;
         AudioManager.Instance.PlaySfx("sfx.dash");
         _dashTimer = DashDuration;
-        _dashCooldownTimer = DashCooldown;
+        _dashCooldownTimer = Stats.DashCooldown;
 
         //Si tiene el upgrade, se desactiva la capa de colisión del jugador para que los enemigos no puedan hacerle daño durante el dash.
         if (Stats.DashIsInvincible)

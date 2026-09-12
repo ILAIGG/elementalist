@@ -204,6 +204,12 @@ public partial class Level : Node2D
         // Marca el nodo como completado en el GameManager
         GameManager.Instance.CompleteNode(GameManager.Instance.ActiveNodeId);
 
+        Player player = GetTree().GetFirstNodeInGroup("player") as Player;
+        if (player != null)
+        {
+            GameManager.Instance.SavePlayerState(player);
+        }
+
         if (GameManager.Instance.ActiveNodeIsFinal)
             GameManager.Instance.CompleteRun();
 

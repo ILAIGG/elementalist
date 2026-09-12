@@ -67,3 +67,17 @@ layout_mode = 2
 text = "Enter"
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1300560906]
+
+[node name="InventoryButton" type="Button" parent="UI" unique_id=660616941]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -93.0
+offset_top = -15.5
+offset_right = -10.0
+offset_bottom = 15.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "Inventory"

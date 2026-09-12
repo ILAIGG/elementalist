@@ -139,6 +139,23 @@ public partial class GameManager : Node
         SaveGame();
     }
 
+    public void SavePlayerState(Player player)
+    {
+        if (ActiveSave == null) return;
+        
+        ActiveSave.PlayerLevel = player.Experience.CurrentLevel;
+        ActiveSave.PlayerXP = player.Experience.CurrentXP;
+        ActiveSave.PlayerCurrentHealth = player.Health.CurrentHealth;
+        ActiveSave.PlayerDashCooldown = player.Stats.DashCooldown;
+        
+        ActiveSave.AcquiredUpgrades.Clear();
+        foreach (var upgrade in player.Upgrades.AcquiredUpgrades)
+        {
+            ActiveSave.AcquiredUpgrades[upgrade.Id] = upgrade.TimesApplied;
+        }
+        SaveGame();
+    }
+
     public void CompleteRun()
     {
         if (ActiveSave == null)

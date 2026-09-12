@@ -14,6 +14,13 @@ public class ExperienceSystem
     public event Action<float, float> OnXPChanged; // XP actual, XP necesaria
     public event Action<int> OnLevelUp; //Cuando el jugador sube de nivel
 
+    public void SetLevelAndXP(int level, float xp)
+    {
+        CurrentLevel = level;
+        CurrentXP = xp;
+        OnXPChanged?.Invoke(CurrentXP, XPToNextLevel);
+    }
+
     public void AddXP(float amount)
     {
         CurrentXP += amount;

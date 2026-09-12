@@ -48,10 +48,15 @@ public partial class HUD : CanvasLayer
             _player.Experience.OnLevelUp += OnLevelUp;
 
             //Se inicializan todos los valores
-            _healthBar.MaxValue = _player.Stats.MaxHealth;
-            _healthBar.Value = _player.Stats.MaxHealth;
-            _healthLabel.Text = $"{_player.Stats.MaxHealth} / {_player.Stats.MaxHealth}";
-            _levelLabel.Text = LocalizationManager.Translate("hud.level", 1);
+            _healthBar.MaxValue = _player.Health.MaxHealth;
+            _healthBar.Value = _player.Health.CurrentHealth;
+            _healthLabel.Text = $"{Mathf.Round(_player.Health.CurrentHealth)} / {Mathf.Round(_player.Health.MaxHealth)}";
+            _levelLabel.Text = LocalizationManager.Translate("hud.level", _player.Experience.CurrentLevel);
+            
+            _xpBar.MaxValue = _player.Experience.XPToNextLevel;
+            _xpBar.Value = _player.Experience.CurrentXP;
+            _xpLabel.Text = $"{(int)_player.Experience.CurrentXP} / {(int)_player.Experience.XPToNextLevel}";
+            
             _inventoryButton.Text = LocalizationManager.Translate("hud.inventory");
             UpdateTimeLabel();
             UpdateCooldownLabels();

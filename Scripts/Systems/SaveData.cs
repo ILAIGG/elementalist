@@ -12,4 +12,9 @@ public class SaveData
     public int CurrentNodeId { get; set; } = -1;
     public float CameraPositionX { get; set; }
     public float CameraPositionY { get; set; }
+    public int PlayerLevel { get; set; } = 1;
+    public float PlayerXP { get; set; } = 0f;
+    public float PlayerCurrentHealth { get; set; } = -1f;
+    public float PlayerDashCooldown { get; set; } = -1f;
+    public System.Collections.Generic.Dictionary<string, int> AcquiredUpgrades { get; set; } = new();
 }

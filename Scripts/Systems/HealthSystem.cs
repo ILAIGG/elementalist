@@ -65,6 +65,12 @@ public class HealthSystem
         OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
     }
 
+    public void LoadHealth(float health)
+    {
+        CurrentHealth = Mathf.Clamp(health, 0, MaxHealth);
+        OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
+    }
+
     public void IncreaseMaxHealth(float amount)
     {
         MaxHealth += amount;

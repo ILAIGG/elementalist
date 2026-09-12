@@ -51,4 +51,5 @@ public class PlayerStats
 
     //Dash
     public bool DashIsInvincible = false;
+    public float DashCooldown = 2f;
 }
